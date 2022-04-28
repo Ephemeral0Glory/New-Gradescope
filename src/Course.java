@@ -6,7 +6,7 @@ public class Course {
     private String name;
     private String code;
     private ArrayList<Section> sections;
-    private ArrayList<RealAssignment> assignments;
+    private ArrayList<ArrayList<RealAssignment>> assignments;
     private ArrayList<Student> students;
     private ArrayList<Entry> entries;
     private ArrayList<Gradeable> finalGrades;
@@ -17,16 +17,26 @@ public class Course {
     }
 
     public Course(String name, String code, ArrayList<RealAssignment> template) {
-        this.name = name;
-        this.code = code;
-        this.assignments = template;
+        this(name, code);
+        this.assignments = createBlankAssignmentsFromTemplate(template);
     }
 
     public Course(String name, String code, ArrayList<RealAssignment> template, ArrayList<Entry> entries) {
-        this.name = name;
-        this.code = code;
-        this.assignments = template;
+        this(name, code, template);
         this.entries = entries;
+    }
+    
+    private ArrayList<ArrayList<RealAssignment>> createBlankAssignmentsFromTemplate(ArrayList<RealAssignment> template) {
+    	assignments = new ArrayList<ArrayList<RealAssignment>>(template.size());
+    	
+    	for(RealAssignment ra: template)
+    	{
+    		ArrayList<RealAssignment> newAssignList = new ArrayList<RealAssignment>();
+    		newAssignList.add(new RealAssignment(ra.getName(), ra.getWeight()));
+    		assignments.add(newAssignList);
+    	}
+    	
+    	return assignments;
     }
 
     public long getID() {
@@ -60,7 +70,7 @@ public class Course {
         return this.sections;
     }
 
-    public ArrayList<RealAssignment> getAssignments() {
+    public ArrayList<ArrayList<RealAssignment>> getAssignments() {
         return this.assignments;
     }
 
@@ -77,11 +87,32 @@ public class Course {
     }
 
     public void addAssignment(RealAssignment assignment) {
-        this.assignments.add(assignment);
+    	// Create list of empty assignments for each row in entries
+    	ArrayList<RealAssignment> list = new ArrayList<RealAssignment>(entries.size());
+    	for(int i = 0; i < entries.size(); i++)
+    	{
+    		RealAssignment ra = new RealAssignment(assignment.getName(), assignment.getWeight());
+    		list.add(ra);
+    	}
+    	
+    	// Add list to end of assignments list
+        this.assignments.add(list);
     }
 
     public boolean removeAssignment(RealAssignment assignmentToRemove) {
-        return this.assignments.remove(assignmentToRemove);
+    	// Find column that has this assignment
+    	ArrayList<RealAssignment> columnToRemove = null;
+    	for(ArrayList<RealAssignment> column: assignments)
+    	{
+    		RealAssignment ra = column.get(0);
+    		if(ra.equals(assignmentToRemove))
+    		{
+    			columnToRemove = column;
+    		}
+    	}
+    	
+    	// Remove this column
+        return this.assignments.remove(columnToRemove);
     }
 
     public void addSection(Section section) {

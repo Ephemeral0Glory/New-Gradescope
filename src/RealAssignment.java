@@ -11,11 +11,11 @@ public class RealAssignment implements Gradeable {
     public RealAssignment(String name, float weight) {
         this.name = name;
         this.weight = weight;
+        grade = new Grade(0f);
     }
 
     public RealAssignment(String name, float weight, Grade grade) {
-        this.name = name;
-        this.weight = weight;
+        this(name, weight);
         this.grade = grade;
     }
 
@@ -77,6 +77,26 @@ public class RealAssignment implements Gradeable {
         }
         grade.setScore(totalGrade);
         return totalGrade * weight;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if(o instanceof RealAssignment)
+    	{
+    		RealAssignment other  = (RealAssignment) o;
+    		if(this.name.equals(other.getName()) && this.weight == other.getWeight())
+    		{
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	else
+    	{
+    		return false;
+    	}
     }
 
 }
