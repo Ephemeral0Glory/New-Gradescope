@@ -69,12 +69,14 @@ public class RealAssignment implements Gradeable {
         return true; 
     }
 
-
-
     @Override
     public float getWeightedGrade() {
-        // TODO Auto-generated method stub
-        return 0;
+        float totalGrade = 0;
+        for (Gradeable subAssignment: this.subAssignments) {
+            totalGrade += subAssignment.getWeightedGrade();
+        }
+        grade.setScore(totalGrade);
+        return totalGrade * weight;
     }
 
 }
