@@ -37,6 +37,15 @@ public class Semester {
         return this.season;
     }
 
+    public int getYear() {
+        return this.year;
+    }
+
+    public int setYear(int newYear) {
+        this.year = newYear;
+        return this.year;
+    }
+
     public ArrayList<Course> getCourses() {
         return this.courses;
     }
