@@ -19,6 +19,33 @@ public class RealAssignment implements Gradeable {
         this.grade = grade;
     }
 
+    public long getID() {
+        return this.id;
+    }
+
+    public long setID(long newID) {
+        this.id = newID;
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String setName(String newName) {
+        this.name = newName;
+        return this.name;
+    }
+
+    public Grade getGrade() {
+        return this.grade;
+    }
+
+    public Grade setGrade(Grade newGrade) {
+        this.grade = newGrade;
+        return this.grade;
+    }
+
     public float getWeight() {
         return this.weight;
     }
