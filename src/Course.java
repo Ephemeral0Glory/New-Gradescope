@@ -97,6 +97,12 @@ public class Course {
     	
     	// Add list to end of assignments list
         this.assignments.add(list);
+        
+        // Add assignment to each entry
+        for(Entry e: entries)
+        {
+        	e.addAssignment(new RealAssignment(assignment.getName(), assignment.getWeight()));
+        }
     }
 
     public boolean removeAssignment(RealAssignment assignmentToRemove) {
@@ -110,6 +116,12 @@ public class Course {
     			columnToRemove = column;
     		}
     	}
+    	
+        // Remove assignment from each entry
+        for(Entry e: entries)
+        {
+        	e.removeAssignment(assignmentToRemove);
+        }
     	
     	// Remove this column
         return this.assignments.remove(columnToRemove);
