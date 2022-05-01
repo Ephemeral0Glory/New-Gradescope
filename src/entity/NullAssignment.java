@@ -1,3 +1,4 @@
+package entity;
 public class NullAssignment implements Gradeable {
 
     private long id; // TODO make this autoincrement

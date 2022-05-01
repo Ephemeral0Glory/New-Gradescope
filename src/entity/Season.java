@@ -1,3 +1,4 @@
+package entity;
 public enum Season {
 
     SPRING, SUMMER, FALL;
