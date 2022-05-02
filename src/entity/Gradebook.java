@@ -3,18 +3,22 @@ import java.util.*;
 
 public class Gradebook {
 
-    private long id; // TODO Add autoincrement of ID 
+    private long id; 
     private User owner;
     private ArrayList<Semester> semesters;
 
     public Gradebook(User owner) {
+    	this.id = IDFactory.generateGradebookID();
         this.owner = owner;
     }
 
     public Gradebook(User owner, ArrayList<Semester> semesters) {
+    	this.id = IDFactory.generateGradebookID();
         this.owner = owner;
         this.semesters = semesters;
     }
+    
+    // TODO Gradebook load from file constructor
 
     public long getID() {
         return this.id;

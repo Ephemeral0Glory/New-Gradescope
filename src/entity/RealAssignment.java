@@ -10,6 +10,7 @@ public class RealAssignment implements Gradeable {
     private ArrayList<Gradeable> subAssignments;
 
     public RealAssignment(String name, float weight) {
+    	this.id = IDFactory.generateAssignmentID();
         this.name = name;
         this.weight = weight;
         grade = new Grade(0f);
@@ -19,6 +20,20 @@ public class RealAssignment implements Gradeable {
         this(name, weight);
         this.grade = grade;
     }
+    
+    public RealAssignment(String name, float weight, ArrayList<RealAssignment> template)
+    {
+    	this(name, weight);
+    	subAssignments = new ArrayList<Gradeable>();
+    	
+    	// Use template to create sub-assignments
+    	for(RealAssignment a: template)
+    	{
+    		subAssignments.add(a);
+    	}
+    }
+    
+    // TODO RealAssignment constructor for load from file
 
     public long getID() {
         return this.id;
@@ -50,6 +65,10 @@ public class RealAssignment implements Gradeable {
     public float getWeight() {
         return this.weight;
     }
+    
+    public Gradeable getSubAssignment(int index) {
+    	return subAssignments.get(index);
+    }
 
     public void addSubAssignment(Gradeable subAssignment) {
         this.subAssignments.add(subAssignment);
@@ -70,6 +89,14 @@ public class RealAssignment implements Gradeable {
         return true; 
     }
 
+    /**
+     *  Calculates the weighted contribution of this assignment to its parent assignment's grade.
+     *  <p>
+     *  First the sum of the weighted grades of the sub-assignments is calculated.
+     *  Then the sum is set as this assignment's grade. Finally, the sum is multiplied
+     *  by this assignment's weight. 
+     *  @return  The weighted sum of this assignment's sub-assignment grades weighted by this assignment's weight
+     */
     @Override
     public float getWeightedGrade() {
         float totalGrade = 0;
@@ -80,6 +107,15 @@ public class RealAssignment implements Gradeable {
         return totalGrade * weight;
     }
     
+    /**
+     *  Determines equality between RealAssignments.
+     *  <p>
+     *  A RealAssignment is equivalent if:
+     *  <ol><li>it has the same name.</li>
+     *  <li>it has the same weight.</li>
+     *  @param o  The Object being compared
+     *  @return  True if the Object being compared is a RealAssignment with the same weight and name
+     */
     @Override
     public boolean equals(Object o) {
     	if(o instanceof RealAssignment)

@@ -6,13 +6,16 @@ public class NullAssignment implements Gradeable {
     private Grade grade;
 
     public NullAssignment(String name) {
+    	this.id = IDFactory.generateAssignmentID();
         this.name = name;
     }
 
     public NullAssignment(String name, Grade grade) {
-        this.name = name;
+        this(name);
         this.grade = grade;
     }
+    
+    // TODO NullAssignment constructor for load from file
 
     public long getID() {
         return this.id;

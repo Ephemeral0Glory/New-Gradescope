@@ -3,21 +3,23 @@ import java.util.*;
 
 public class Semester {
 
-    private long id; // TODO Add autoincrement of ID 
+    private long id; 
     private Season season;
     private int year;
     private ArrayList<Course> courses;
 
     public Semester(String season, int year) {
+    	this.id = IDFactory.generateSemesterID();
         this.season = Season.getSeason(season);
         this.year = year;
     }
 
     public Semester(String season, int year, ArrayList<Course> courses) {
-        this.season = Season.getSeason(season);
-        this.year = year;
+        this(season, year);
         this.courses = courses;
     }
+    
+    // TODO Semester constructor for load from file
 
     public long getID() {
         return this.id;

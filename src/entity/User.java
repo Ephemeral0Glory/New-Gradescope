@@ -23,12 +23,14 @@ public class User {
      *  @param hashedPW  Hashed version of the user-designated password
      */
     public User(String email, String fname, String lname, int hashedPW) {
-        this.id = 0;
+        this.id = IDFactory.generateUserID();
         this.email = email;
         this.fname = fname;
         this.lname = lname;
         this.hashedPW = hashedPW;
     }
+    
+    // TODO User constructor for load from file
 
     /**
      *  Checks the entered password for correctness.

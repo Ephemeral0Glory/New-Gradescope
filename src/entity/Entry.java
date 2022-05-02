@@ -1,17 +1,35 @@
 package entity;
 import java.util.*;
 
+/**
+ *  A entry in the course's grades database table.
+ *  <p>
+ *  An entry contains the {@link Student}, the {@link Section} the student belongs to, and the assignments
+ *  with their grades. The final grade is represented as a {@link RealAssignment}, and the
+ *  assignments in the course are its sub-assignments. 
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class Entry {
 
-    private long id; // TODO Add autoincrement of ID 
+    private long id;
     private Section section;
     private Student student;
-    private ArrayList<RealAssignment> finalGrades;
+    private RealAssignment finalGrade;
 
+    /**
+     *  Constructor.
+     *  <p>
+     *  Create an entry with the given section, student, and assignments from template.
+     *  @param section  The section the student belongs to
+     *  @param student  The student to whom these grades belong
+     *  @param template  The assignments for the course
+     */
     public Entry(Section section, Student student, ArrayList<RealAssignment> template) {
+    	this.id = IDFactory.generateEntryID();
         this.section = section;
         this.student = student;
-        this.finalGrades = template; // unsure if this is what it is supposed to be
+        this.finalGrade = new RealAssignment("Final Grade", 1.0f, template); // unsure if this is what it is supposed to be
     }
 
     public long getID() {
@@ -41,16 +59,28 @@ public class Entry {
         return this.student;
     }
 
-    public ArrayList<RealAssignment> getFinalGrades() {
-        return this.finalGrades;
+    public RealAssignment getFinalGrade() {
+        return this.finalGrade;
+    }
+    
+    public Gradeable getAssignment(int index) {
+    	return finalGrade.getSubAssignment(index);
     }
 
     public void addAssignment(RealAssignment assignment) {
-        this.finalGrades.add(assignment);
+        this.finalGrade.addSubAssignment(assignment);
     }
 
     public boolean removeAssignment(RealAssignment assignmentToRemove) {
-        return this.finalGrades.remove(assignmentToRemove);
+        return this.finalGrade.removeSubAssignment(assignmentToRemove);
+    }
+    
+    /**
+     *  Updates the final grade and the grade of all sub-assignments.
+     */
+    public void updateGrade()
+    {
+    	this.finalGrade.getWeightedGrade();
     }
 
 }

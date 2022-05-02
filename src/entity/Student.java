@@ -2,17 +2,21 @@ package entity;
 
 public class Student {
 
+	private long id;
     private String fname;
     private String lname;
     private String buID;
     private StudentStatus enrollmentStatus;
 
     public Student(String fname, String lname, String buID, StudentStatus enrollmentStatus) {
+    	this.id = IDFactory.generateStudentID();
         this.fname = fname;
         this.lname = lname;
         this.buID = buID;
         this.enrollmentStatus = enrollmentStatus;
     }
+    
+    // TODO Student constructor for load from file
 
     public String getFName() {
         return this.fname;
