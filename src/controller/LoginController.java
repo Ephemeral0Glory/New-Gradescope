@@ -35,6 +35,8 @@ public class LoginController implements ActionListener{
 		{
 			// Display bad login message and end
 			view.showBadLogin();
+			view.update();
+			view.display();
 			return;
 		}
 		
@@ -48,6 +50,8 @@ public class LoginController implements ActionListener{
 		{
 			// Bad password, show bad login message
 			view.showBadLogin();
+			view.update();
+			view.display();
 		}
 	}
 	
@@ -68,6 +72,7 @@ public class LoginController implements ActionListener{
 	private void createMainMenu(User user)
 	{
 		// TODO LoginController.createMainMenu
+		System.out.println("opens");
 	}
 
 }
