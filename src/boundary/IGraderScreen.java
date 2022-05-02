@@ -11,5 +11,6 @@ import javax.swing.JPanel;
 public interface IGraderScreen
 {
 	public JPanel getPanelContent();
+	public void update();
 
 }

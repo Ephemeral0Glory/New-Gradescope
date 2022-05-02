@@ -67,6 +67,7 @@ public class CreateNewUserView extends JPanel implements IGraderScreen
 	
 	private void setupPanel(String usernameInfo, LogInView view)
 	{
+		String username = usernameInfo.isEmpty()? "user@example.com": usernameInfo;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -135,9 +136,9 @@ public class CreateNewUserView extends JPanel implements IGraderScreen
 		gbc_usernameLabel.gridy = 3;
 		add(usernameLabel, gbc_usernameLabel);
 		
-		usernameField = new JTextField(usernameInfo);
+		usernameField = new JTextField();
 		usernameField.setHorizontalAlignment(SwingConstants.LEFT);
-		usernameField.setText("user@example.com");
+		usernameField.setText(username);
 		usernameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_usernameField = new GridBagConstraints();
 		gbc_usernameField.anchor = GridBagConstraints.SOUTHWEST;
@@ -461,6 +462,15 @@ public class CreateNewUserView extends JPanel implements IGraderScreen
 		gbc_createButton.gridx = 1;
 		gbc_createButton.gridy = y;
 		add(createButton, gbc_createButton);
+	}
+
+	/**
+	 *  Does nothing.
+	 */
+	@Override
+	public void update()
+	{
+		// Ignore
 	}
 
 }

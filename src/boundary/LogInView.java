@@ -43,6 +43,7 @@ public class LogInView extends JFrame implements IGraderFrame {
 	 *  Creates a log in screen with no backing user data.
 	 */
 	public LogInView() {
+		super("Grader - Log in");
 		setupFrame();
 		users = new ArrayList<User>();
 	}
@@ -60,7 +61,6 @@ public class LogInView extends JFrame implements IGraderFrame {
 	}
 	
 	private void setupFrame() {
-		setTitle("Grader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(50, 50, 600, 600);
 		
