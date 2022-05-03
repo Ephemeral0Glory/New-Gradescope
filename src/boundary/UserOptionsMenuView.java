@@ -68,7 +68,7 @@ public class UserOptionsMenuView extends JPanel implements IGraderScreen
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel title = new JLabel("Create New User");
+		JLabel title = new JLabel("Edit User Information");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		GridBagConstraints gbc_title = new GridBagConstraints();
 		gbc_title.insets = new Insets(0, 0, 5, 0);
@@ -278,6 +278,7 @@ public class UserOptionsMenuView extends JPanel implements IGraderScreen
 	@Override
 	public void update()
 	{
+		removeAll();
 		setupPanel();
 	}
 	
@@ -301,6 +302,11 @@ public class UserOptionsMenuView extends JPanel implements IGraderScreen
 	private void setupPanelWithPWErrorMessage(PasswordProblem error)
 	{
 		// TODO UserOptionsMenuView.setupPanelWithPWErrorMessage
+	}
+	
+	public void showChangedPassword()
+	{
+		// TODO UserOptionsMenuView.showChangedPassword
 	}
 	
 	public User getUser()

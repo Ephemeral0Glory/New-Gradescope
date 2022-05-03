@@ -157,6 +157,7 @@ public class LogInView extends JFrame implements IGraderFrame {
 		panel.add(loginButton, gbc_loginButton);
 		
 		setContentPane(panel);
+		usernameField.requestFocus();
 	}
 	
 	/**
