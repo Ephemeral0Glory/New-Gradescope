@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import boundary.GraderView;
 import boundary.LogInView;
-import boundary.MainMenuView;
 import entity.User;
 
 /**
@@ -73,20 +71,9 @@ public class LoginController implements ActionListener{
 	
 	private void createMainMenu(User user)
 	{
-		// Create new window frame
-		GraderView newView = new GraderView();
-		// Create main menu screen
-		MainMenuView mm = new MainMenuView(newView, user);
-		
-		// Set up main menu
-		newView.setNewView(mm);
-		
-		// Close old view
-		view.closeWindow();
-		
-		// Open new window
-		newView.update();
-		newView.display();
+		// Use open controller to open main menu
+		OpenMainMenuController ommc = new OpenMainMenuController(view, user);
+		ommc.open();
 	}
 
 }
