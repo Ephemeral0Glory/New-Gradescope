@@ -1,4 +1,7 @@
 package entity;
+
+import java.util.ArrayList;
+
 public class NullAssignment implements Gradeable {
 
     private long id; // TODO make this autoincrement
@@ -47,6 +50,17 @@ public class NullAssignment implements Gradeable {
     @Override
     public float getWeightedGrade() {
         return this.grade.getScore();
+    }
+    
+    /**
+     *  @return  A list of the single Grade member of this assignment
+     */
+    @Override
+    public ArrayList<Grade> getFlattenedSubAssignmentTreeGrades()
+    {
+    	ArrayList<Grade> list = new ArrayList<Grade>(1);
+    	list.add(grade);
+    	return list;
     }
     
 }

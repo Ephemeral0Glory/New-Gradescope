@@ -17,6 +17,11 @@ public class Student {
     }
     
     // TODO Student constructor for load from file
+    
+    public long getID()
+    {
+    	return this.id;
+    }
 
     public String getFName() {
         return this.fname;

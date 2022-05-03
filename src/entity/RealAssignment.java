@@ -5,6 +5,7 @@ public class RealAssignment implements Gradeable {
 
     private long id;
     private String name;
+    private Student student;
     private float weight;
     private Grade grade;
     private ArrayList<Gradeable> subAssignments;
@@ -16,9 +17,10 @@ public class RealAssignment implements Gradeable {
         grade = new Grade(0f);
     }
 
-    public RealAssignment(String name, float weight, Grade grade) {
+    public RealAssignment(String name, float weight, Grade grade, Student student) {
         this(name, weight);
         this.grade = grade;
+        this.student = student;
     }
     
     public RealAssignment(String name, float weight, ArrayList<RealAssignment> template)
@@ -66,8 +68,32 @@ public class RealAssignment implements Gradeable {
         return this.weight;
     }
     
+    public void setWeight(int newWeight)
+    {
+    	this.weight = newWeight;
+    }
+    
+    public String getStudentName()
+    {
+    	return this.student.getFName() + " " + this.student.getLName();
+    }
+    
     public Gradeable getSubAssignment(int index) {
     	return subAssignments.get(index);
+    }
+    
+    /**
+     *  @return A list of Grade representing the leaf nodes grades of the subassignment tree
+     */
+    public ArrayList<Grade> getFlattenedSubAssignmentTreeGrades()
+    {
+    	ArrayList<Grade> list = new ArrayList<Grade>();
+    	for(Gradeable g: subAssignments)
+    	{
+    		list.addAll(g.getFlattenedSubAssignmentTreeGrades());
+    	}
+    	
+    	return list;
     }
 
     public void addSubAssignment(Gradeable subAssignment) {
