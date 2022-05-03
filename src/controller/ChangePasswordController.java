@@ -40,20 +40,52 @@ public class ChangePasswordController implements ActionListener
 		{
 			// Change password
 			User u = userInfo.getUser();
-			u.changePassword(userInfo.getOldPassword(), userInfo.getNewPassword());
+			if(!u.changePassword(userInfo.getOldPassword(), userInfo.getNewPassword()))
+			{
+				// This means the old password was put in incorrectly, display error
+				userInfo.showInvalidPasswordInfo(PasswordProblem.BAD_OLD);
+			}
+			// Else everything went well
+			userInfo.showChangedPassword();
 		}
 		else
 		{
 			// Display error
 			userInfo.showInvalidPasswordInfo(error);
-			rootView.update();
-			rootView.display();
 		}
+		
+		// Update display
+		rootView.update();
+		rootView.display();
 	}
 	
 	private PasswordProblem validateInformation()
 	{
-		// TODO ChangePasswordController.validateInformation
+		String newPassword = userInfo.getNewPassword();
+		String confirmPassword = userInfo.getConfirmPassword();
+		String oldPassword = userInfo.getOldPassword();
+		
+		// Empty strings check
+		if(newPassword.isEmpty())
+		{
+			return PasswordProblem.EMPTY_NEW;
+		}
+		if(confirmPassword.isEmpty())
+		{
+			return PasswordProblem.EMPTY_CONFIRM;
+		}
+		if(oldPassword.isEmpty())
+		{
+			return PasswordProblem.EMPTY_OLD;
+		}
+		
+		// Matching confirm password check
+		if(!newPassword.equals(confirmPassword))
+		{
+			return PasswordProblem.CONFIRM_FAIL;
+		}
+		
+		// Otherwise, no problem with inputs
 		return PasswordProblem.NO_ERROR;
 	}
 
