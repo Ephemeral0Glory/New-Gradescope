@@ -45,9 +45,6 @@ public class OpenMainMenuController implements ActionListener
 	 */
 	public void open()
 	{
-		// Create main menu screen
-		MainMenuView mmv = new MainMenuView(rootView, user);
-		
 		// Want to close the login screen, but keep the grader screen
 		if(rootView instanceof LogInView)
 		{
@@ -57,6 +54,9 @@ public class OpenMainMenuController implements ActionListener
 			// Create new root view
 			GraderView gv = new GraderView();
 			
+			// Create main menu screen
+			MainMenuView mmv = new MainMenuView(gv, user);
+			
 			// Display main menu screen
 			gv.setNewView(mmv);
 			gv.update();
@@ -64,6 +64,9 @@ public class OpenMainMenuController implements ActionListener
 		}
 		else  // Keep window
 		{
+			// Create main menu screen
+			MainMenuView mmv = new MainMenuView(rootView, user);
+			
 			// Swap displayed screen
 			rootView.setNewView(mmv);
 			

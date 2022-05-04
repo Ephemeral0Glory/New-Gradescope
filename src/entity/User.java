@@ -8,7 +8,7 @@ package entity;
  */
 public class User {
 
-    private long id; // TODO Add autoincrement of ID 
+    private long id;
     private String email;
     private String fname;
     private String lname;
@@ -16,10 +16,12 @@ public class User {
 
     /**
      *  Constructor.
-     *  
+     *  <p>
+     *  Constructs a new user. When loading an existing user from a file, use
+     *   {@link User(long id, String email, String fname, String lname, int hashedPW)}.
      *  @param email  Email address of the user, doubles as the username
-     *  @param fname  First name of the user
-     *  @param lname  Last name of the user
+     *  @param fname  First (given) name of the user
+     *  @param lname  Last (family) name of the user
      *  @param hashedPW  Hashed version of the user-designated password
      */
     public User(String email, String fname, String lname, int hashedPW) {
@@ -30,7 +32,25 @@ public class User {
         this.hashedPW = hashedPW;
     }
     
-    // TODO User constructor for load from file
+    /**
+     *  Constructor.
+     *  <p>
+     *  Constructs a user from data read from a file. To create a new user, use
+     *  {@link User(String email, String fname, String lname, int hashedPW)}.
+     *  @param id  The unique id associated with this user
+     *  @param email  Email address of the user, doubles as the username
+     *  @param fname  First (given) name of the user
+     *  @param lname  Last (family) name of the user
+     *  @param hashedPW  Hashed version of the user-designated password
+     */
+    public User(long id, String email, String fname, String lname, int hashedPW)
+    {
+    	this.id = id;
+    	this.email = email;
+    	this.fname = fname;
+    	this.lname = lname;
+    	this.hashedPW = hashedPW;
+    }
 
     /**
      *  Checks the entered password for correctness.
@@ -77,6 +97,11 @@ public class User {
     public String setLName(String newLName) {
         this.lname = newLName;
         return this.lname;
+    }
+    
+    public int getHashedPW()
+    {
+    	return this.hashedPW;
     }
 
     /**

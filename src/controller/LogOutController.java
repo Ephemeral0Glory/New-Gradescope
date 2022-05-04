@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import entity.UserFileReader;
+import entity.UserFileReaderException;
 import boundary.IGraderFrame;
 import boundary.LogInView;
 
@@ -38,9 +40,19 @@ public class LogOutController implements ActionListener
 		// Close the application window currently open
 		rootView.closeWindow();
 		
-		// Open the login screen
-		LogInView liv = new LogInView();
-		liv.display();
+		// Read users file
+		try
+		{
+			UserFileReader reader = new UserFileReader(UserFileReader.usersFileName);
+			// Open the login screen
+			rootView = new LogInView(reader.readUsers());
+			rootView.display();
+		}
+		catch (UserFileReaderException e1)
+		{
+			e1.printStackTrace();
+		}
+		
 	}
 
 }

@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import entity.User;
+import entity.UserFileReader;
+import entity.UserFileWriter;
+import entity.UserFileWriterException;
 import boundary.CreateNewUserView;
 import boundary.LogInView;
 
@@ -57,8 +60,10 @@ public class CreateNewUserController implements ActionListener
 		{
 			// Have a good username, create and add it to the list
 			User user = createUser(newUsername, firstName, lastName, password);
-			// TODO CreateNewUser: add user to users file
 			view.addUser(user);
+			
+			// Write out new user to file
+			writeNewUser();
 			
 			// Return to the log-in screen
 			OpenLogInController olc = new OpenLogInController(view);
@@ -126,6 +131,22 @@ public class CreateNewUserController implements ActionListener
 		}
 		
 		return u;
+	}
+	
+	private void writeNewUser()
+	{
+		try
+		{
+			UserFileWriter writer = new UserFileWriter(UserFileReader.usersFileName);
+			writer.writeUsers(view.getUsers());
+		}
+		catch (UserFileWriterException e)
+		{
+			// Print error
+			e.printStackTrace();
+			
+			// TODO show message to user in interface
+		}
 	}
 
 }
