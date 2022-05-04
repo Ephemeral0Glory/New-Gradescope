@@ -137,20 +137,24 @@ public class CourseView extends JPanel implements IGraderScreen
 		table.setLayout(new GridBagLayout());
 		
 		// Add entries
-		int y = 0;
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 0;
-		gbc.gridy = y;
+		gbc.gridy = 0;
 		for(Entry e: course.getEntries())
 		{
 			EntryView ev = new EntryView(e);
 //			ev.addMouseListener(new EntrySelectedController(rootView, this));
 			table.add(ev, gbc);
-			y += 1;
-			gbc.gridy = y;
+			gbc.gridy += 1;
 		}
+		
+		// Add entry button
+		JButton addEntryButton = new JButton("Add Entry");
+		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//		addEntryButton.addActionListener(new AddEntryController(rootView, course));
+		table.add(addEntryButton, gbc);
 		
 		return table;
 	}
@@ -170,7 +174,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		{
 			// Add this label
 			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(ra.getName());
+			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
 			assignmentLabel.setFont(headerFont);
 			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
 			// Want all of the main grade-containing assignments on the bottom row
@@ -184,11 +188,18 @@ public class CourseView extends JPanel implements IGraderScreen
 			labelSubAssignments(ra, header, gbc, greatestDepth);
 		}
 		
+		// Add Assignment Button
+		JButton addAssignmentButton = new JButton("Add Assignment");
+		addAssignmentButton.setFont(headerFont);
+//		addAssignmentButton.addActionListener(new AddAssignmentController(rootView, course));
+		gbc.gridwidth = 1;
+		gbc.gridy = greatestDepth;
+		header.add(addAssignmentButton, gbc);
+		gbc.gridx += 1;
+		
 		// Final Grade
 		JLabel finalGradeLabel = new JLabel("Final Grade");
 		finalGradeLabel.setFont(headerFont);
-		gbc.gridwidth = 1;
-		gbc.gridy = greatestDepth;
 		header.add(finalGradeLabel, gbc);
 		
 		// Section
@@ -266,7 +277,7 @@ public class CourseView extends JPanel implements IGraderScreen
 			{
 				// Add this label
 				RealAssignment sa = (RealAssignment) ra.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(sa.getName());
+				JLabel assignmentLabel = new JLabel(sa.getName() + " " + sa.getWeight() + "%");
 				assignmentLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 				gbc.gridwidth = sa.getNumSuccessors() == 0 ? 1 : sa.getNumSuccessors();
 				gbc.gridy = sa.getNumSubAssignments() == 0 ? greatestDepth : currentDepth;

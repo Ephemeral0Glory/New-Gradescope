@@ -139,7 +139,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 			// Create parent label
 			// Can cast because finalGrade can never have a NullAssignment as a subassignment
 			RealAssignment a = (RealAssignment) finalGrade.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(a.getName());
+			JLabel assignmentLabel = new JLabel(a.getName() + " " + a.getWeight() + "%");
 			assignmentLabel.setFont(panelFont);
 			gbc.anchor = GridBagConstraints.EAST;
 			add(assignmentLabel, gbc);
@@ -215,7 +215,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 				// Create parent label
 				// Can cast because checked for sub-assignments above
 				RealAssignment sa = (RealAssignment) a.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(sa.getName());
+				JLabel assignmentLabel = new JLabel(sa.getName()+ " " + sa.getWeight() + "%");
 				assignmentLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				gbc.anchor = GridBagConstraints.EAST;
 				add(assignmentLabel, gbc);
