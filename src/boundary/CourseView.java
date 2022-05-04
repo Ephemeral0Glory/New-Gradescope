@@ -37,7 +37,7 @@ import javax.swing.JComboBox;
 public class CourseView extends JPanel implements IGraderScreen
 {
 	private static final long serialVersionUID = 3924557341183124315L;
-	private IGraderFrame rootView;
+	private GraderView rootView;
 	private User user;
 	private Course course;
 	private JTextField searchField;
@@ -46,7 +46,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	 *  Constructor.
 	 *  
 	 */
-	public CourseView(IGraderFrame rootView, User user, Course course) {
+	public CourseView(GraderView rootView, User user, Course course) {
 		super();
 		this.rootView = rootView;
 		this.user = user;
@@ -64,11 +64,14 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		JPanel entriesTable = createEntriesTable();
 		tableScrollPane.setViewportView(entriesTable);
+		
+		JPanel tableHeader = createTableHeader();
+		tableScrollPane.setColumnHeaderView(tableHeader);
 
 		JScrollPane infoPanelScrollPane = new JScrollPane();
 		add(infoPanelScrollPane, BorderLayout.SOUTH);
 
-		JPanel infoPanel = new JPanel();
+		JPanel infoPanel = new CourseInfoView(rootView);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
@@ -152,146 +155,122 @@ public class CourseView extends JPanel implements IGraderScreen
 		return table;
 	}
 	
-	private JPanel createInfoPanelColumn(ArrayList<RealAssignment> column)
+	private JPanel createTableHeader()
 	{
-		// Set up panel
-		JPanel infoPanel = new JPanel();
-		infoPanel.setLayout(new GridBagLayout());
-		
-		// Title
+		JPanel header = new JPanel();
+		header.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
+		
+		// Section
+		JLabel sectionLabel = new JLabel("Section");
+		sectionLabel.setFont(headerFont);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 5;
-		String assignmentName = column.isEmpty() ? "No Assignment" : column.get(0).getName();
-		JLabel title = new JLabel(assignmentName);
-		title.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		infoPanel.add(title, gbc);
+		header.add(sectionLabel, gbc);
 		
-		// Fill panel
-		Font tableFont = new Font("Tahoma", Font.PLAIN, 12);
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		for(RealAssignment ra: column)
-		{
-			// Get name of student for assignment
-			JLabel studentName = new JLabel(ra.getStudentName());
-			studentName.setFont(tableFont);
-			infoPanel.add(studentName, gbc);
-			gbc.gridx++;
-			
-			// Get assignment grade
-			JLabel gradeLabel = new JLabel("Grade:");
-			gradeLabel.setFont(tableFont);
-			infoPanel.add(gradeLabel, gbc);
-			gbc.gridx++;
-			JTextField gradeField = new JTextField();
-			gradeField.setFont(tableFont);
-			gradeField.setText(ra.getGrade().getScore() + "");
-			infoPanel.add(gradeField, gbc);
-			gbc.gridx++;
-			
-			// Get assignment comments
-			JLabel commentsLabel = new JLabel("Comments:");
-			commentsLabel.setFont(tableFont);
-			infoPanel.add(commentsLabel, gbc);
-			gbc.gridx++;
-			JTextArea commentsArea = new JTextArea();
-			commentsArea.setFont(tableFont);
-			commentsArea.setText(ra.getGrade().getComment());
-			gbc.gridheight = 2;
-			infoPanel.add(commentsArea, gbc);
-			
-			// Reset constraints
-			gbc.gridheight = 1;
-			gbc.gridx = 0;
-			gbc.gridy += 2;
-		}
+		// Student
+		JLabel studentLabel = new JLabel("Student");
+		studentLabel.setFont(headerFont);
+		gbc.gridx = 1;
+		header.add(studentLabel, gbc);
 		
-		// Add update grades, delete assignment buttons
-		JButton deleteAssignmentButton = new JButton("Delete Assignment");
-		deleteAssignmentButton.setFont(tableFont);
-//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
-		gbc.gridx = 3;
-		infoPanel.add(deleteAssignmentButton, gbc);
-		JButton updateGradesButton = new JButton("Update Grades");
-		updateGradesButton.setFont(tableFont);
-//		updateGradesButton.addActionListener(new UpdateGradesController(rootView, course));
-		gbc.gridx = 4;
-		infoPanel.add(updateGradesButton, gbc);
-		
-		return infoPanel;
-	}
-	
-	private JPanel createInfoPanelRow(Entry entry)
-	{
-		// Set up panel
-		JPanel infoPanel = new JPanel();
-		infoPanel.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		Font panelFont = new Font("Tahoma", Font.PLAIN, 12);
-		
-		// Title
-		JLabel title = new JLabel("Course information for student:");
-		title.setFont(panelFont);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 6;
-		gbc.insets = new Insets(0, 0, 5, 0);
-		gbc.anchor = GridBagConstraints.WEST;
-		infoPanel.add(title, gbc);
-		gbc.gridy += 1;
-		gbc.gridwidth = 1;
-		
-		// Student information row
-			// Name
-		JLabel studentNameLabel = new JLabel("Student name:");
-		studentNameLabel.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.EAST;
-		infoPanel.add(studentNameLabel, gbc);
-		gbc.gridx += 1;
-		JTextField studentFirstNameField = new JTextField(entry.getStudent().getFName());
-		studentFirstNameField.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.WEST;
-		infoPanel.add(studentFirstNameField, gbc);
-		gbc.gridx += 1;
-		JTextField studentLastNameField = new JTextField(entry.getStudent().getLName());
-		studentLastNameField.setFont(panelFont);
-		infoPanel.add(studentLastNameField, gbc);
-		gbc.gridx += 1;
-			// ID
-		JLabel idLabel = new JLabel("BUID:");
-		idLabel.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.EAST;
-		infoPanel.add(idLabel, gbc);
-		gbc.gridx += 1;
-		JTextField idField = new JTextField(entry.getStudent().getBUID());
-		idField.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.WEST;
-		infoPanel.add(idField, gbc);
-		gbc.gridx += 1;
-			// Status
-		JLabel statusLabel = new JLabel("Status:");
-		statusLabel.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.EAST;
-		infoPanel.add(statusLabel, gbc);
-		gbc.gridx += 1;
-		JComboBox<StudentStatus> statusSelector = new JComboBox<StudentStatus>(
-				new DefaultComboBoxModel<StudentStatus>(StudentStatus.values()));
-		statusSelector.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.WEST;
-		infoPanel.add(statusSelector, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		// BUID
+		JLabel idLabel = new JLabel("BUID");
+		idLabel.setFont(headerFont);
+		gbc.gridx = 2;
+		header.add(idLabel, gbc);
 		
 		// Assignments
+		RealAssignment template = course.getTemplate();  // Take a final grade assignment
+		int greatestDepth = calculateSubAssignmentTreeDepth(template);
+		gbc.gridx = 3;
+		for(int i = 0; i < template.getNumSubAssignments(); i++)
+		{
+			// Add this label
+			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
+			JLabel assignmentLabel = new JLabel(ra.getName());
+			assignmentLabel.setFont(headerFont);
+			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
+			// Want all of the main grade-containing assignments on the bottom row
+			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
+			header.add(assignmentLabel, gbc);
+			gbc.gridy += 1;
+			// Need to advance to next column if there are no sub-assignments
+			gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
+			
+			// Recursively add sub-assignment labels
+			labelSubAssignments(ra, header, gbc, greatestDepth);
+		}
 		
+		return header;
+	}
+	
+	private int calculateSubAssignmentTreeDepth(RealAssignment template)
+	{
+		int totalDepth = 0;
 		
-		return infoPanel;
+		// If template has no assignments
+		if(template.getNumSubAssignments() == 0)
+		{
+			// Then have no depth
+			return totalDepth;
+		}
+		// Else have assignments
+		totalDepth += 1;
+		int greatestDepth = 0;
+		// Find deepest branch
+		for(int i = 0; i < template.getNumSubAssignments(); i++)
+		{
+			// Can cast because checked for NullAssignment case above
+			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
+			
+			// Get maximum depth of this branch
+			int branchDepth = calculateSubAssignmentTreeDepth(ra);
+			
+			// If this is the new deepest branch
+			if(branchDepth > greatestDepth)
+			{
+				// Have new best depth
+				greatestDepth = branchDepth;
+			}
+		}
+		
+		// Add deepest branch to total
+		totalDepth += greatestDepth;
+		
+		return totalDepth;
+	}
+	
+	private void labelSubAssignments(RealAssignment ra, JPanel header, GridBagConstraints gbc, int greatestDepth)
+	{
+		// If there are no sub-assignments
+		if(ra.getNumSubAssignments() == 0)
+		{
+			// We're done, return
+			gbc.gridy -= 1;
+			return;
+		}
+		else  // Have sub-assignments to label
+		{
+			int currentDepth = gbc.gridy;
+			for(int i = 0; i < ra.getNumSubAssignments(); i++)
+			{
+				// Add this label
+				RealAssignment sa = (RealAssignment) ra.getSubAssignment(i);
+				JLabel assignmentLabel = new JLabel(sa.getName());
+				assignmentLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+				gbc.gridwidth = sa.getNumSuccessors() == 0 ? 1 : sa.getNumSuccessors();
+				gbc.gridy = sa.getNumSubAssignments() == 0 ? greatestDepth : currentDepth;
+				header.add(assignmentLabel, gbc);
+				gbc.gridx += 1;
+				gbc.gridy += 1;
+
+				// Recursively add sub-assignment labels
+				labelSubAssignments(sa, header, gbc, greatestDepth);
+			}
+		}
 	}
 
 	/**

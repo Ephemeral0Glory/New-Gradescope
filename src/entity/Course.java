@@ -16,7 +16,7 @@ public class Course {
     private String code;
     private User owner;
     private ArrayList<Entry> entries;
-    private ArrayList<RealAssignment> template;
+    private RealAssignment template;
     private ArrayList<Section> sections;
     private ArrayList<ArrayList<RealAssignment>> assignments;
     private ArrayList<Student> students;
@@ -39,7 +39,7 @@ public class Course {
         createAggregates();
     }
 
-    public Course(String name, String code, User owner, ArrayList<RealAssignment> template) {
+    public Course(String name, String code, User owner, RealAssignment template) {
         this(name, code, owner);
         this.template = template;
         createAggregates();
@@ -80,20 +80,20 @@ public class Course {
     	
     	// Create assignments
     	// TODO Course.createAggregates need a better way to handle arbitrary sub-assignment depth, maybe keeps track of only the lowest (non-NullAssignment) level of assignments?
-    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.size());
-    	for(int i = 0; i < template.size(); i++)
-    	{
-    		ArrayList<RealAssignment> al = new ArrayList<RealAssignment>(entries.size());
-    		for(Entry e: entries)
-    		{
-    			/* Can cast because we know that the first sub-assignment level of each
-        		 * Entry's finalGrade member are the assignments.
-        		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
-    			RealAssignment a = (RealAssignment) e.getAssignment(i);
-    			al.add(a);
-    		}
-    		all.add(al);
-    	}
+//    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.size());
+//    	for(int i = 0; i < template.size(); i++)
+//    	{
+//    		ArrayList<RealAssignment> al = new ArrayList<RealAssignment>(entries.size());
+//    		for(Entry e: entries)
+//    		{
+//    			/* Can cast because we know that the first sub-assignment level of each
+//        		 * Entry's finalGrade member are the assignments.
+//        		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
+//    			RealAssignment a = (RealAssignment) e.getAssignment(i);
+//    			al.add(a);
+//    		}
+//    		all.add(al);
+//    	}
     	
     	
     	// Create students
@@ -152,6 +152,11 @@ public class Course {
 
     public ArrayList<Entry> getEntries() {
         return this.entries;
+    }
+    
+    public RealAssignment getTemplate()
+    {
+    	return this.template;
     }
 
     public ArrayList<Gradeable> getFinalGrades() {

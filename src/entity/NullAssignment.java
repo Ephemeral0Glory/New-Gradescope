@@ -63,4 +63,10 @@ public class NullAssignment implements Gradeable {
     	return list;
     }
     
+    @Override
+    public int getNumSuccessors()
+    {
+    	return 0;
+    }
+    
 }

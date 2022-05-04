@@ -9,17 +9,26 @@ public class RealAssignment implements Gradeable {
     private float weight;
     private Grade grade;
     private ArrayList<Gradeable> subAssignments;
+    private int numSubAssignments;
 
     public RealAssignment(String name, float weight) {
     	this.id = IDFactory.generateAssignmentID();
         this.name = name;
         this.weight = weight;
         grade = new Grade(0f);
+        subAssignments = new ArrayList<Gradeable>();
+        // Initialize with NullAssignment
+        subAssignments.add(new NullAssignment(this.name, new Grade(this.grade.getScore())));
+        numSubAssignments = 0;  // 0 because NullAssignment doesn't count
     }
 
     public RealAssignment(String name, float weight, Grade grade, Student student) {
         this(name, weight);
         this.grade = grade;
+        // Redo add NullAssignment to get grade info
+        subAssignments = new ArrayList<Gradeable>();
+        // Initialize with NullAssignment
+        subAssignments.add(new NullAssignment(this.name, new Grade(this.grade.getScore())));
         this.student = student;
     }
     
@@ -33,6 +42,7 @@ public class RealAssignment implements Gradeable {
     	{
     		subAssignments.add(a);
     	}
+    	numSubAssignments = subAssignments.size();
     }
     
     // TODO RealAssignment constructor for load from file
@@ -82,9 +92,27 @@ public class RealAssignment implements Gradeable {
     	return subAssignments.get(index);
     }
     
+    public int getNumSubAssignments()
+    {
+    	return numSubAssignments;
+    }
+    
+    @Override
+    public int getNumSuccessors()
+    {
+    	int successors = numSubAssignments;
+    	for(Gradeable g: subAssignments)
+    	{
+    		successors += g.getNumSuccessors();
+    	}
+    	
+    	return successors;
+    }
+    
     /**
      *  @return A list of Grade representing the leaf nodes grades of the subassignment tree
      */
+    @Override
     public ArrayList<Grade> getFlattenedSubAssignmentTreeGrades()
     {
     	ArrayList<Grade> list = new ArrayList<Grade>();
@@ -97,11 +125,32 @@ public class RealAssignment implements Gradeable {
     }
 
     public void addSubAssignment(Gradeable subAssignment) {
+    	// Check that we don't need to remove NullAssignment
+    	if(numSubAssignments == 0)
+    	{
+    		// Remove the NullAssignment
+    		subAssignments.remove(0);
+    	}
         this.subAssignments.add(subAssignment);
+        numSubAssignments += 1;
     }
 
     public boolean removeSubAssignment(Gradeable subAssignment) {
-        return this.subAssignments.remove(subAssignment);
+        boolean success = this.subAssignments.remove(subAssignment);
+        
+        if(success) 
+        {
+        	numSubAssignments -= 1;
+        	
+        	// If we have removed the last sub-assignment 
+        	if(numSubAssignments == 0)
+        	{
+        		// Add a NullAssignment
+        		subAssignments.add(new NullAssignment(name, new Grade(grade.getScore(), grade.getComment())));
+        	}
+        }
+        
+        return success;
     }
 
     public boolean verifySubweights() {
