@@ -162,26 +162,6 @@ public class CourseView extends JPanel implements IGraderScreen
 		GridBagConstraints gbc = new GridBagConstraints();
 		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
 		
-		// Section
-		JLabel sectionLabel = new JLabel("Section");
-		sectionLabel.setFont(headerFont);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.anchor = GridBagConstraints.CENTER;
-		header.add(sectionLabel, gbc);
-		
-		// Student
-		JLabel studentLabel = new JLabel("Student");
-		studentLabel.setFont(headerFont);
-		gbc.gridx = 1;
-		header.add(studentLabel, gbc);
-		
-		// BUID
-		JLabel idLabel = new JLabel("BUID");
-		idLabel.setFont(headerFont);
-		gbc.gridx = 2;
-		header.add(idLabel, gbc);
-		
 		// Assignments
 		RealAssignment template = course.getTemplate();  // Take a final grade assignment
 		int greatestDepth = calculateSubAssignmentTreeDepth(template);
@@ -203,6 +183,33 @@ public class CourseView extends JPanel implements IGraderScreen
 			// Recursively add sub-assignment labels
 			labelSubAssignments(ra, header, gbc, greatestDepth);
 		}
+		
+		// Final Grade
+		JLabel finalGradeLabel = new JLabel("Final Grade");
+		finalGradeLabel.setFont(headerFont);
+		gbc.gridwidth = 1;
+		gbc.gridy = greatestDepth;
+		header.add(finalGradeLabel, gbc);
+		
+		// Section
+		JLabel sectionLabel = new JLabel("Section");
+		sectionLabel.setFont(headerFont);
+		gbc.gridx = 0;
+		gbc.gridy = greatestDepth;
+		gbc.anchor = GridBagConstraints.CENTER;
+		header.add(sectionLabel, gbc);
+		
+		// Student
+		JLabel studentLabel = new JLabel("Student");
+		studentLabel.setFont(headerFont);
+		gbc.gridx = 1;
+		header.add(studentLabel, gbc);
+		
+		// BUID
+		JLabel idLabel = new JLabel("BUID");
+		idLabel.setFont(headerFont);
+		gbc.gridx = 2;
+		header.add(idLabel, gbc);
 		
 		return header;
 	}
