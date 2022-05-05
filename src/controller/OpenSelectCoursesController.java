@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import utilities.GradebookFileReaderException;
-import entity.Gradebook;
-import entity.User;
+import entity.*;
+import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 import boundary.SelectCoursesView;
 

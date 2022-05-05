@@ -2,8 +2,8 @@ package boundary;
 
 import javax.swing.JPanel;
 
-import entity.Gradebook;
-import entity.User;
+import entity.*;
+import utilities.GradebookFileReader;
 import utilities.GradebookFileReaderException;
 
 import javax.swing.JLabel;
@@ -43,7 +43,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 	{
 		this.rootView = rootView;
 		this.currentUser = currentUser;
-		this.gradebook = gradebook;
+		this.gradebook = new GradebookFileReader(GradebookFileReader.gradebookDirectory).readGradebook(currentUser); 
 		setupPanel();
 	}
 	

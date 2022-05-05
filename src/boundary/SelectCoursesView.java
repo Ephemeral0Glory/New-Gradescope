@@ -102,7 +102,6 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	}
 
 	private Course[] getCourses() throws GradebookFileReaderException {
-		GradebookFileReader gradebookFileReader = new GradebookFileReader(GradebookFileReader.gradebookDirectory);
 		ArrayList<Semester> semesters = gradebook.getSemesters();
 		ArrayList<Course> result = new ArrayList<Course>();
 		Semester currSemester;
