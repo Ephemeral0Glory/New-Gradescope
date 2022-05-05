@@ -3,6 +3,7 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.User;
+import utilities.GradebookFileReaderException;
 
 import javax.swing.JLabel;
 
@@ -36,14 +37,14 @@ public class MainMenuView extends JPanel implements IGraderScreen
 	private IGraderFrame rootView;
 	private User currentUser;
 	
-	public MainMenuView(IGraderFrame rootView, User currentUser)
+	public MainMenuView(IGraderFrame rootView, User currentUser) throws GradebookFileReaderException
 	{
 		this.rootView = rootView;
 		this.currentUser = currentUser;
 		setupPanel();
 	}
 	
-	private void setupPanel()
+	private void setupPanel() throws GradebookFileReaderException
 	{
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};

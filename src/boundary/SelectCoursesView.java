@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private User user;
+	
 	public SelectCoursesView(IGraderFrame rootView, User user) throws GradebookFileReaderException {
 		this.rootView = rootView;
 		this.user = user;
