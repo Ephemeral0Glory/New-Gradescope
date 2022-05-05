@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import utilities.GradebookFileReaderException;
+import entity.Gradebook;
 import entity.User;
-import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 import boundary.SelectCoursesView;
 
@@ -13,30 +13,18 @@ public class OpenSelectCoursesController implements ActionListener
 {
 	private IGraderFrame rootView;
 	private User user;
+	private Gradebook gradebook;
 	
-	public OpenSelectCoursesController(IGraderFrame rootView, User user) throws GradebookFileReaderException
+	public OpenSelectCoursesController(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException
 	{
 		this.rootView = rootView;
 		this.user = user;
+		this.gradebook = gradebook;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
-		// Create menu
-		SelectCoursesView scv;
-		try {
-			scv = new SelectCoursesView(rootView, user);
-			// Display it
-			rootView.setNewView(scv);
-			rootView.update();
-			rootView.display();
-		} catch (GradebookFileReaderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
 		open();
 	}
 	
@@ -44,7 +32,7 @@ public class OpenSelectCoursesController implements ActionListener
 	{
 		try
 		{
-			SelectCoursesView scv = new SelectCoursesView(rootView, user);
+			SelectCoursesView scv = new SelectCoursesView(rootView, user, gradebook);
 			rootView.setNewView(scv);
 			rootView.update();
 			rootView.display();

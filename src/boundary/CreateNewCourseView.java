@@ -1,31 +1,41 @@
 package boundary;
 
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
+
 import javax.swing.JTextField;
+
 import java.awt.Insets;
+
 import javax.swing.SwingConstants;
 
 import controller.CreateNewCourseController;
+import controller.CreateNewCourseController.CreateCourseProblem;
 import controller.OpenMainMenuController;
+import entity.Gradebook;
 import entity.User;
 
 import javax.swing.JButton;
 
 public class CreateNewCourseView extends JPanel implements IGraderScreen {
+	private static final long serialVersionUID = -5928149496471688167L;
 	private JTextField nameField;
 	private JTextField codeField;
 	private IGraderFrame rootView;
 	private User user;
+	private Gradebook gradebook;
 	
-	public CreateNewCourseView(IGraderFrame rootView, User user) {
+	public CreateNewCourseView(IGraderFrame rootView, User user, Gradebook gradebook) {
 		super();
 		this.rootView = rootView;
 		this.user = user;
+		this.gradebook = gradebook;
 		setupPanel();
-		
 	}
 	
 	private void setupPanel() {
@@ -83,7 +93,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		codeField.setColumns(10);
 		
 		JButton createCourseButton = new JButton("Create");
-		createCourseButton.addActionListener(new CreateNewCourseController(rootView, this, user));
+		createCourseButton.addActionListener(new CreateNewCourseController(rootView, this, user, gradebook));
 		GridBagConstraints gbc_createCourseButton = new GridBagConstraints();
 		gbc_createCourseButton.insets = new Insets(0, 0, 0, 5);
 		gbc_createCourseButton.gridx = 1;
@@ -127,7 +137,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		
 	}
 	
-	public void showCourseCreationFailed() {
+	public void showCourseCreationFailed(CreateCourseProblem error) {
 		
 	}
 }

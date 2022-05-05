@@ -2,6 +2,7 @@ package boundary;
 
 import javax.swing.JPanel;
 
+import entity.Gradebook;
 import entity.User;
 import utilities.GradebookFileReaderException;
 
@@ -36,11 +37,13 @@ public class MainMenuView extends JPanel implements IGraderScreen
 	private static final long serialVersionUID = 7233321725027595441L;
 	private IGraderFrame rootView;
 	private User currentUser;
+	private Gradebook gradebook;
 	
-	public MainMenuView(IGraderFrame rootView, User currentUser) throws GradebookFileReaderException
+	public MainMenuView(IGraderFrame rootView, User currentUser, Gradebook gradebook) throws GradebookFileReaderException
 	{
 		this.rootView = rootView;
 		this.currentUser = currentUser;
+		this.gradebook = gradebook;
 		setupPanel();
 	}
 	
@@ -67,7 +70,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton createNewCourseButton = new JButton("Create New Course");
 		createNewCourseButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createNewCourseButton.addActionListener(new OpenNewCourseController(rootView, currentUser));
+		createNewCourseButton.addActionListener(new OpenNewCourseController(rootView, currentUser, gradebook));
 		GridBagConstraints gbc_createNewCourseButton = new GridBagConstraints();
 		gbc_createNewCourseButton.weighty = 0.1;
 		gbc_createNewCourseButton.weightx = 1.0;
@@ -79,7 +82,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton selectCoursesButton = new JButton("Select Course");
 		selectCoursesButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser));
+		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser, gradebook));
 		GridBagConstraints gbc_manageCoursesButton = new GridBagConstraints();
 		gbc_manageCoursesButton.weighty = 0.1;
 		gbc_manageCoursesButton.weightx = 1.0;
@@ -91,7 +94,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton viewCourseInfoButton = new JButton("View Course Info");
 		viewCourseInfoButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		viewCourseInfoButton.addActionListener(new OpenViewCoursesInfoController(rootView, currentUser));
+		viewCourseInfoButton.addActionListener(new OpenViewCoursesInfoController(rootView, currentUser, gradebook));
 		GridBagConstraints gbc_viewCourseInfoButton = new GridBagConstraints();
 		gbc_viewCourseInfoButton.weighty = 0.1;
 		gbc_viewCourseInfoButton.fill = GridBagConstraints.BOTH;

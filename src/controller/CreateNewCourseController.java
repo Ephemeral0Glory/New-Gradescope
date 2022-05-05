@@ -5,12 +5,16 @@ import java.awt.event.ActionListener;
 
 import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
-import boundary.MainMenuView;
 //import controller.CreateNewUserController.CreateProblem;
 import entity.Course;
-import entity.RealAssignment;
+import entity.Gradebook;
 import entity.User;
 
+/**
+ *  
+ *  @author Seonghoon Steve Cho
+ *  @author Alex Titus
+ */
 public class CreateNewCourseController implements ActionListener {
 
 	/**
@@ -22,11 +26,14 @@ public class CreateNewCourseController implements ActionListener {
 	private CreateNewCourseView newCourseInfo;
 	private IGraderFrame rootView;
 	private User user;
+	private Gradebook gradebook;
 	
-	public CreateNewCourseController(IGraderFrame rootView, CreateNewCourseView newCourseInfo, User user) {
+	public CreateNewCourseController(IGraderFrame rootView, CreateNewCourseView newCourseInfo, User user,
+			Gradebook gradebook) {
 		this.rootView = rootView;
 		this.newCourseInfo = newCourseInfo;
 		this.user = user;
+		this.gradebook = gradebook;
 	}
 
 	@Override
@@ -43,17 +50,17 @@ public class CreateNewCourseController implements ActionListener {
 			
 			// Display course created
 			newCourseInfo.showCourseCreated();
+			
+			// Return to main menu screen
+			openMainMenu();
 		} else {
 			// Display error
-			newCourseInfo.showCourseCreationFailed();
+			newCourseInfo.showCourseCreationFailed(error);
 		}
-		
-		// Return to main menu screen
-		openMainMenu();
 
-//		// Update display
-//		rootView.update();
-//		rootView.display();
+		// Update display
+		rootView.update();
+		rootView.display();
 	}
 	
 	public CreateCourseProblem validateInfo(String newCoursename, String newCoursecode) {
