@@ -19,7 +19,9 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 	private JTextField codeField;
 	private IGraderFrame rootView;
 	private User user;
+	
 	public CreateNewCourseView(IGraderFrame rootView, User user) {
+		super();
 		this.rootView = rootView;
 		this.user = user;
 		setupPanel();
@@ -44,7 +46,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		gbc_titleLabel.gridy = 0;
 		add(titleLabel, gbc_titleLabel);
 		
-		JLabel nameLabel = new JLabel("Name: ");
+		JLabel nameLabel = new JLabel("Course name: ");
 		nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
 		gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
@@ -81,7 +83,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		codeField.setColumns(10);
 		
 		JButton createCourseButton = new JButton("Create");
-		createCourseButton.addActionListener(new CreateNewCourseController(rootView, user));
+		createCourseButton.addActionListener(new CreateNewCourseController(rootView, this, user));
 		GridBagConstraints gbc_createCourseButton = new GridBagConstraints();
 		gbc_createCourseButton.insets = new Insets(0, 0, 0, 5);
 		gbc_createCourseButton.gridx = 1;
@@ -98,14 +100,34 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 
 	@Override
 	public JPanel getPanelContent() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		removeAll();
+		setupPanel();
+	}
+	
+	/**
+	 * @return The course name entered by the user
+	 */
+	public String getEnteredCoursename() {
+		return nameField.getText();
 	}
 
+	/**
+	 * @return The course code entered by the user
+	 */
+	public String getEnteredCoursecode() {
+		return codeField.getText();
+	}
+	
+	public void showCourseCreated() {
+		
+	}
+	
+	public void showCourseCreationFailed() {
+		
+	}
 }
