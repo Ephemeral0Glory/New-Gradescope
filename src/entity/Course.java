@@ -1,13 +1,15 @@
 package entity;
 import java.util.*;
 
+import utilities.IDFactory;
+
 /**
  *  A university course.
  *  <p>
  *  It contains the students in the course and their assignments with grades.
  *  Course-level actions can be taken from here, such as adding or removing students and assignments.
- *  @author Alex Titus
  *  @author David Sullo
+ *  @author Alex Titus
  */
 public class Course {
 
@@ -44,22 +46,45 @@ public class Course {
         this.template = template;
         createAggregates();
     }
+    
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used when loading a course from the gradebook file. Does not load or
+     *  create the owner or entries, and should not be used for editing courses.
+     *  To create a new course, use
+     *  {@link Course(String name, String code, User owner, RealAssignment template)} or
+     *  {@link Course(String name, String code, User owner)}.
+     *  @param id  The ID of the course
+     *  @param name  The name of the course
+     *  @param code  The university course code
+     */
+    public Course(long id, String name, String code) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+    }
 
     /**
      *  Constructor.
      *  <p>
-     *  Used when loading a course from a file.
+     *  Used when loading a course from the course file. To create a new course, use
+     *  {@link Course(String name, String code, User owner, RealAssignment template)} or
+     *  {@link Course(String name, String code, User owner)}. To load a course from
+     *  the gradebook file, use {@link Course(long id, String name, String code)}.
+     *  @param id  The ID of the course
      *  @param name  The name of the course
      *  @param code  The university course code
      *  @param owner  The owner (teacher) of the course
      *  @param entries  The grades table for the course
-     *  @param id  The ID of the course
      */
-    public Course(String name, String code, User owner, ArrayList<Entry> entries, long id) {
+    public Course(long id, String name, String code, User owner, RealAssignment template,
+    		ArrayList<Entry> entries) {
+        this.id = id;
         this.name = name;
         this.code = code;
         this.owner = owner;
-        this.id = id;
+        this.template = template;
         this.entries = entries;
         createAggregates();
     }

@@ -1,5 +1,7 @@
 package entity;
 
+import utilities.IDFactory;
+
 /**
  *  A user in the grader system.
  *  <p>

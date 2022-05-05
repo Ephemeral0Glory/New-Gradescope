@@ -1,4 +1,4 @@
-package entity;
+package utilities;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
+import entity.User;
 
 /**
  *  Writes Users to file in XML format.
@@ -46,13 +48,10 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class UserFileWriter
 {
-	private String usersFileURL;
 	private XMLStreamWriter writer;
 	
 	public UserFileWriter(String usersFileName) throws UserFileWriterException
 	{
-		usersFileURL = makeURL(usersFileName);
-		
 		FileOutputStream outStream;
 		try
 		{
@@ -65,13 +64,12 @@ public class UserFileWriter
 		}
 	}
 	
-	private String makeURL(String usersFileName)
-	{
-		String path = new File(usersFileName).getAbsolutePath();
-		
-		return "file:" + path;
-	}
-	
+	/**
+	 *  Writes the given users to the file location specified during construction.
+	 *  
+	 *  @param users  The users to write out
+	 *  @throws UserFileWriterException  If a problem was encountered during writing
+	 */
 	public void writeUsers(ArrayList<User> users) throws UserFileWriterException
 	{
 		try

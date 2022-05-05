@@ -1,6 +1,8 @@
 package entity;
 import java.util.*;
 
+import utilities.IDFactory;
+
 public class Semester {
 
     private long id; 
@@ -19,7 +21,24 @@ public class Semester {
         this.courses = courses;
     }
     
-    // TODO Semester constructor for load from file
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used to create a semester loaded from file. To create a new Semester, use
+     *  {@link Semester(String season, int year, ArrayList&ltCourse&gt courses)} or
+     *  {@link Semester(String season, int year)}.
+     *  @param id  Unique id associated with this instance
+     *  @param season  The season this semester took place
+     *  @param year  The year that this semester took place
+     *  @param courses  The courses that took place this semester
+     */
+    public Semester(long id, String season, int year, ArrayList<Course> courses)
+    {
+    	this.id = id;
+    	this.season = Season.getSeason(season);
+    	this.year = year;
+    	this.courses = courses;
+    }
 
     public long getID() {
         return this.id;

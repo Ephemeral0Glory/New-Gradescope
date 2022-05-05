@@ -1,6 +1,8 @@
 package entity;
 import java.util.*;
 
+import utilities.IDFactory;
+
 /**
  *  A entry in the course's grades database table.
  *  <p>
@@ -21,6 +23,8 @@ public class Entry {
      *  Constructor.
      *  <p>
      *  Create an entry with the given section, student, and assignments from template.
+     *  Used to create a new entry. To load an entry from a file, use
+     *  {@link Entry(long id, Section section, Student student, RealAssignment finalGrade)}.
      *  @param section  The section the student belongs to
      *  @param student  The student to whom these grades belong
      *  @param template  The assignments for the course
@@ -30,6 +34,22 @@ public class Entry {
         this.section = section;
         this.student = student;
         this.finalGrade = new RealAssignment("Final Grade", 1.0f, template); // unsure if this is what it is supposed to be
+    }
+    
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used when loading an entry from a file. To create a new entry, use
+     *  {@link Entry(Section section, Student student, ArrayList<RealAssignment> template)}.
+     *  @param id
+     *  @param section
+     */
+    public Entry(long id, Section section, Student student, RealAssignment finalGrade)
+    {
+    	this.id = id;
+    	this.section = section;
+    	this.student = student;
+    	this.finalGrade = finalGrade;
     }
 
     public long getID() {

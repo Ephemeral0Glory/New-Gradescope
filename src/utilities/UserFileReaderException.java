@@ -1,4 +1,5 @@
-package entity;
+package utilities;
+
 
 /**
  *  Generic exception for problems with {@link UserFileReader}.

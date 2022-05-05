@@ -1,5 +1,14 @@
 package entity;
 
+import utilities.IDFactory;
+
+/**
+ *  A student in the course.
+ *  <p>
+ *  Has a name, ID, and enrollment status.
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class Student {
 
 	private long id;
@@ -8,6 +17,16 @@ public class Student {
     private String buID;
     private StudentStatus enrollmentStatus;
 
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used to create a new Student. To create a Student from a file, use
+     *  {@link Student(long id, String fname, String lname, String buID, StudentStatus enrollmentStatus)}.
+     *  @param fname
+     *  @param lname
+     *  @param buID
+     *  @param enrollmentStatus
+     */
     public Student(String fname, String lname, String buID, StudentStatus enrollmentStatus) {
     	this.id = IDFactory.generateStudentID();
         this.fname = fname;
@@ -16,7 +35,25 @@ public class Student {
         this.enrollmentStatus = enrollmentStatus;
     }
     
-    // TODO Student constructor for load from file
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used when loading the Student from a file. To create a new Student, use
+     *  {@link Student(String fname, String lname, String buID, StudentStatus enrollmentStatus)}.
+     *  @param id
+     *  @param fname
+     *  @param lname
+     *  @param buID
+     *  @param enrollmentStatus
+     */
+    public Student(long id, String fname, String lname, String buID, StudentStatus enrollmentStatus)
+    {
+    	this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.buID = buID;
+        this.enrollmentStatus = enrollmentStatus;
+    }
     
     public long getID()
     {

@@ -3,8 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import entity.UserFileReader;
-import entity.UserFileReaderException;
+import utilities.UserFileReader;
+import utilities.UserFileReaderException;
 import boundary.IGraderFrame;
 import boundary.LogInView;
 

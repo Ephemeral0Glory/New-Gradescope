@@ -1,6 +1,8 @@
 package entity;
 import java.util.*;
 
+import utilities.IDFactory;
+
 public class RealAssignment implements Gradeable {
 
     private long id;
@@ -8,8 +10,8 @@ public class RealAssignment implements Gradeable {
     private Student student;
     private float weight;
     private Grade grade;
-    private ArrayList<Gradeable> subAssignments;
     private int numSubAssignments;
+    private ArrayList<Gradeable> subAssignments;
 
     public RealAssignment(String name, float weight) {
     	this.id = IDFactory.generateAssignmentID();
@@ -45,7 +47,32 @@ public class RealAssignment implements Gradeable {
     	numSubAssignments = subAssignments.size();
     }
     
-    // TODO RealAssignment constructor for load from file
+    /**
+     *  Constructor.
+     *  <p>
+     *  Used when loading an assignment from file. To create a new RealAssignment, use
+     *  {@link RealAssignment(String name, float weight, ArrayList<RealAssignment> template)},
+     *  {@link RealAssignment(String name, float weight, Grade grade, Student student)}, or
+     *  {@link RealAssignment(String name, float weight)}.
+     *  @param id  The unique identifier for this object instance
+     *  @param name  The name of the assignment
+     *  @param student  The student whose grade this is
+     *  @param weight  The weight of this assignment toward its parent's grade
+     *  @param grade  The grade received for this assignment 
+     *  @param numSubAssignments  The number of sub-assignments this assignment has
+     *  @param subAssignments  The sub-assignments of this assignment
+     */
+    public RealAssignment(long id, String name, Student student, float weight,
+    		Grade grade, int numSubAssignments, ArrayList<Gradeable> subAssignments)
+    {
+    	this.id = id;
+    	this.name = name;
+    	this.student = student;
+    	this.weight = weight;
+    	this.grade = grade;
+    	this.numSubAssignments = numSubAssignments;
+    	this.subAssignments = subAssignments;
+    }
 
     public long getID() {
         return this.id;

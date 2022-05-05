@@ -1,4 +1,4 @@
-package entity;
+package utilities;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,6 +9,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+
+import entity.User;
 
 /**
  *  Reads Users from file in XML format.
@@ -50,7 +52,6 @@ public class UserFileReader extends DefaultHandler
 {
 	public static final String usersFileName = "users.xml";
 	private String usersFileURL;
-	private String gradebooksDirectoryPath;
 	private XMLReader reader;
 	/*
 	 *  The following used during parsing
@@ -62,12 +63,16 @@ public class UserFileReader extends DefaultHandler
 	private String lname;
 	private int hashedPW;
 	
+	/**
+	 *  Constructor.
+	 *  
+	 *  @param usersFileName  The file name of the users file, can be a path to it
+	 *  @throws UserFileReaderException  Might occur during the creation of the reader
+	 */
 	public UserFileReader(String usersFileName) throws UserFileReaderException
 	{
 		super();
 		usersFileURL = makeURL(usersFileName);
-		gradebooksDirectoryPath = usersFileURL.substring(0, (usersFileURL.length() - usersFileName.length()));
-		gradebooksDirectoryPath.concat("gradebooks");
 		
 		// Create reader from factory
 		SAXParserFactory factory = SAXParserFactory.newInstance();

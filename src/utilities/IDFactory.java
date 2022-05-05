@@ -1,4 +1,4 @@
-package entity;
+package utilities;
 
 /**
  *  Creates IDs for entities that will be saved.
@@ -18,27 +18,18 @@ public class IDFactory
 	/**
 	 *  Method to set ID starting points when loading from file. Call this or
 	 *  else all IDs will start at 1 each time.
-	 *  @param lastCourseID
-	 *  @param lastEntryID
-	 *  @param lastGradebookID
-	 *  @param lastAssignmentID
-	 *  @param lastSectionID
-	 *  @param lastSemesterID
-	 *  @param lastStudentID
-	 *  @param lastUserID
+	 *  @param configs
 	 */
-	public static void setStartingIDs(long lastCourseID, long lastEntryID, long lastGradebookID,
-			long lastAssignmentID, long lastSectionID, long lastSemesterID,
-			long lastStudentID, long lastUserID)
+	public static void setStartingIDs(GraderConfigs configs)
 	{
-		IDFactory.lastCourseID = lastCourseID;
-		IDFactory.lastEntryID = lastEntryID;
-		IDFactory.lastGradebookID = lastGradebookID;
-		IDFactory.lastAssignmentID = lastAssignmentID;
-		IDFactory.lastSectionID = lastSectionID;
-		IDFactory.lastSemesterID = lastSemesterID;
-		IDFactory.lastStudentID = lastStudentID;
-		IDFactory.lastUserID = lastUserID;
+		IDFactory.lastCourseID = configs.getLastCourseID();
+		IDFactory.lastEntryID = configs.getLastEntryID();
+		IDFactory.lastGradebookID = configs.getLastGradebookID();
+		IDFactory.lastAssignmentID = configs.getLastAssignmentID();
+		IDFactory.lastSectionID = configs.getLastSectionID();
+		IDFactory.lastSemesterID = configs.getLastSemesterID();
+		IDFactory.lastStudentID = configs.getLastStudentID();
+		IDFactory.lastUserID = configs.getLastUserID();
 	}
 	
 	/**
@@ -104,6 +95,16 @@ public class IDFactory
 	{
 		lastUserID += 1;
 		return lastUserID;
+	}
+	
+	/**
+	 *  @return  The last IDs used in the form of a GraderConfigs object
+	 */
+	public static GraderConfigs getConfigs()
+	{
+		return new GraderConfigs(lastCourseID, lastEntryID, lastGradebookID,
+				lastAssignmentID, lastSectionID, lastSemesterID,
+				lastStudentID, lastUserID);
 	}
 
 }

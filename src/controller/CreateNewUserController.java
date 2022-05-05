@@ -3,10 +3,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.UserFileReader;
+import utilities.UserFileWriter;
+import utilities.UserFileWriterException;
 import entity.User;
-import entity.UserFileReader;
-import entity.UserFileWriter;
-import entity.UserFileWriterException;
 import boundary.CreateNewUserView;
 import boundary.LogInView;
 
