@@ -26,10 +26,12 @@ import javax.swing.SwingConstants;
 public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private User user;
+	private Gradebook gradebook;
 	
-	public SelectCoursesView(IGraderFrame rootView, User user) throws GradebookFileReaderException {
+	public SelectCoursesView(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException {
 		this.rootView = rootView;
 		this.user = user;
+		this.gradebook = gradebook;
 		setupPanel();
 		
 	}
@@ -101,7 +103,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 
 	private Course[] getCourses() throws GradebookFileReaderException {
 		GradebookFileReader gradebookFileReader = new GradebookFileReader(GradebookFileReader.gradebookDirectory);
-		ArrayList<Semester> semesters = gradebookFileReader.readGradebook(user).getSemesters();
+		ArrayList<Semester> semesters = gradebook.getSemesters();
 		ArrayList<Course> result = new ArrayList<Course>();
 		Semester currSemester;
 		for (int i = 0; i < semesters.size(); i++) {
