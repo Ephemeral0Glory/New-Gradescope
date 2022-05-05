@@ -17,8 +17,11 @@ public class Course {
     private String name;
     private String code;
     private User owner;
-    private ArrayList<Entry> entries;
     private RealAssignment template;
+    private ArrayList<Entry> entries;
+    /*
+     *  The following are aggregates:
+     */
     private ArrayList<Section> sections;
     private ArrayList<ArrayList<RealAssignment>> assignments;
     private ArrayList<Student> students;

@@ -110,9 +110,22 @@ public class RealAssignment implements Gradeable {
     	this.weight = newWeight;
     }
     
+    public Student getStudent()
+    {
+    	return this.student;
+    }
+    
+    /**
+     *  @return  The full name of this student, first name and last name appended
+     */
     public String getStudentName()
     {
     	return this.student.getFName() + " " + this.student.getLName();
+    }
+    
+    public ArrayList<Gradeable> getSubAssignments()
+    {
+    	return subAssignments;
     }
     
     public Gradeable getSubAssignment(int index) {

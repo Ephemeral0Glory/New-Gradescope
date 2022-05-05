@@ -106,6 +106,11 @@ public class Section {
         this.code = newCode;
         return this.code;
     }
+    
+    public ArrayList<Student> getStudents()
+    {
+    	return this.students;
+    }
 
     /**
      *  Adds a student to this section.

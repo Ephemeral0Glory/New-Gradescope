@@ -53,13 +53,17 @@ public class GradebookFileWriter
 {
 	private XMLStreamWriter writer;
 	
-	public GradebookFileWriter(String gradebookFileName) throws UserFileWriterException, GradebookFileWriterException
+	/**
+	 *  Constructor.
+	 *  <p>
+	 *  @param gradebookFileName  The path (relative or absolute) to the gradebook file, including the file name
+	 *  @throws GradebookFileWriterException  If a problem is encountered setting up the file writer
+	 */
+	public GradebookFileWriter(String gradebookFileName) throws GradebookFileWriterException
 	{
-		
-		FileOutputStream outStream;
 		try
 		{
-			outStream = new FileOutputStream(new File(gradebookFileName));
+			FileOutputStream outStream = new FileOutputStream(new File(gradebookFileName));
 			writer = XMLOutputFactory.newInstance().createXMLStreamWriter(outStream);
 		}
 		catch (Exception e)
@@ -68,7 +72,12 @@ public class GradebookFileWriter
 		}
 	}
 	
-	public void writeGradebook(Gradebook gradebook) throws UserFileWriterException
+	/**
+	 *  Writes the given gradebook to a file determined by the constructor argument.
+	 *  @param gradebook  The gradebook to write out
+	 *  @throws GradebookFileWriterException  If there is a problem during writing
+	 */
+	public void writeGradebook(Gradebook gradebook) throws GradebookFileWriterException
 	{
 		try
 		{
@@ -85,7 +94,7 @@ public class GradebookFileWriter
 		}
 		catch (Exception e)
 		{
-			throw new UserFileWriterException(e.getMessage());
+			throw new GradebookFileWriterException(e.getMessage());
 		}
 	}
 	
