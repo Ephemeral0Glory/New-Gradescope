@@ -3,8 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import entity.User;
 import utilities.GradebookFileReaderException;
+import entity.User;
 import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 import boundary.SelectCoursesView;
@@ -36,6 +36,24 @@ public class OpenSelectCoursesController implements ActionListener
 			e.printStackTrace();
 		}
 
+
+		open();
+	}
+	
+	public void open()
+	{
+		try
+		{
+			SelectCoursesView scv = new SelectCoursesView(rootView, user);
+			rootView.setNewView(scv);
+			rootView.update();
+			rootView.display();
+		} catch (GradebookFileReaderException e)
+		{
+			e.printStackTrace();
+			
+			// TODO notify user of problem
+		}
 	}
 
 }

@@ -106,7 +106,7 @@ public class GradebookFileReader extends DefaultHandler
 	{
 		String path = new File(gradebooksDirectoryName).getAbsolutePath();
 		
-		return "file:" + path;
+		return "file:" + path + "/";
 	}
 	
 	/**
