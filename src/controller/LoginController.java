@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import utilities.GradebookFileReaderException;
 import boundary.LogInView;
 import entity.User;
 
@@ -73,7 +74,14 @@ public class LoginController implements ActionListener{
 	{
 		// Use open controller to open main menu
 		OpenMainMenuController ommc = new OpenMainMenuController(view, user);
-		ommc.open();
+		try
+		{
+			ommc.open();
+		} catch (GradebookFileReaderException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
+		}
 	}
 
 }

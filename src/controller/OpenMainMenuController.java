@@ -3,7 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import entity.Gradebook;
 import entity.User;
+import utilities.GradebookFileReader;
 import utilities.GradebookFileReaderException;
 import boundary.GraderView;
 import boundary.IGraderFrame;
@@ -48,10 +50,13 @@ public class OpenMainMenuController implements ActionListener
 	 *  If the root view is the log in screen, then that window will be closed
 	 *  and a new window containing the main menu will be created. Otherwise,
 	 *  the window will be kept.
-	 * @throws GradebookFileReaderException 
+	 * @throws GradebookFileReaderException  If error encountered while reading gradebook file
 	 */
 	public void open() throws GradebookFileReaderException
 	{
+		// Get user's gradebook
+		Gradebook gb = new GradebookFileReader(GradebookFileReader.gradebookDirectory).readGradebook(user);
+		
 		// Want to close the login screen, but keep the grader screen
 		if(rootView instanceof LogInView)
 		{
@@ -62,7 +67,7 @@ public class OpenMainMenuController implements ActionListener
 			GraderView gv = new GraderView();
 			
 			// Create main menu screen
-			MainMenuView mmv = new MainMenuView(gv, user);
+			MainMenuView mmv = new MainMenuView(gv, user, gb);
 			
 			// Display main menu screen
 			gv.setNewView(mmv);
@@ -72,7 +77,7 @@ public class OpenMainMenuController implements ActionListener
 		else  // Keep window
 		{
 			// Create main menu screen
-			MainMenuView mmv = new MainMenuView(rootView, user);
+			MainMenuView mmv = new MainMenuView(rootView, user, gb);
 			
 			// Swap displayed screen
 			rootView.setNewView(mmv);

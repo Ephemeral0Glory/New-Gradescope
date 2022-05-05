@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.GradebookFileReaderException;
 import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 //import controller.CreateNewUserController.CreateProblem;
@@ -78,6 +79,13 @@ public class CreateNewCourseController implements ActionListener {
 	
 	private void openMainMenu() {
 		OpenMainMenuController ommc = new OpenMainMenuController(rootView, user);
-		ommc.open();
+		try
+		{
+			ommc.open();
+		} catch (GradebookFileReaderException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
+		}
 	}
 }

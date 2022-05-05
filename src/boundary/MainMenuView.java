@@ -39,15 +39,15 @@ public class MainMenuView extends JPanel implements IGraderScreen
 	private User currentUser;
 	private Gradebook gradebook;
 	
-	public MainMenuView(IGraderFrame rootView, User currentUser, Gradebook gradebook) throws GradebookFileReaderException
+	public MainMenuView(IGraderFrame rootView, User currentUser, Gradebook gradebook)
 	{
 		this.rootView = rootView;
 		this.currentUser = currentUser;
-		this.gradebook = new GradebookFileReader(GradebookFileReader.gradebookDirectory).readGradebook(currentUser); 
+		this.gradebook = gradebook;
 		setupPanel();
 	}
 	
-	private void setupPanel() throws GradebookFileReaderException
+	private void setupPanel()
 	{
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};

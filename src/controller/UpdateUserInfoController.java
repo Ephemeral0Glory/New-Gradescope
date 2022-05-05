@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.GradebookFileReaderException;
 import controller.CreateNewUserController.CreateProblem;
 import entity.User;
 import boundary.IGraderFrame;
@@ -67,7 +68,14 @@ public class UpdateUserInfoController implements ActionListener
 	private void openMainMenu()
 	{
 		OpenMainMenuController ommc = new OpenMainMenuController(rootView, userInfo.getUser());
-		ommc.open();
+		try
+		{
+			ommc.open();
+		} catch (GradebookFileReaderException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
+		}
 	}
 
 }

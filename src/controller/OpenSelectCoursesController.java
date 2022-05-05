@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import utilities.GradebookFileReaderException;
 import entity.*;
-import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 import boundary.SelectCoursesView;
 
@@ -15,7 +14,7 @@ public class OpenSelectCoursesController implements ActionListener
 	private User user;
 	private Gradebook gradebook;
 	
-	public OpenSelectCoursesController(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException
+	public OpenSelectCoursesController(IGraderFrame rootView, User user, Gradebook gradebook)
 	{
 		this.rootView = rootView;
 		this.user = user;
