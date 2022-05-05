@@ -21,11 +21,11 @@ public class Gradebook {
     public Gradebook(User owner) {
     	this.id = IDFactory.generateGradebookID();
         this.owner = owner;
+        semesters = new ArrayList<Semester>();
     }
 
     public Gradebook(User owner, ArrayList<Semester> semesters) {
-    	this.id = IDFactory.generateGradebookID();
-        this.owner = owner;
+    	this(owner);
         this.semesters = semesters;
     }
 
