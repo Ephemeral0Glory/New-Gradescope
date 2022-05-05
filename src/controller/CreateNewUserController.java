@@ -2,10 +2,15 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import utilities.GradebookFileReader;
+import utilities.GradebookFileWriter;
+import utilities.GradebookFileWriterException;
 import utilities.UserFileReader;
 import utilities.UserFileWriter;
 import utilities.UserFileWriterException;
+import entity.Gradebook;
 import entity.User;
 import boundary.CreateNewUserView;
 import boundary.LogInView;
@@ -64,6 +69,10 @@ public class CreateNewUserController implements ActionListener
 			
 			// Write out new user to file
 			writeNewUser();
+			
+			// Create user directory and default gradebook file
+			createUserDirectory(user);
+			createGradebookFile(user);
 			
 			// Return to the log-in screen
 			OpenLogInController olc = new OpenLogInController(view);
@@ -146,6 +155,33 @@ public class CreateNewUserController implements ActionListener
 			e.printStackTrace();
 			
 			// TODO show message to user in interface
+		}
+	}
+	
+	private void createUserDirectory(User user)
+	{
+		// Create user directory
+		String path = GradebookFileReader.gradebookDirectory + "u" + user.getID() + "/";
+		File userDir = new File(path);
+		userDir.mkdir();
+	}
+	
+	private void createGradebookFile(User user)
+	{
+		String userDirPath = GradebookFileReader.gradebookDirectory + "u" + user.getID() + "/";
+		String gradebookFile = userDirPath + "gradebook.xml";
+		Gradebook gb = new Gradebook(user);
+		try
+		{
+			GradebookFileWriter writer = new GradebookFileWriter(gradebookFile);
+			
+			// Write out gradebook
+			writer.writeGradebook(gb);
+		}
+		catch (GradebookFileWriterException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
 		}
 	}
 

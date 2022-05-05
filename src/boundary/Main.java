@@ -6,6 +6,7 @@ import utilities.ConfigFileReader;
 import utilities.ConfigFileReaderException;
 import utilities.ConfigFileWriter;
 import utilities.ConfigFileWriterException;
+import utilities.GradebookFileReader;
 import utilities.GraderConfigs;
 import utilities.IDFactory;
 import utilities.UserFileReader;
@@ -24,21 +25,10 @@ public class Main {
 		try
 		{
 			// Attempt to load configuration file
-			File configFile = new File(ConfigFileReader.configFileName);
-			if(configFile.exists())
-			{
-				// Load and set configurations
-				ConfigFileReader creader = new ConfigFileReader(ConfigFileReader.configFileName);
-				GraderConfigs configs = creader.readConfigs();
-				IDFactory.setStartingIDs(configs);
-			}
-			else  // Don't have a configurations file
-			{
-				// Create configurations file
-				GraderConfigs configs = new GraderConfigs();
-				ConfigFileWriter cwriter = new ConfigFileWriter(ConfigFileReader.configFileName);
-				cwriter.writeConfig(configs);
-			}
+			loadConfigs();
+			
+			// Check for gradebooks directory
+			checkGradebooks();
 			
 			File file = new File(UserFileReader.usersFileName);
 			if(file.exists())
@@ -68,6 +58,36 @@ public class Main {
 		{
 			// TODO Notify the user of a problem
 			e.printStackTrace();
+		}
+	}
+	
+	private static void loadConfigs() throws ConfigFileReaderException, ConfigFileWriterException
+	{
+		// Attempt to load configurations file
+		File configFile = new File(ConfigFileReader.configFileName);
+		if(configFile.exists())
+		{
+			// Load and set configurations
+			ConfigFileReader creader = new ConfigFileReader(ConfigFileReader.configFileName);
+			GraderConfigs configs = creader.readConfigs();
+			IDFactory.setStartingIDs(configs);
+		}
+		else  // Don't have a configurations file
+		{
+			// Create configurations file
+			GraderConfigs configs = new GraderConfigs();
+			ConfigFileWriter cwriter = new ConfigFileWriter(ConfigFileReader.configFileName);
+			cwriter.writeConfig(configs);
+		}
+	}
+	
+	private static void checkGradebooks()
+	{
+		File gbDir = new File(GradebookFileReader.gradebookDirectory);
+		if(!gbDir.exists())
+		{
+			// Create gradebooks directory
+			gbDir.mkdir();
 		}
 	}
 
