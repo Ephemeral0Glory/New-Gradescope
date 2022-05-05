@@ -19,6 +19,10 @@ import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ *  @author David Sullo
+ */
 public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private User user;
@@ -31,8 +35,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 
 	@Override
 	public JPanel getPanelContent() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	}
 
 	private Course[] getCourses() throws GradebookFileReaderException {
-		GradebookFileReader gradebookFileReader = new GradebookFileReader("INSERT DIRECTORY");
+		GradebookFileReader gradebookFileReader = new GradebookFileReader(GradebookFileReader.gradebookDirectory);
 		ArrayList<Semester> semesters = gradebookFileReader.readGradebook(user).getSemesters();
 		ArrayList<Course> result = new ArrayList<Course>();
 		Semester currSemester;

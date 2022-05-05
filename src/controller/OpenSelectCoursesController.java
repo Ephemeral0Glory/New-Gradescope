@@ -3,8 +3,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.GradebookFileReaderException;
 import entity.User;
 import boundary.IGraderFrame;
+import boundary.SelectCoursesView;
 
 public class OpenSelectCoursesController implements ActionListener
 {
@@ -20,8 +22,23 @@ public class OpenSelectCoursesController implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		// TODO OpenSelectCoursesController.actionPerformed
-
+		open();
+	}
+	
+	public void open()
+	{
+		try
+		{
+			SelectCoursesView scv = new SelectCoursesView(rootView, user);
+			rootView.setNewView(scv);
+			rootView.update();
+			rootView.display();
+		} catch (GradebookFileReaderException e)
+		{
+			e.printStackTrace();
+			
+			// TODO notify user of problem
+		}
 	}
 
 }
