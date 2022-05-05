@@ -2,7 +2,8 @@ package boundary;
 
 import javax.swing.JPanel;
 
-import entity.User;
+import entity.*;
+import utilities.GradebookFileReader;
 import utilities.GradebookFileReaderException;
 
 import javax.swing.JLabel;
@@ -36,11 +37,13 @@ public class MainMenuView extends JPanel implements IGraderScreen
 	private static final long serialVersionUID = 7233321725027595441L;
 	private IGraderFrame rootView;
 	private User currentUser;
+	private Gradebook gradebook;
 	
 	public MainMenuView(IGraderFrame rootView, User currentUser) throws GradebookFileReaderException
 	{
 		this.rootView = rootView;
 		this.currentUser = currentUser;
+		this.gradebook = new GradebookFileReader(GradebookFileReader.gradebookDirectory).readGradebook(currentUser); 
 		setupPanel();
 	}
 	
@@ -79,7 +82,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton selectCoursesButton = new JButton("Select Course");
 		selectCoursesButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser));
+		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser, gradebook));
 		GridBagConstraints gbc_manageCoursesButton = new GridBagConstraints();
 		gbc_manageCoursesButton.weighty = 0.1;
 		gbc_manageCoursesButton.weightx = 1.0;
