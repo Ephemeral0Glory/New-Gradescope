@@ -109,6 +109,7 @@ public class CourseFileReader extends DefaultHandler
     private int templateNumSubAssignments;
 	private HashMap<Long, Section> sections;
 	private HashMap<Long, Student> students;
+	private ArrayList<Section> sectionList;
 	private long section_id;
 	private String sectionName;
 	private String sectionCode;
@@ -180,7 +181,7 @@ public class CourseFileReader extends DefaultHandler
 			throw new CourseFileReaderException(e.getMessage());
 		}
 		
-		return new Course(course_id, courseName, courseCode, owner, template, entries);
+		return new Course(course_id, courseName, courseCode, owner, template, entries, sectionList);
 	}
 	
 	@Override
@@ -198,6 +199,13 @@ public class CourseFileReader extends DefaultHandler
 		    assignmentWeights = new ArrayDeque<Float>();
 		    assignmentGrades = new ArrayDeque<Grade>();
 		    assignmentNumSubAssignments = new ArrayDeque<Integer>();
+		    sectionList = new ArrayList<Section>();
+		}
+		// Sections list
+		else if(localName.equals("sectionlist"))
+		{
+			sections = new HashMap<Long, Section>();
+			students = new HashMap<Long, Student>();
 		}
 		// Section
 		else if(localName.equals("section"))
@@ -410,6 +418,7 @@ public class CourseFileReader extends DefaultHandler
 			// Create semester
 			Section s = new Section(section_id, course_id, sectionName,
 					sectionCode, sectionStudents);
+			sectionList.add(s);
 			sections.put(s.getID(), s);
 		}
 		// Entry

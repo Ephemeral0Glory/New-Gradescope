@@ -19,10 +19,10 @@ public class Course {
     private User owner;
     private RealAssignment template;
     private ArrayList<Entry> entries;
+    private ArrayList<Section> sections;
     /*
      *  The following are aggregates:
      */
-    private ArrayList<Section> sections;
     private ArrayList<ArrayList<RealAssignment>> assignments;
     private ArrayList<Student> students;
     private ArrayList<Gradeable> finalGrades;
@@ -42,6 +42,7 @@ public class Course {
         this.owner = owner;
         this.template = new RealAssignment(name+" template", 0f);
         this.entries = new ArrayList<Entry>();
+        this.sections = new ArrayList<Section>();
         createAggregates();
     }
 
@@ -92,31 +93,19 @@ public class Course {
      *  @param entries  The grades table for the course
      */
     public Course(long id, String name, String code, User owner, RealAssignment template,
-    		ArrayList<Entry> entries) {
+    		ArrayList<Entry> entries, ArrayList<Section> sections) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.owner = owner;
         this.template = template;
         this.entries = entries;
+        this.sections = sections;
         createAggregates();
     }
     
     private void createAggregates()
     {
-    	// Create sections
-    	sections = new ArrayList<Section>();
-//    	ArrayList<Section> sl = new ArrayList<Section>();
-//    	for(Entry e: entries)
-//    	{
-//    		Section s = e.getSection();
-//    		if(!sl.contains(s))
-//    		{
-//    			sl.add(s);
-//    		}
-//    	}
-//    	sections = sl;
-    	
     	// Create assignments
     	assignments = new ArrayList<ArrayList<RealAssignment>>();
     	assignments.add(new ArrayList<RealAssignment>());

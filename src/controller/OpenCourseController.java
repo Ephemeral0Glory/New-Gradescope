@@ -46,19 +46,13 @@ public class OpenCourseController
 		rootView.closeWindow();
 		
 		// Create new frame, with menu bars
-		IGraderFrame gv = setUpFrame();
+		GraderView gv = new GraderView();
 		
 		// Create and display course edit screen
 		gv.setNewView(new CourseView(gv, user, owner, course, semester));
+		gv.setUpMenuBars(course, user);
 		gv.update();
 		gv.display();
-	}
-	
-	private IGraderFrame setUpFrame()
-	{
-		GraderView gv = new GraderView();
-		gv.setUpMenuBars();
-		return gv;
 	}
 
 }

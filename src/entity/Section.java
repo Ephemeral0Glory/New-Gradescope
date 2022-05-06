@@ -24,6 +24,7 @@ public class Section {
      *  <p>
      *  Used to create a new Section. To load a section from a file, use
      *  {@link Section(long id, long courseID, String name, String code, ArrayList<Student> students)}.
+     *  Creates a blank list of students.
      *  @param name  The name of the section
      *  @param courseID  The unique identifier for the course this section is a part of
      *  @param code  The code of this section
@@ -33,6 +34,7 @@ public class Section {
         this.name = name;
         this.courseID = courseID;
         this.code = code;
+        this.students = new ArrayList<Student>();
     }
 
     /**

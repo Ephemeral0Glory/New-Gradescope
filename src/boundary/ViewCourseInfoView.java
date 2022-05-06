@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import controller.AddSectionController;
 import controller.OpenAddSectionViewController;
+import controller.OpenAddSectionWindowController;
 import controller.OpenMainMenuController;
 import controller.OpenViewCourseInfoViewController;
 import controller.SaveCourseDataController;
@@ -54,33 +55,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	
 		setupPanel();
 		// fill data
-		lblTitle.setText(course.getCode() + "(" + course.getName() + ")");
-
-		if (course.getSections() != null) {
-			lblNumOfSectionsData.setText(String.valueOf(course.getSections().size()));
-		} else {
-			lblNumOfAssignmentsData.setText("0");
-		}
-		
-		if (course.getStudents() != null) {
-			long numOfCurrentStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.ACTIVE).count();
-			long numOfDroppedStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.WITHDRAWN).count();
-			long numOfStartStudents = numOfCurrentStudents + numOfDroppedStudents;
-			
-			lblCurrentStudentsData.setText(String.valueOf(numOfCurrentStudents));
-			lblStartStudentsData.setText(String.valueOf(numOfStartStudents));
-			lblDroppedStudentsData.setText(String.valueOf(numOfDroppedStudents));
-		} else {
-			lblCurrentStudentsData.setText("0");
-			lblStartStudentsData.setText("0");
-			lblDroppedStudentsData.setText("0");
-		}
-		
-		if  (course.getAssignments() != null) {
-			lblNumOfAssignmentsData.setText(String.valueOf(course.getAssignments().size()));
-		} else {
-			lblNumOfAssignmentsData.setText("0");
-		}
+		fillData();
 	}
 	
 	private void setupPanel() {
@@ -185,9 +160,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		add(lblDroppedStudentsData, gbc_lblDroppedStudentsData);
 		
 		JButton btnAddSection = new JButton("Add section");
-//		btnAddSection.addActionListener(new OpenViewCourseInfoViewController(rootView, user, course));
-		btnAddSection.addActionListener(new OpenAddSectionViewController(rootView, user, course));
-//		btnAddSection.addActionListener(new AddSectionController(rootView, user, null));
+		btnAddSection.addActionListener(new OpenAddSectionWindowController(rootView, user, course));
 		GridBagConstraints gbc_btnAddSection = new GridBagConstraints();
 		gbc_btnAddSection.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAddSection.gridx = 1;
@@ -203,6 +176,37 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		add(btnOk, gbc_btnOk);
 	}
 
+	private void fillData()
+	{
+		lblTitle.setText(course.getCode() + "(" + course.getName() + ")");
+
+		if (course.getSections() != null) {
+			lblNumOfSectionsData.setText(String.valueOf(course.getSections().size()));
+		} else {
+			lblNumOfAssignmentsData.setText("0");
+		}
+		
+		if (course.getStudents() != null) {
+			long numOfCurrentStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.ACTIVE).count();
+			long numOfDroppedStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.WITHDRAWN).count();
+			long numOfStartStudents = numOfCurrentStudents + numOfDroppedStudents;
+			
+			lblCurrentStudentsData.setText(String.valueOf(numOfCurrentStudents));
+			lblStartStudentsData.setText(String.valueOf(numOfStartStudents));
+			lblDroppedStudentsData.setText(String.valueOf(numOfDroppedStudents));
+		} else {
+			lblCurrentStudentsData.setText("0");
+			lblStartStudentsData.setText("0");
+			lblDroppedStudentsData.setText("0");
+		}
+		
+		if  (course.getAssignments() != null) {
+			lblNumOfAssignmentsData.setText(String.valueOf(course.getAssignments().size()));
+		} else {
+			lblNumOfAssignmentsData.setText("0");
+		}
+	}
+	
 	@Override
 	public JPanel getPanelContent() {
 		return this;
@@ -210,7 +214,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 
 	@Override
 	public void update() {
-		// Ignore
+		fillData();
 	}
 
 }

@@ -20,6 +20,7 @@ public class NullAssignment implements Gradeable {
     public NullAssignment(String name) {
     	this.id = IDFactory.generateAssignmentID();
         this.name = name;
+        this.grade = new Grade();
     }
 
     /**

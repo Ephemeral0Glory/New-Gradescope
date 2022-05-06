@@ -8,18 +8,25 @@ import entity.Section;
 import entity.User;
 import boundary.AddSectionView;
 import boundary.IGraderFrame;
-//import boundary.UserOptionsMenuView;
-import boundary.ViewCourseInfoView;
 
+/**
+ * 
+ *  @author Seonghoon Steve Cho
+ *  @author Alex Titus
+ *
+ */
 public class AddSectionController implements ActionListener {
 	
 	public static enum SectionProblem { NO_ERROR, EMPTY_SECTION, DUPLICATED_CODE }
 	private IGraderFrame rootView;
+	private IGraderFrame parentView;
 	private User user;
 	private AddSectionView addSectionView;
 	
-	public AddSectionController(IGraderFrame rootView, User user, AddSectionView addSectionView) {
+	public AddSectionController(IGraderFrame rootView, IGraderFrame parentFrame,
+			User user, AddSectionView addSectionView) {
 		this.rootView = rootView;
+		this.parentView = parentFrame;
 		this.user = user;
 		this.addSectionView = addSectionView;
 	}
@@ -32,33 +39,50 @@ public class AddSectionController implements ActionListener {
 		long courseID = course.getID();
 
 		if (error == SectionProblem.NO_ERROR) {
+			// Create and add new section
 			Section newSection = new Section(addSectionView.getName(), courseID, addSectionView.getCode());
 			course.addSection(newSection);
+			
+			// Close window
+			returnToParentView();
 		}
-		
-		openViewCourseInfoView(course);
+		else  // Had a problem
+		{
+			// Tell user about problem
+			addSectionView.showError(error);
+			rootView.update();
+			rootView.display();
+		}
 		
 	}
 	
 	private SectionProblem validateInformation() {
 		String sectionCode = addSectionView.getCode();
 		
+		// Check empty code
 		if (sectionCode.isEmpty()) {
 			return SectionProblem.EMPTY_SECTION;
+		}
+		
+		// Check for duplicate code
+		for(Section s: addSectionView.getCourse().getSections())
+		{
+			if(sectionCode.equals(s.getCode()))
+			{
+				return SectionProblem.DUPLICATED_CODE;
+			}
 		}
 		
 		return SectionProblem.NO_ERROR;
 	}
 	
-	private void openViewCourseInfoView(Course course) {
-//		OpenViewCourseInfoViewController ovcivc = new OpenViewCourseInfoViewController(rootView, user, course);
-		// Create menu
-		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
+	private void returnToParentView() {
+		// Close the Add Section window
+		rootView.closeWindow();
 		
-		// Display it
-		rootView.setNewView(vciv);
-		rootView.update();
-		rootView.display();
+		// Refresh the parent
+		parentView.update();
+		parentView.display();
 	}
 
 }

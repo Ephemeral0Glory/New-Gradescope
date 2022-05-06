@@ -18,6 +18,14 @@ public class RealAssignment implements Gradeable {
     private int numSubAssignments;
     private ArrayList<Gradeable> subAssignments;
 
+    /**
+     *  Constructor.
+     *  <p>
+     *  Creates a RealAssignment with default student, no sub-assignments, and
+     *  default grade.
+     *  @param name  The name of this assignment
+     *  @param weight  The weight of this assignment toward its parent's grade
+     */
     public RealAssignment(String name, float weight) {
     	this.id = IDFactory.generateAssignmentID();
         this.name = name;
@@ -30,6 +38,15 @@ public class RealAssignment implements Gradeable {
         numSubAssignments = 0;  // 0 because NullAssignment doesn't count
     }
 
+    /**
+     *  Constructor.
+     *  <p>
+     *  Creates a RealAssignment with given Student and Grade with no sub-assignments.
+     *  @param name  The name of this assignment
+     *  @param weight  The weight of this assignment toward its parent's grade
+     *  @param grade  The grade received by the student for this assignment
+     *  @param student  The student who owns this assignment
+     */
     public RealAssignment(String name, float weight, Grade grade, Student student) {
         this(name, weight);
         this.grade = grade;
@@ -39,16 +56,23 @@ public class RealAssignment implements Gradeable {
         this.student = student;
     }
     
-    public RealAssignment(String name, float weight, ArrayList<RealAssignment> template)
+    /**
+     *  Constructor.
+     *  <p>
+     *  Creates a RealAssignment with a given student, default grade, and
+     *  sub-assignments based on a template assignment.
+     *  @param name  The name of this assignment
+     *  @param weight  The weight of this assignment toward its parent's grade
+     *  @param student  The student who owns this assignment
+     *  @param template  The template to base this assignment's sub-assignments on
+     */
+    public RealAssignment(String name, float weight, Student student, RealAssignment template)
     {
     	this(name, weight);
     	subAssignments = new ArrayList<Gradeable>();
     	
     	// Use template to create sub-assignments
-    	for(RealAssignment a: template)
-    	{
-    		subAssignments.add(a);
-    	}
+    	subAssignments = copyTemplate(template, student);
     	numSubAssignments = subAssignments.size();
     }
     
@@ -77,6 +101,35 @@ public class RealAssignment implements Gradeable {
     	this.grade = grade;
     	this.numSubAssignments = numSubAssignments;
     	this.subAssignments = subAssignments;
+    }
+  
+    private ArrayList<Gradeable> copyTemplate(RealAssignment template, Student owner)
+    {
+    	ArrayList<Gradeable> subAssignments = new ArrayList<Gradeable>();
+    	
+    	// Fill sub-assignments with new objects
+    	for(Gradeable g: template.getSubAssignments())
+    	{
+    		subAssignments.add(copyGradeable(g, owner));
+    	}
+    	
+    	return subAssignments;
+    }
+    
+    private Gradeable copyGradeable(Gradeable g, Student owner)
+    {
+    	if(g instanceof RealAssignment)
+    	{
+    		RealAssignment ra = (RealAssignment) g;
+    		RealAssignment copy = new RealAssignment(ra.getName(), ra.getWeight(), owner, ra);
+    		return copy;
+    	}
+    	else  // Have a NullAssignment
+    	{
+    		NullAssignment na = (NullAssignment) g;
+    		NullAssignment copy = new NullAssignment(na.getName(), na.getGrade());
+    		return copy;
+    	}
     }
 
     public long getID() {

@@ -162,7 +162,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Add entry button
 		JButton addEntryButton = new JButton("Add Entry");
 		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//		addEntryButton.addActionListener(new AddEntryController(rootView, course));
+//		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, course));
 		table.add(addEntryButton, gbc);
 		
 		return table;
@@ -209,7 +209,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Add Assignment Button
 		JButton addAssignmentButton = new JButton("Add Assignment");
 		addAssignmentButton.setFont(headerFont);
-//		addAssignmentButton.addActionListener(new AddAssignmentController(rootView, course));
+//		addAssignmentButton.addActionListener(new OpenAddAssignmentWindowController(rootView, course));
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridy = greatestDepth;

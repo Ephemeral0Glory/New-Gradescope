@@ -3,6 +3,11 @@ public class Grade {
 
     private float score;
     private String comment;
+    
+    public Grade() {
+    	this.score = 0f;
+    	this.comment = "N/A";
+    }
 
     public Grade(float score) {
         this.score = score;

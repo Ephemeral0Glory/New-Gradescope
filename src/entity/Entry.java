@@ -1,6 +1,4 @@
 package entity;
-import java.util.*;
-
 import utilities.IDFactory;
 
 /**
@@ -29,11 +27,11 @@ public class Entry {
      *  @param student  The student to whom these grades belong
      *  @param template  The assignments for the course
      */
-    public Entry(Section section, Student student, ArrayList<RealAssignment> template) {
+    public Entry(Section section, Student student, RealAssignment template) {
     	this.id = IDFactory.generateEntryID();
         this.section = section;
         this.student = student;
-        this.finalGrade = new RealAssignment("Final Grade", 1.0f, template); // unsure if this is what it is supposed to be
+        this.finalGrade = new RealAssignment("Final Grade", 1.0f, student, template);
     }
     
     /**
