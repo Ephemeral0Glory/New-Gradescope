@@ -49,7 +49,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.35, 0.1, 0.1, 0.35, 0.1, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -93,6 +93,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		viewCourseInfoButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		viewCourseInfoButton.addActionListener(new OpenViewCoursesInfoController(rootView, currentUser, gradebook));
 		GridBagConstraints gbc_viewCourseInfoButton = new GridBagConstraints();
+		gbc_viewCourseInfoButton.weightx = 1.0;
 		gbc_viewCourseInfoButton.weighty = 0.1;
 		gbc_viewCourseInfoButton.fill = GridBagConstraints.BOTH;
 		gbc_viewCourseInfoButton.insets = new Insets(0, 5, 5, 5);
@@ -104,6 +105,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		userOptionsButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		userOptionsButton.addActionListener(new OpenUserOptionsController(rootView, currentUser));
 		GridBagConstraints gbc_userOptionsButton = new GridBagConstraints();
+		gbc_userOptionsButton.weightx = 1.0;
 		gbc_userOptionsButton.weighty = 0.1;
 		gbc_userOptionsButton.fill = GridBagConstraints.BOTH;
 		gbc_userOptionsButton.insets = new Insets(0, 0, 5, 5);
@@ -115,6 +117,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		logOutButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		logOutButton.addActionListener(new LogOutController(rootView));
 		GridBagConstraints gbc_logOutButton = new GridBagConstraints();
+		gbc_logOutButton.weightx = 1.0;
 		gbc_logOutButton.fill = GridBagConstraints.BOTH;
 		gbc_logOutButton.anchor = GridBagConstraints.SOUTH;
 		gbc_logOutButton.insets = new Insets(0, 5, 5, 5);
@@ -126,6 +129,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		quitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		quitButton.addActionListener(new QuitController(rootView));
 		GridBagConstraints gbc_quitButton = new GridBagConstraints();
+		gbc_quitButton.weightx = 1.0;
 		gbc_quitButton.fill = GridBagConstraints.BOTH;
 		gbc_quitButton.anchor = GridBagConstraints.SOUTH;
 		gbc_quitButton.insets = new Insets(0, 0, 5, 5);

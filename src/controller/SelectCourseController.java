@@ -44,6 +44,11 @@ public class SelectCourseController implements ActionListener
 	{
 		// Determine course selected
 		Course selectedCourse = selectionInfo.getSelectedCourse();
+		if(selectedCourse == null)  // If a course wasn't selected
+		{
+			// Do nothing
+			return;
+		}
 		
 		try
 		{
