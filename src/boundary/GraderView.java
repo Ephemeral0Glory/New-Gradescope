@@ -1,5 +1,7 @@
 package boundary;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 /**
@@ -22,13 +24,15 @@ public class GraderView extends JFrame implements IGraderFrame
 	private void setupFrame()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(50, 50, 1000, 600);
+		this.setBounds(50, 50, 600, 600);
 		this.setResizable(false);
 	}
 	
 	public void setUpMenuBars()
 	{
 		// TODO GraderView.setUpMenuBars
+
+		this.setBounds(50, 50, 1000, 600);
 	}
 
 	/**

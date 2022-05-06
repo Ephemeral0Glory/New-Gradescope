@@ -55,10 +55,10 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	
 	private void setupPanel() throws GradebookFileReaderException {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.5, 0.5, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.1, 0.75, 0.15, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel titleLabel = new JLabel("Select a Course from the list below");
@@ -75,7 +75,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		listScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_listScrollPane = new GridBagConstraints();
 		gbc_listScrollPane.gridwidth = 2;
-		gbc_listScrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_listScrollPane.insets = new Insets(0, 5, 5, 5);
 		gbc_listScrollPane.fill = GridBagConstraints.BOTH;
 		gbc_listScrollPane.gridx = 0;
 		gbc_listScrollPane.gridy = 1;
@@ -88,7 +88,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		JButton selectButton = new JButton("Select");
 		selectButton.addActionListener(new SelectCourseController(rootView, this, user, gradebook));
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
-		gbc_selectButton.insets = new Insets(0, 0, 0, 5);
+		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
 		gbc_selectButton.gridx = 0;
 		gbc_selectButton.gridy = 2;
 		add(selectButton, gbc_selectButton);
@@ -96,7 +96,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new OpenMainMenuController(rootView, user));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		gbc_cancelButton.insets = new Insets(0, 0, 0, 5);
+		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);
 		gbc_cancelButton.gridx = 1;
 		gbc_cancelButton.gridy = 2;
 		add(cancelButton, gbc_cancelButton);
