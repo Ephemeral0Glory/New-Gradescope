@@ -11,10 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 
-import controller.AddSectionController;
-import controller.OpenAddSectionViewController;
 import controller.OpenMainMenuController;
-import controller.OpenViewCourseInfoViewController;
 
 import javax.swing.JButton;
 
@@ -175,9 +172,6 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		add(lblDroppedStudentsData, gbc_lblDroppedStudentsData);
 		
 		JButton btnAddSection = new JButton("Add section");
-//		btnAddSection.addActionListener(new OpenViewCourseInfoViewController(rootView, user, course));
-		btnAddSection.addActionListener(new OpenAddSectionViewController(rootView, user, course));
-//		btnAddSection.addActionListener(new AddSectionController(rootView, user, null));
 		GridBagConstraints gbc_btnAddSection = new GridBagConstraints();
 		gbc_btnAddSection.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAddSection.gridx = 1;
