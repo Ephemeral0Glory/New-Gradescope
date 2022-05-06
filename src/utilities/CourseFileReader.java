@@ -232,9 +232,14 @@ public class CourseFileReader extends DefaultHandler
 			students.put(s.getID(), s);
 		}
 		// Course ID
-		if(localName.equals("cid"))
+		else if(localName.equals("cid"))
 		{
 			course_id = new Long(atts.getValue("text"));
+		}
+		// Course name
+		else if(localName.equals("cname"))
+		{
+			courseName = atts.getValue("text");
 		}
 		// Course code
 		else if(localName.equals("ccode"))

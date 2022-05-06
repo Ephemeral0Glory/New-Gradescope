@@ -172,8 +172,11 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		JPanel header = new JPanel();
 		GridBagLayout headerLayout = new GridBagLayout();
+		headerLayout.columnWidths = calculateColumnWidths();
+		headerLayout.columnWeights = calculateColumnWeights();
 		header.setLayout(headerLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
 		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
 		
 		// Assignments
@@ -207,14 +210,17 @@ public class CourseView extends JPanel implements IGraderScreen
 		JButton addAssignmentButton = new JButton("Add Assignment");
 		addAssignmentButton.setFont(headerFont);
 //		addAssignmentButton.addActionListener(new AddAssignmentController(rootView, course));
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridy = greatestDepth;
-//		header.add(addAssignmentButton, gbc);
+		header.add(addAssignmentButton, gbc);
 		gbc.gridx += 1;
 		
 		// Final Grade
 		JLabel finalGradeLabel = new JLabel("Final Grade");
 		finalGradeLabel.setFont(headerFont);
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(0, 0, 0, 5);
 		header.add(finalGradeLabel, gbc);
 		
 		// Section
@@ -222,7 +228,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		sectionLabel.setFont(headerFont);
 		gbc.gridx = 0;
 		gbc.gridy = greatestDepth;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 5, 0, 0);
 		header.add(sectionLabel, gbc);
 		
 		// Student
@@ -238,6 +244,42 @@ public class CourseView extends JPanel implements IGraderScreen
 		header.add(idLabel, gbc);
 		
 		return header;
+	}
+	
+	private int[] calculateColumnWidths()
+	{
+		int numColumns = course.getTemplate().getNumSuccessors()+5+1;
+		int[] widths = new int[numColumns];
+		widths[0] = 75;  // Section
+		widths[1] = 75;  // Student
+		widths[2] = 75;  // BUID
+		for(int i = 3; i < numColumns-2; i++)  // Assignments
+		{
+			widths[i] = 75;
+		}
+		widths[numColumns-3] = 100;  // Add assignment button
+		widths[numColumns-2] = 75;  // Final Grade
+		widths[numColumns-1] = 0;  // Obligatory unused final column
+		
+		return widths;
+	}
+	
+	private double[] calculateColumnWeights()
+	{
+		int numColumns = course.getTemplate().getNumSuccessors()+5+1;
+		double[] widths = new double[numColumns];
+		widths[0] = 0;  // Section
+		widths[1] = 0;  // Student
+		widths[2] = 0;  // BUID
+		for(int i = 3; i < numColumns-2; i++)  // Assignments
+		{
+			widths[i] = 0;
+		}
+		widths[numColumns-3] = 1.0;  // Add assignment button
+		widths[numColumns-2] = 0;  // Final Grade
+		widths[numColumns-1] = Double.MIN_VALUE;  // Obligatory unused final column
+		
+		return widths;
 	}
 	
 	private int calculateSubAssignmentTreeDepth(RealAssignment template)

@@ -1,23 +1,33 @@
 package boundary;
 
 import javax.swing.JPanel;
+
 import entity.Course;
-import entity.Student;
 import entity.StudentStatus;
 import entity.User;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.SwingConstants;
 
 import controller.AddSectionController;
 import controller.OpenAddSectionViewController;
 import controller.OpenMainMenuController;
 import controller.OpenViewCourseInfoViewController;
+import controller.SaveCourseDataController;
 
 import javax.swing.JButton;
 
+/**
+ * 
+ *  @author Seonghoon Steve Cho
+ *
+ */
 public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 
 	private static final long serialVersionUID = 1L;
@@ -184,8 +194,9 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		gbc_btnAddSection.gridy = 10;
 		add(btnAddSection, gbc_btnAddSection);
 		
-		JButton btnOk = new JButton("Ok");
+		JButton btnOk = new JButton("OK");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		btnOk.addActionListener(new SaveCourseDataController(course));
 		btnOk.addActionListener(new OpenMainMenuController(rootView, user));
 		gbc_btnOk.gridx = 3;
 		gbc_btnOk.gridy = 10;
@@ -194,14 +205,12 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 
 	@Override
 	public JPanel getPanelContent() {
-		// TODO Auto-generated method stub
 		return this;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		// Ignore
 	}
 
 }

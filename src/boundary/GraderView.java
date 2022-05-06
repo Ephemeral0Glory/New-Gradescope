@@ -30,9 +30,9 @@ public class GraderView extends JFrame implements IGraderFrame
 	
 	public void setUpMenuBars()
 	{
+		this.setBounds(50, 50, 1000, 600);
 		// TODO GraderView.setUpMenuBars
 
-		this.setBounds(50, 50, 1000, 600);
 	}
 
 	/**

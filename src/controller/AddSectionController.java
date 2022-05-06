@@ -26,7 +26,6 @@ public class AddSectionController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		SectionProblem error = validateInformation();
 		
 		Course course = addSectionView.getCourse();
