@@ -16,6 +16,20 @@ public class Student {
     private String lname;
     private String buID;
     private StudentStatus enrollmentStatus;
+    
+    /**
+     *  Constructor.
+     *  <p>
+     *  Creates a blank student. Intended for use by the course template.
+     */
+    public Student()
+    {
+    	this.id = IDFactory.generateStudentID();
+    	this.fname = "Template";
+    	this.lname = "Student";
+    	this.buID = "U00000000";
+    	this.enrollmentStatus = StudentStatus.ACTIVE;
+    }
 
     /**
      *  Constructor.

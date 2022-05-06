@@ -31,19 +31,29 @@ public class Course {
      *  Constructor.
      *  <p>
      *  Creates a completely empty course, without students or assignments.
-     *  @param name
-     *  @param code
-     *  @param owner
+     *  @param name  The name of the course
+     *  @param code  The university course code
+     *  @param owner  The owner (teacher) of the course
      */
     public Course(String name, String code, User owner) {
     	this.id = IDFactory.generateCourseID();
         this.name = name;
         this.code = code;
         this.owner = owner;
+        this.template = new RealAssignment(name+" template", 0f);
         this.entries = new ArrayList<Entry>();
         createAggregates();
     }
 
+    /**
+     *  Constructor.
+     *  <p>
+     *  Creates a new course with the template of assignments.
+     *  @param name  The name of the course
+     *  @param code  The university course code
+     *  @param owner  The owner (teacher) of the course
+     *  @param template
+     */
     public Course(String name, String code, User owner, RealAssignment template) {
         this(name, code, owner);
         this.template = template;

@@ -3,6 +3,11 @@ import java.util.*;
 
 import utilities.IDFactory;
 
+/**
+ *  An assignment with potential sub-assignments.
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class RealAssignment implements Gradeable {
 
     private long id;
@@ -16,6 +21,7 @@ public class RealAssignment implements Gradeable {
     public RealAssignment(String name, float weight) {
     	this.id = IDFactory.generateAssignmentID();
         this.name = name;
+        this.student = new Student();
         this.weight = weight;
         grade = new Grade(0f);
         subAssignments = new ArrayList<Gradeable>();
@@ -29,7 +35,6 @@ public class RealAssignment implements Gradeable {
         this.grade = grade;
         // Redo add NullAssignment to get grade info
         subAssignments = new ArrayList<Gradeable>();
-        // Initialize with NullAssignment
         subAssignments.add(new NullAssignment(this.name, new Grade(this.grade.getScore())));
         this.student = student;
     }

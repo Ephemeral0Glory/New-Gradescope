@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Course;
+import entity.Semester;
 import entity.User;
 import boundary.CourseView;
 import boundary.GraderView;
@@ -19,6 +20,7 @@ public class OpenCourseController
 	private User user;
 	private User owner;
 	private Course course;
+	private Semester semester;
 	
 	/**
 	 *  Constructor.
@@ -28,12 +30,14 @@ public class OpenCourseController
 	 *  @param owner  The owner of the gradebook this course came from 
 	 *  @param course  The course to display
 	 */
-	public OpenCourseController(IGraderFrame rootView, User user, User owner, Course course)
+	public OpenCourseController(IGraderFrame rootView, User user, User owner,
+			Course course, Semester semester)
 	{
 		this.rootView = rootView;
 		this.user = user;
 		this.owner = owner;
 		this.course = course;
+		this.semester = semester;
 	}
 	
 	public void open()
@@ -45,7 +49,7 @@ public class OpenCourseController
 		IGraderFrame gv = setUpFrame();
 		
 		// Create and display course edit screen
-		gv.setNewView(new CourseView(gv, user, owner, course));
+		gv.setNewView(new CourseView(gv, user, owner, course, semester));
 		gv.update();
 		gv.display();
 	}

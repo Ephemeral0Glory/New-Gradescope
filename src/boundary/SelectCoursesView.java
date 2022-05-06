@@ -16,13 +16,16 @@ import javax.swing.JLabel;
 import java.awt.Insets;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import controller.OpenMainMenuController;
 import controller.SelectCourseController;
+import controller.SelectCoursesSemesterChangeController;
 
 /**
  * 
@@ -34,7 +37,9 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private User user;
 	private Gradebook gradebook;
+	private JScrollPane listScrollPane;
 	private JList<Course> courseList;
+	private JComboBox<Semester> semesterSelector;
 	
 	public SelectCoursesView(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException {
 		this.rootView = rootView;
@@ -56,9 +61,9 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private void setupPanel() throws GradebookFileReaderException {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.5, 0.5, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.1, 0.75, 0.15, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.1, 0.1, 0.65, 0.15, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel titleLabel = new JLabel("Select a Course from the list below");
@@ -70,15 +75,36 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_titleLabel.gridx = 0;
 		gbc_titleLabel.gridy = 0;
 		add(titleLabel, gbc_titleLabel);
+		
+		JLabel selectSemesterLabel = new JLabel("Select Semester:");
+		selectSemesterLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints gbc_selectSemesterLabel = new GridBagConstraints();
+		gbc_selectSemesterLabel.anchor = GridBagConstraints.EAST;
+		gbc_selectSemesterLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_selectSemesterLabel.gridx = 0;
+		gbc_selectSemesterLabel.gridy = 1;
+		add(selectSemesterLabel, gbc_selectSemesterLabel);
+		
+		semesterSelector = new JComboBox<Semester>();
+		semesterSelector.setModel(createComboBoxModel());
+		semesterSelector.setSelectedIndex(gradebook.getSemesters().size()-1);  // Most recently created
+		semesterSelector.addActionListener(new SelectCoursesSemesterChangeController(rootView, this));
+		GridBagConstraints gbc_semesterSelectBox = new GridBagConstraints();
+		gbc_semesterSelectBox.anchor = GridBagConstraints.WEST;
+		gbc_semesterSelectBox.insets = new Insets(0, 0, 5, 0);
+		gbc_semesterSelectBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_semesterSelectBox.gridx = 1;
+		gbc_semesterSelectBox.gridy = 1;
+		add(semesterSelector, gbc_semesterSelectBox);
 
-		JScrollPane listScrollPane = new JScrollPane();
+		listScrollPane = new JScrollPane();
 		listScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_listScrollPane = new GridBagConstraints();
 		gbc_listScrollPane.gridwidth = 2;
 		gbc_listScrollPane.insets = new Insets(0, 5, 5, 5);
 		gbc_listScrollPane.fill = GridBagConstraints.BOTH;
 		gbc_listScrollPane.gridx = 0;
-		gbc_listScrollPane.gridy = 1;
+		gbc_listScrollPane.gridy = 2;
 		add(listScrollPane, gbc_listScrollPane);
 		
 		courseList = new JList<Course>(getCourses());
@@ -90,7 +116,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
 		gbc_selectButton.gridx = 0;
-		gbc_selectButton.gridy = 2;
+		gbc_selectButton.gridy = 3;
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Cancel");
@@ -98,32 +124,50 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);
 		gbc_cancelButton.gridx = 1;
-		gbc_cancelButton.gridy = 2;
+		gbc_cancelButton.gridy = 3;
 		add(cancelButton, gbc_cancelButton);
 
 	}
+	
+	private DefaultComboBoxModel<Semester> createComboBoxModel()
+	{
+		DefaultComboBoxModel<Semester> model = new DefaultComboBoxModel<Semester>();
+		for(Semester s: gradebook.getSemesters())
+		{
+			model.addElement(s);
+		}
+		return model;
+	}
 
 	private Course[] getCourses() {
-		ArrayList<Semester> semesters = gradebook.getSemesters();
-		ArrayList<Course> allCourses = new ArrayList<Course>();
-		Semester currSemester;
-		for (int i = 0; i < semesters.size(); i++) {
-			currSemester = semesters.get(i);
-			for (int j = 0; j < currSemester.getCourses().size(); j++) {
-				allCourses.add(currSemester.getCourses().get(j));
-			}
-		}
-		Course[] courses = new Course[allCourses.size()];
-		for(int i = 0; i < allCourses.size(); i++)
+		// Get courses for selected semester
+		Semester semester = getSelectedSemester();
+		ArrayList<Course> semesterCourses = semester.getCourses();
+		
+		// Convert to array for JList
+		Course[] courses = new Course[semesterCourses.size()];
+		for(int i = 0; i < semesterCourses.size(); i++)
 		{
-			courses[i] = allCourses.get(i);
+			courses[i] = semesterCourses.get(i);
 		}
 		return courses;
+	}
+	
+	public void updateCourseListing()
+	{
+		courseList = new JList<Course>(getCourses());
+		courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listScrollPane.setViewportView(courseList);
 	}
 	
 	public Course getSelectedCourse()
 	{
 		return courseList.getSelectedValue();
+	}
+	
+	public Semester getSelectedSemester()
+	{
+		return (Semester) semesterSelector.getSelectedItem();
 	}
 
 }

@@ -80,5 +80,11 @@ public class Semester {
     public boolean removeCourse(Course courseToRemove) {
         return this.courses.remove(courseToRemove);
     }
+    
+    @Override
+    public String toString()
+    {
+    	return season.toString() + " " + year;
+    }
 
 }

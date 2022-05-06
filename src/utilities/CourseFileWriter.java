@@ -244,10 +244,7 @@ public class CourseFileWriter
 		writer.writeAttribute("password", owner.getHashedPW()+"");
 		
 		// Template
-		if(course.hasTemplate())  // Don't have a template for some courses
-		{
-			writeTemplate(course.getTemplate());	
-		}
+		writeTemplate(course.getTemplate());	
 	}
 	
 	private void writeTemplate(RealAssignment template) throws XMLStreamException

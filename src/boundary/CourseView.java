@@ -5,15 +5,22 @@ import javax.swing.JPanel;
 import entity.Course;
 import entity.Entry;
 import entity.RealAssignment;
+import entity.Semester;
 import entity.User;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.SwingConstants;
+
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -35,6 +42,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private User user;
 	private User owner;
 	private Course course;
+	private Semester semester;
 	private JTextField searchField;
 	
 	/**
@@ -45,12 +53,14 @@ public class CourseView extends JPanel implements IGraderScreen
 	 *  @param owner  The owner of the gradebook this course comes from
 	 *  @param course
 	 */
-	public CourseView(IGraderFrame rootView, User user, User owner, Course course) {
+	public CourseView(IGraderFrame rootView, User user, User owner, Course course,
+			Semester semester) {
 		super();
 		this.rootView = rootView;
 		this.user = user;
 		this.owner = owner;
 		this.course = course;
+		this.semester = semester;
 		setupPanel();
 	}
 	
@@ -78,11 +88,11 @@ public class CourseView extends JPanel implements IGraderScreen
 		GridBagLayout gbl_topPanel = new GridBagLayout();
 		gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_topPanel.rowHeights = new int[]{0, 0, 0};
-		gbl_topPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_topPanel.columnWeights = new double[]{0.0, 0.5, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_topPanel.rowWeights = new double[]{0.6, 0.4, Double.MIN_VALUE};
 		topPanel.setLayout(gbl_topPanel);
 
-		JLabel courseName = new JLabel("Course");
+		JLabel courseName = new JLabel(course.toString());
 		courseName.setHorizontalAlignment(SwingConstants.CENTER);
 		courseName.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		GridBagConstraints gbc_courseName = new GridBagConstraints();
@@ -92,7 +102,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		gbc_courseName.gridy = 0;
 		topPanel.add(courseName, gbc_courseName);
 
-		JLabel semesterLabel = new JLabel("Semester");
+		JLabel semesterLabel = new JLabel(semester.toString());
 		semesterLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_semesterLabel = new GridBagConstraints();
 		gbc_semesterLabel.anchor = GridBagConstraints.WEST;
@@ -161,7 +171,8 @@ public class CourseView extends JPanel implements IGraderScreen
 	private JPanel createTableHeader()
 	{
 		JPanel header = new JPanel();
-		header.setLayout(new GridBagLayout());
+		GridBagLayout headerLayout = new GridBagLayout();
+		header.setLayout(headerLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
 		

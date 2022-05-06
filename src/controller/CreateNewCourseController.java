@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-import javax.swing.JPanel;
 import utilities.ConfigFileReader;
 import utilities.ConfigFileWriter;
 import utilities.ConfigFileWriterException;
@@ -159,8 +158,6 @@ public class CreateNewCourseController implements ActionListener {
 		rootView.update();
 		rootView.display();
 	}
-	
-
 
 	private void updateGradebookFile()
 	{
