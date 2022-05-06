@@ -24,6 +24,8 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import controller.EntrySelectedController;
+
 /**
  *  Displays the information about a course.
  *  <p>
@@ -44,6 +46,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private Course course;
 	private Semester semester;
 	private JTextField searchField;
+	private CourseInfoView infoPanel;
 	
 	/**
 	 *  Constructor.
@@ -80,7 +83,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		JScrollPane infoPanelScrollPane = new JScrollPane();
 		add(infoPanelScrollPane, BorderLayout.SOUTH);
 
-		JPanel infoPanel = new CourseInfoView(rootView);
+		infoPanel = new CourseInfoView(rootView);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
@@ -154,7 +157,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		for(Entry e: course.getEntries())
 		{
 			EntryView ev = new EntryView(e);
-//			ev.addMouseListener(new EntrySelectedController(rootView, this));
+			ev.addMouseListener(new EntrySelectedController(rootView, this));
 			table.add(ev, gbc);
 			gbc.gridy += 1;
 		}
@@ -181,29 +184,24 @@ public class CourseView extends JPanel implements IGraderScreen
 		
 		// Assignments
 		RealAssignment template = course.getTemplate();  // Take a final grade assignment
-		int greatestDepth = 0;
-		// At the start we don't have a template at all
-		if(template != null)
+		int greatestDepth = calculateSubAssignmentTreeDepth(template);
+		gbc.gridx = 3;
+		for(int i = 0; i < template.getNumSubAssignments(); i++)
 		{
-			greatestDepth = calculateSubAssignmentTreeDepth(template);
-			gbc.gridx = 3;
-			for(int i = 0; i < template.getNumSubAssignments(); i++)
-			{
-				// Add this label
-				RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
-				assignmentLabel.setFont(headerFont);
-				gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
-				// Want all of the main grade-containing assignments on the bottom row
-				gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
-				header.add(assignmentLabel, gbc);
-				gbc.gridy += 1;
-				// Need to advance to next column if there are no sub-assignments
-				gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
+			// Add this label
+			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
+			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
+			assignmentLabel.setFont(headerFont);
+			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
+			// Want all of the main grade-containing assignments on the bottom row
+			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
+			header.add(assignmentLabel, gbc);
+			gbc.gridy += 1;
+			// Need to advance to next column if there are no sub-assignments
+			gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
 
-				// Recursively add sub-assignment labels
-				labelSubAssignments(ra, header, gbc, greatestDepth);
-			}
+			// Recursively add sub-assignment labels
+			labelSubAssignments(ra, header, gbc, greatestDepth);
 		}
 		
 		// Add Assignment Button
@@ -358,8 +356,12 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		// Ignore
+	}
+	
+	public void showEntryInfo(Entry e)
+	{
+		infoPanel.showEntry(e);
 	}
 
 }

@@ -107,40 +107,95 @@ public class Course {
     private void createAggregates()
     {
     	// Create assignments
-    	assignments = new ArrayList<ArrayList<RealAssignment>>();
+    	/*
+    	 *  Assignments is a list of the lowest (non-NullAssignment) level of the tree
+    	 *  described by the template. 
+    	 */
+    	assignments = createAssignmentAggregate();
     	assignments.add(new ArrayList<RealAssignment>());
-    	// TODO Course.createAggregates need a better way to handle arbitrary sub-assignment depth, maybe keeps track of only the lowest (non-NullAssignment) level of assignments?
-//    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.size());
-//    	for(int i = 0; i < template.size(); i++)
-//    	{
-//    		ArrayList<RealAssignment> al = new ArrayList<RealAssignment>(entries.size());
-//    		for(Entry e: entries)
-//    		{
-//    			/* Can cast because we know that the first sub-assignment level of each
-//        		 * Entry's finalGrade member are the assignments.
-//        		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
-//    			RealAssignment a = (RealAssignment) e.getAssignment(i);
-//    			al.add(a);
-//    		}
-//    		all.add(al);
-//    	}
+    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.getNumSubAssignments()+1);
+    	for(int i = 0; i < template.getNumSuccessors(); i++)
+    	{
+    		ArrayList<RealAssignment> al = new ArrayList<RealAssignment>(entries.size());
+    		for(Entry e: entries)
+    		{
+    			/* Can cast because we know that the first sub-assignment level of each
+        		 * Entry's finalGrade member are the assignments.
+        		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
+    			RealAssignment a = (RealAssignment) e.getAssignment(i);
+    			al.add(a);
+    		}
+    		all.add(al);
+    	}
     	
     	
     	// Create students
-    	students = new ArrayList<Student>();
-//    	ArrayList<Student> stl = new ArrayList<Student>(entries.size());
-//    	for(Entry e: entries)
-//    	{
-//    		stl.add(e.getStudent());
-//    	}
+    	students = new ArrayList<Student>(entries.size());
+    	for(Entry e: entries)
+    	{
+    		students.add(e.getStudent());
+    	}
     	
     	// Create final grades
-    	finalGrades = new ArrayList<Gradeable>();
-//    	ArrayList<Gradeable> gl = new ArrayList<Gradeable>(entries.size());
-//    	for(Entry e: entries)
-//    	{
-//    		gl.add(e.getFinalGrade());
-//    	}
+    	finalGrades = new ArrayList<Gradeable>(entries.size());
+    	for(Entry e: entries)
+    	{
+    		finalGrades.add(e.getFinalGrade());
+    	}
+    }
+    
+    private ArrayList<ArrayList<RealAssignment>> createAssignmentAggregate()
+    {
+    	// Create list of leaf node assignments from the assignment tree 
+    	ArrayList<ArrayList<RealAssignment>> aggregate = new ArrayList<ArrayList<RealAssignment>>();
+    	// Initialize lists
+    	for(int i = 0; i < template.getNumSuccessors(); i++)
+    	{
+    		aggregate.add(new ArrayList<RealAssignment>());
+    	}
+    	
+    	// Fill lists
+    	for(Entry e: entries)
+    	{
+    		// Get all leaf assignments in this entry
+    		ArrayList<RealAssignment> entryAssignments = getLeafAssignmentList(e.getFinalGrade());
+    		
+    		// Transfer the information to the aggregate list
+    		for(int i = 0; i < template.getNumSuccessors(); i++)
+    		{
+    			aggregate.get(i).add(entryAssignments.get(i));
+    		}
+    	}
+    	
+    	return aggregate;
+    }
+    
+    private ArrayList<RealAssignment> getLeafAssignmentList(RealAssignment ra)
+    {
+    	ArrayList<RealAssignment> leafNodes = new ArrayList<RealAssignment>();
+    	
+    	// Check for leaf condition
+    	if(ra.getNumSubAssignments() == 0)
+    	{
+    		// Have a leaf, return
+    		leafNodes.add(ra);
+    		return leafNodes;
+    	}
+    	else  // Have subassignments
+    	{
+    		for(Gradeable g: ra.getSubAssignments())
+    		{
+    			// Can cast because checked for NullAssignment above
+    			RealAssignment sa = (RealAssignment) g;
+    			
+    			// Get all leaf assignments in this sub-assignment
+    			ArrayList<RealAssignment> saLeafList = getLeafAssignmentList(sa);
+    			
+    			// Transfer information
+    			leafNodes.addAll(saLeafList);
+    		}
+    		return leafNodes;
+    	}
     }
 
     public long getID() {
