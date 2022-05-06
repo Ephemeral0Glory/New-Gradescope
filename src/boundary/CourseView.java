@@ -19,6 +19,8 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.SwingConstants;
 
+import controller.OpenAddAssignmentViewController;
+
 import java.awt.Insets;
 
 import javax.swing.JTextField;
@@ -209,7 +211,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Add Assignment Button
 		JButton addAssignmentButton = new JButton("Add Assignment");
 		addAssignmentButton.setFont(headerFont);
-//		addAssignmentButton.addActionListener(new OpenAddAssignmentWindowController(rootView, course));
+		addAssignmentButton.addActionListener(new OpenAddAssignmentViewController(rootView, user, course));
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridy = greatestDepth;
