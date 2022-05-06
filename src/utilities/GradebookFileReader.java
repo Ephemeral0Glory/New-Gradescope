@@ -60,7 +60,7 @@ public class GradebookFileReader extends DefaultHandler
 	 *  The following are used while parsing:
 	 */
 	private long gb_id;
-	private User user;
+	private User owner;
 	private long user_id;
 	private String email;
 	private String fname;
@@ -130,7 +130,7 @@ public class GradebookFileReader extends DefaultHandler
 			throw new GradebookFileReaderException(e.getMessage());
 		}
 		
-		return new Gradebook(gb_id, user, semesters);
+		return new Gradebook(gb_id, this.owner, semesters);
 	}
 	
 	private String getGradebookFileName(User owner)
@@ -224,10 +224,10 @@ public class GradebookFileReader extends DefaultHandler
 	{
 		// Take action depending on tag type
 		// User
-		if(localName.equals("user"))
+		if(localName.equals("owner"))
 		{
 			// Create user
-			user = new User(user_id, email, fname, lname, hashedPW);
+			owner = new User(user_id, email, fname, lname, hashedPW);
 		}
 		// Semester
 		else if(localName.equals("semester"))

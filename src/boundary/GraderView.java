@@ -25,6 +25,11 @@ public class GraderView extends JFrame implements IGraderFrame
 		this.setBounds(50, 50, 1000, 600);
 		this.setResizable(false);
 	}
+	
+	public void setUpMenuBars()
+	{
+		// TODO GraderView.setUpMenuBars
+	}
 
 	/**
 	 *  Displays this frame and all of its subcomponents.

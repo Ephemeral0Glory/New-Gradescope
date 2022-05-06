@@ -22,6 +22,12 @@ public class OpenMainMenuController implements ActionListener
 	private IGraderFrame rootView;
 	private User user;
 	
+	/**
+	 *  Constructor.
+	 *  
+	 *  @param rootView  The application's window frame object
+	 *  @param user  The current user
+	 */
 	public OpenMainMenuController(IGraderFrame rootView, User user)
 	{
 		this.rootView = rootView;

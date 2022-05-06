@@ -124,6 +124,8 @@ public class CourseFileWriter
 			
 			// End
 			writer.writeEndDocument();
+			
+			writer.flush();
 		}
 		catch (Exception e)
 		{
@@ -242,7 +244,10 @@ public class CourseFileWriter
 		writer.writeAttribute("password", owner.getHashedPW()+"");
 		
 		// Template
-		writeTemplate(course.getTemplate());
+		if(course.hasTemplate())  // Don't have a template for some courses
+		{
+			writeTemplate(course.getTemplate());	
+		}
 	}
 	
 	private void writeTemplate(RealAssignment template) throws XMLStreamException

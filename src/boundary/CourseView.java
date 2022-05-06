@@ -5,24 +5,17 @@ import javax.swing.JPanel;
 import entity.Course;
 import entity.Entry;
 import entity.RealAssignment;
-import entity.StudentStatus;
 import entity.User;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import java.awt.Insets;
-import java.util.ArrayList;
-
 import javax.swing.JTextField;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 /**
  *  Displays the information about a course.
@@ -31,25 +24,32 @@ import javax.swing.JComboBox;
  *  <ul><li>a title area, with the name of the course and the table headers</li>
  *  <li>the grades table, a series of {@link EntryView} panels</li>
  *  <li>the info panel, where grades and comments can be edited</li>
+ *  </ul>
  *  
  *  @author Alex Titus
  */
 public class CourseView extends JPanel implements IGraderScreen
 {
 	private static final long serialVersionUID = 3924557341183124315L;
-	private GraderView rootView;
+	private IGraderFrame rootView;
 	private User user;
+	private User owner;
 	private Course course;
 	private JTextField searchField;
 	
 	/**
 	 *  Constructor.
 	 *  
+	 *  @param rootView
+	 *  @param user  The current user
+	 *  @param owner  The owner of the gradebook this course comes from
+	 *  @param course
 	 */
-	public CourseView(GraderView rootView, User user, Course course) {
+	public CourseView(IGraderFrame rootView, User user, User owner, Course course) {
 		super();
 		this.rootView = rootView;
 		this.user = user;
+		this.owner = owner;
 		this.course = course;
 		setupPanel();
 		
@@ -168,24 +168,29 @@ public class CourseView extends JPanel implements IGraderScreen
 		
 		// Assignments
 		RealAssignment template = course.getTemplate();  // Take a final grade assignment
-		int greatestDepth = calculateSubAssignmentTreeDepth(template);
-		gbc.gridx = 3;
-		for(int i = 0; i < template.getNumSubAssignments(); i++)
+		int greatestDepth = 0;
+		// At the start we don't have a template at all
+		if(template != null)
 		{
-			// Add this label
-			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
-			assignmentLabel.setFont(headerFont);
-			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
-			// Want all of the main grade-containing assignments on the bottom row
-			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
-			header.add(assignmentLabel, gbc);
-			gbc.gridy += 1;
-			// Need to advance to next column if there are no sub-assignments
-			gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
-			
-			// Recursively add sub-assignment labels
-			labelSubAssignments(ra, header, gbc, greatestDepth);
+			greatestDepth = calculateSubAssignmentTreeDepth(template);
+			gbc.gridx = 3;
+			for(int i = 0; i < template.getNumSubAssignments(); i++)
+			{
+				// Add this label
+				RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
+				JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
+				assignmentLabel.setFont(headerFont);
+				gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
+				// Want all of the main grade-containing assignments on the bottom row
+				gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
+				header.add(assignmentLabel, gbc);
+				gbc.gridy += 1;
+				// Need to advance to next column if there are no sub-assignments
+				gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
+
+				// Recursively add sub-assignment labels
+				labelSubAssignments(ra, header, gbc, greatestDepth);
+			}
 		}
 		
 		// Add Assignment Button

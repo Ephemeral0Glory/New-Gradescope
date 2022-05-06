@@ -45,7 +45,7 @@ import entity.StudentStatus;
 public class CourseInfoView extends JPanel implements IGraderScreen
 {
 	private static final long serialVersionUID = -1118231147797373119L;
-	private GraderView rootView;
+	private IGraderFrame rootView;
 	private Entry entry;
 	private ArrayList<RealAssignment> column;
 	private JTextField firstNameField;
@@ -55,7 +55,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
 	
-	public CourseInfoView(GraderView rootView)
+	public CourseInfoView(IGraderFrame rootView)
 	{
 		this.rootView = rootView;
 	}
