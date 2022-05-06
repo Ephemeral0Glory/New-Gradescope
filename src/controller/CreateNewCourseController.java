@@ -3,9 +3,12 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
 import utilities.GradebookFileReaderException;
 import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
+import boundary.ViewCourseInfoView;
 //import controller.CreateNewUserController.CreateProblem;
 import entity.Course;
 import entity.Gradebook;
@@ -53,7 +56,8 @@ public class CreateNewCourseController implements ActionListener {
 			newCourseInfo.showCourseCreated();
 			
 			// Return to main menu screen
-			openMainMenu();
+//			openMainMenu();
+			openViewCourseInfoView(c);
 		} else {
 			// Display error
 			newCourseInfo.showCourseCreationFailed(error);
@@ -88,4 +92,17 @@ public class CreateNewCourseController implements ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
+	private void openViewCourseInfoView(Course course) {
+//		OpenViewCourseInfoViewController ovcivc = new OpenViewCourseInfoViewController(rootView, user, course);
+		// Create menu
+		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
+		
+		// Display it
+		rootView.setNewView(vciv);
+		rootView.update();
+		rootView.display();
+	}
+	
+
 }
