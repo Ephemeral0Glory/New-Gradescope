@@ -33,9 +33,7 @@ public class AddAssignmentController implements ActionListener{
             Gradeable newAssignment = new RealAssignment(assignmentName, assignmentWeight);
             Course course = addAssignmentView.getCourse();
             course.getTemplate().addSubAssignment(newAssignment);
-            for (Entry entry: course.getEntries()) {
-                entry.addAssignment((RealAssignment) newAssignment);
-            }
+            course.addAssignment((RealAssignment) newAssignment);
             // Close window
             returnToParentView();
         }
@@ -61,6 +59,9 @@ public class AddAssignmentController implements ActionListener{
 
         // Check for duplicate assignment name
         for (Gradeable a: addAssignmentView.getCourse().getTemplate().getSubAssignments()) {
+            if (addAssignmentView.getCourse().getTemplate().getNumSubAssignments() == 0) {
+                break;
+            }
             if (assignmentName.equals(((RealAssignment) a).getName())) {
                 return AssignmentProblem.DUPLICATED_NAME;
             }
