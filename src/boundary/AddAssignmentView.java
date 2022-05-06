@@ -231,7 +231,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.gridx = 2;
-		gbc_cancelButton.gridy = 8;
+		gbc_cancelButton.gridy = y;
 		add(cancelButton, gbc_cancelButton);
 	}
 
