@@ -22,9 +22,13 @@ import javax.swing.SwingConstants;
 import controller.OpenAddAssignmentViewController;
 
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import controller.ColumnSelectedController;
+import controller.EntrySelectedController;
 
 /**
  *  Displays the information about a course.
@@ -46,6 +50,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private Course course;
 	private Semester semester;
 	private JTextField searchField;
+	private CourseInfoView infoPanel;
 	
 	/**
 	 *  Constructor.
@@ -82,7 +87,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		JScrollPane infoPanelScrollPane = new JScrollPane();
 		add(infoPanelScrollPane, BorderLayout.SOUTH);
 
-		JPanel infoPanel = new CourseInfoView(rootView);
+		infoPanel = new CourseInfoView(rootView);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
@@ -156,7 +161,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		for(Entry e: course.getEntries())
 		{
 			EntryView ev = new EntryView(e);
-//			ev.addMouseListener(new EntrySelectedController(rootView, this));
+			ev.addMouseListener(new EntrySelectedController(rootView, this));
 			table.add(ev, gbc);
 			gbc.gridy += 1;
 		}
@@ -183,29 +188,28 @@ public class CourseView extends JPanel implements IGraderScreen
 		
 		// Assignments
 		RealAssignment template = course.getTemplate();  // Take a final grade assignment
-		int greatestDepth = 0;
-		// At the start we don't have a template at all
-		if(template != null)
+		int greatestDepth = calculateSubAssignmentTreeDepth(template);
+		gbc.gridx = 3;
+		for(int i = 0; i < template.getNumSubAssignments(); i++)
 		{
-			greatestDepth = calculateSubAssignmentTreeDepth(template);
-			gbc.gridx = 3;
-			for(int i = 0; i < template.getNumSubAssignments(); i++)
+			// Add this label
+			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
+			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
+			assignmentLabel.setFont(headerFont);
+			if(ra.getNumSubAssignments() == 0)  // If a leaf node
 			{
-				// Add this label
-				RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
-				assignmentLabel.setFont(headerFont);
-				gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
-				// Want all of the main grade-containing assignments on the bottom row
-				gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
-				header.add(assignmentLabel, gbc);
-				gbc.gridy += 1;
-				// Need to advance to next column if there are no sub-assignments
-				gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
-
-				// Recursively add sub-assignment labels
-				labelSubAssignments(ra, header, gbc, greatestDepth);
+				assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
 			}
+			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
+			// Want all of the main grade-containing assignments on the bottom row
+			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
+			header.add(assignmentLabel, gbc);
+			gbc.gridy += 1;
+			// Need to advance to next column if there are no sub-assignments
+			gbc.gridx += (ra.getNumSubAssignments() == 0) ? 1 : 0;
+
+			// Recursively add sub-assignment labels
+			labelSubAssignments(ra, header, gbc, greatestDepth);
 		}
 		
 		// Add Assignment Button
@@ -360,8 +364,30 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		course.updateGrades();
+	}
+	
+	/**
+	 *  Update info panel to show the entry's information.
+	 *  @param e  The entry to display
+	 */
+	public void showEntryInfo(Entry e)
+	{
+		infoPanel.showEntry(e);
+	}
+	
+	/**
+	 *  Update info panel to show the assignment column's information.
+	 *  @param column  The assignment list to display
+	 */
+	public void showColumnInfo(ArrayList<RealAssignment> column)
+	{
+		infoPanel.showColumn(column);
+	}
+	
+	public Course getCourse()
+	{
+		return course;
 	}
 
 }

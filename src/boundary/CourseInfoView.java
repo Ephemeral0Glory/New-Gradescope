@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controller.DeleteEntryController;
+import controller.UpdateEntryController;
+import controller.UpdateGradesController;
 import entity.Entry;
 import entity.RealAssignment;
 import entity.StudentStatus;
@@ -50,7 +53,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	private ArrayList<RealAssignment> column;
 	private JTextField firstNameField;
 	private JTextField lastNameField;
-	private JTextField idField;
+	private JTextField buidField;
 	private JComboBox<StudentStatus> statusSelector;
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
@@ -114,10 +117,10 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		gbc.anchor = GridBagConstraints.EAST;
 		add(idLabel, gbc);
 		gbc.gridx += 1;
-		idField = new JTextField(entry.getStudent().getBUID());
-		idField.setFont(panelFont);
+		buidField = new JTextField(entry.getStudent().getBUID());
+		buidField.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.WEST;
-		add(idField, gbc);
+		add(buidField, gbc);
 		gbc.gridx += 1;
 			// Status
 		JLabel statusLabel = new JLabel("Status:");
@@ -154,7 +157,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Buttons
 		JButton deleteButton = new JButton("Delete Entry");
 		deleteButton.setFont(panelFont);
-//		deleteButton.addActionListener(new DeleteEntryController(rootView, this));
+		deleteButton.addActionListener(new DeleteEntryController(rootView, entry));
 		gbc.gridx = 4;
 		gbc.gridy += 1;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -162,7 +165,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		gbc.gridx += 1;
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(panelFont);
-//		updateButton.addActionListener(new UpdateEntryController(rootView, this));
+		updateButton.addActionListener(new UpdateEntryController(rootView, this));
 		add(updateButton, gbc);
 	}
 	
@@ -223,7 +226,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 				gbc.gridy += 1;
 
 				// Recursively add labels and grade/comment input fields for all sub-assignments
-				labelSubAssignments(a, gbc);
+				labelSubAssignments(sa, gbc);
 				gbc.gridx = startingX;
 			}
 		}
@@ -307,12 +310,12 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Add update grades, delete assignment buttons
 		JButton deleteAssignmentButton = new JButton("Delete Assignment");
 		deleteAssignmentButton.setFont(tableFont);
-		//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
+//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
 		gbc.gridx = 3;
 		infoPanel.add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");
 		updateGradesButton.setFont(tableFont);
-		//		updateGradesButton.addActionListener(new UpdateGradesController(rootView, course));
+		updateGradesButton.addActionListener(new UpdateGradesController(rootView, this));
 		gbc.gridx = 4;
 		infoPanel.add(updateGradesButton, gbc);
 
@@ -328,8 +331,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	@Override
 	public void update()
 	{
-		// TODO Auto-generated method stub
-
+		// Ignore
 	}
 	
 	public Entry getEntry()
@@ -340,6 +342,46 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	public ArrayList<RealAssignment> getColumn()
 	{
 		return column;
+	}
+	
+	public ArrayList<String> getGradesList()
+	{
+		ArrayList<String> gradeScores = new ArrayList<String>(gradesList.size());
+		for(JTextField entry: gradesList)
+		{
+			gradeScores.add(entry.getText());
+		}
+		return gradeScores;
+	}
+	
+	public ArrayList<String> getCommentsList()
+	{
+		ArrayList<String> comments = new ArrayList<String>(commentsList.size());
+		for(JTextArea entry: commentsList)
+		{
+			comments.add(entry.getText());
+		}
+		return comments;
+	}
+	
+	public String getEnteredFName()
+	{
+		return firstNameField.getText();
+	}
+	
+	public String getEnteredLName()
+	{
+		return lastNameField.getText();
+	}
+	
+	public String getEnteredBUID()
+	{
+		return buidField.getText();
+	}
+	
+	public StudentStatus getSelectedStatus()
+	{
+		return (StudentStatus) statusSelector.getSelectedItem();
 	}
 
 }

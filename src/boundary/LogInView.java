@@ -196,6 +196,15 @@ public class LogInView extends JFrame implements IGraderFrame {
 	{
 		setContentPane(gs.getPanelContent());
 	}
+
+	/**
+	 *  @return  Null, don't use
+	 */
+	@Override
+	public IGraderScreen getCurrentDisplay()
+	{
+		return null;
+	}
 	
 	public ArrayList<User> getUsers()
 	{

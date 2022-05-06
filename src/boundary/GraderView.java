@@ -204,5 +204,14 @@ public class GraderView extends JFrame implements IGraderFrame
 		nowDisplaying = gs;
 		setContentPane(gs.getPanelContent());
 	}
+	
+	/**
+	 *  @return  The screen currently being displayed
+	 */
+	@Override
+	public IGraderScreen getCurrentDisplay()
+	{
+		return nowDisplaying;
+	}
 
 }

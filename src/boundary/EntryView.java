@@ -97,5 +97,10 @@ public class EntryView extends JPanel implements IGraderScreen
 		removeAll();
 		setupPanel();
 	}
+	
+	public Entry getEntry()
+	{
+		return entry;
+	}
 
 }
