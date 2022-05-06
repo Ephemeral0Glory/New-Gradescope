@@ -20,10 +20,12 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import controller.ColumnSelectedController;
 import controller.EntrySelectedController;
 
 /**
@@ -192,6 +194,10 @@ public class CourseView extends JPanel implements IGraderScreen
 			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
 			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
 			assignmentLabel.setFont(headerFont);
+			if(ra.getNumSubAssignments() == 0)  // If a leaf node
+			{
+				assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
+			}
 			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
 			// Want all of the main grade-containing assignments on the bottom row
 			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
@@ -359,9 +365,27 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Ignore
 	}
 	
+	/**
+	 *  Update info panel to show the entry's information.
+	 *  @param e  The entry to display
+	 */
 	public void showEntryInfo(Entry e)
 	{
 		infoPanel.showEntry(e);
+	}
+	
+	/**
+	 *  Update info panel to show the assignment column's information.
+	 *  @param column  The assignment list to display
+	 */
+	public void showColumnInfo(ArrayList<RealAssignment> column)
+	{
+		infoPanel.showColumn(column);
+	}
+	
+	public Course getCourse()
+	{
+		return course;
 	}
 
 }

@@ -319,6 +319,11 @@ public class Course {
     	// Remove this column
         return this.assignments.remove(columnToRemove);
     }
+    
+    public ArrayList<RealAssignment> getAggregateAssignment(int index)
+    {
+    	return this.assignments.get(index);
+    }
 
     public void addSection(Section section) {
         this.sections.add(section);
