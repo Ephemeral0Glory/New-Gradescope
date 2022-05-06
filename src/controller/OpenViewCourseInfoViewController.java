@@ -23,13 +23,13 @@ public class OpenViewCourseInfoViewController implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		// Create menu
-//		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
-//		
-//		// Display it
-//		rootView.setNewView(vciv);
-//		rootView.update();
-//		rootView.display();
+		// Create menu
+		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
+		
+		// Display it
+		rootView.setNewView(vciv);
+		rootView.update();
+		rootView.display();
 		
 	}
 
