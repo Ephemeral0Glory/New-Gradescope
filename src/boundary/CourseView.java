@@ -362,7 +362,7 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	@Override
 	public void update() {
-		// Ignore
+		course.updateGrades();
 	}
 	
 	/**

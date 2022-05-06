@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import controller.DeleteEntryController;
 import controller.UpdateEntryController;
+import controller.UpdateGradesController;
 import entity.Entry;
 import entity.RealAssignment;
 import entity.StudentStatus;
@@ -314,7 +315,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		infoPanel.add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");
 		updateGradesButton.setFont(tableFont);
-//		updateGradesButton.addActionListener(new UpdateGradesController(rootView, course));
+		updateGradesButton.addActionListener(new UpdateGradesController(rootView, this));
 		gbc.gridx = 4;
 		infoPanel.add(updateGradesButton, gbc);
 
