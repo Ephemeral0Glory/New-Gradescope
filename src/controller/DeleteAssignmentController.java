@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import entity.Course;
 import entity.RealAssignment;
-import boundary.CourseInfoView;
 import boundary.CourseView;
 import boundary.IGraderFrame;
 
@@ -16,7 +15,7 @@ import boundary.IGraderFrame;
 public class DeleteAssignmentController implements ActionListener
 {
 	private IGraderFrame rootView;
-	private CourseInfoView assignmentInfo;
+	private RealAssignment ra;
 	
 	/**
 	 *  Constructor.
@@ -24,10 +23,10 @@ public class DeleteAssignmentController implements ActionListener
 	 *  @param rootView  The application window frame
 	 *  @param assignmentInfo  The screen with the information about the assignments
 	 */
-	public DeleteAssignmentController(IGraderFrame rootView, CourseInfoView assignmentInfo)
+	public DeleteAssignmentController(IGraderFrame rootView, RealAssignment ra)
 	{
 		this.rootView = rootView;
-		this.assignmentInfo = assignmentInfo;
+		this.ra = ra;
 	}
 
 	/**
@@ -43,9 +42,6 @@ public class DeleteAssignmentController implements ActionListener
 	
 	public void delete()
 	{
-		// Get assignment to delete
-		RealAssignment ra = assignmentInfo.getColumn().get(0);
-		
 		// Get course
 		// Can cast because the only way to reach this method is via CourseView
 		Course c = ((CourseView) rootView.getCurrentDisplay()).getCourse();

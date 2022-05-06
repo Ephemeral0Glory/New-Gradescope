@@ -311,7 +311,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Add update grades, delete assignment buttons
 		JButton deleteAssignmentButton = new JButton("Delete Assignment");
 		deleteAssignmentButton.setFont(tableFont);
-		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, this));
+		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, column.get(0)));
 		gbc.gridx = 3;
 		infoPanel.add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");

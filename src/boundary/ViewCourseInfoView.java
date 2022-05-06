@@ -15,19 +15,16 @@ import java.awt.Insets;
 
 import javax.swing.SwingConstants;
 
-import controller.AddSectionController;
-import controller.OpenAddSectionViewController;
 import controller.OpenAddSectionWindowController;
 import controller.OpenMainMenuController;
-import controller.OpenViewCourseInfoViewController;
 import controller.SaveCourseDataController;
 
 import javax.swing.JButton;
 
 /**
- * 
+ *  
  *  @author Seonghoon Steve Cho
- *
+ *  @author Alex Titus
  */
 public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 

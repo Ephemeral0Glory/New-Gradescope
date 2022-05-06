@@ -7,13 +7,13 @@ import boundary.*;
 import entity.*;
 
 
-public class OpenAddAssignmentViewController implements ActionListener {
+public class OpenAddAssignmentWindowController implements ActionListener {
 
     private IGraderFrame rootView;
     private User user;
     private Course course;
 
-    public OpenAddAssignmentViewController(IGraderFrame rootView, User user, Course course) {
+    public OpenAddAssignmentWindowController(IGraderFrame rootView, User user, Course course) {
         this.rootView = rootView;
         this.user = user;
         this.course = course;

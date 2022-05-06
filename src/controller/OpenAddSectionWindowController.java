@@ -11,6 +11,7 @@ import boundary.IGraderFrame;
 
 /**
  *  Opens the Add New Section window from the Course Edit screen.
+ *  @author Seonghoon Steve Cho
  *  @author Alex Titus
  */
 public class OpenAddSectionWindowController implements ActionListener
