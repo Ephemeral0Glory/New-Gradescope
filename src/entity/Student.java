@@ -110,5 +110,10 @@ public class Student {
         this.enrollmentStatus = newStudentStatus;
         return this.enrollmentStatus;
     }
+    
+    public void setEnrollmentStatus(StudentStatus newStatus)
+    {
+    	this.enrollmentStatus = newStatus;
+    }
 
 }

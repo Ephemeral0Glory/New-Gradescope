@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controller.UpdateEntryController;
 import entity.Entry;
 import entity.RealAssignment;
 import entity.StudentStatus;
@@ -50,7 +51,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	private ArrayList<RealAssignment> column;
 	private JTextField firstNameField;
 	private JTextField lastNameField;
-	private JTextField idField;
+	private JTextField buidField;
 	private JComboBox<StudentStatus> statusSelector;
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
@@ -114,10 +115,10 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		gbc.anchor = GridBagConstraints.EAST;
 		add(idLabel, gbc);
 		gbc.gridx += 1;
-		idField = new JTextField(entry.getStudent().getBUID());
-		idField.setFont(panelFont);
+		buidField = new JTextField(entry.getStudent().getBUID());
+		buidField.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.WEST;
-		add(idField, gbc);
+		add(buidField, gbc);
 		gbc.gridx += 1;
 			// Status
 		JLabel statusLabel = new JLabel("Status:");
@@ -162,7 +163,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		gbc.gridx += 1;
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(panelFont);
-//		updateButton.addActionListener(new UpdateEntryController(rootView, this));
+		updateButton.addActionListener(new UpdateEntryController(rootView, this));
 		add(updateButton, gbc);
 	}
 	
@@ -223,7 +224,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 				gbc.gridy += 1;
 
 				// Recursively add labels and grade/comment input fields for all sub-assignments
-				labelSubAssignments(a, gbc);
+				labelSubAssignments(sa, gbc);
 				gbc.gridx = startingX;
 			}
 		}
@@ -340,6 +341,46 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	public ArrayList<RealAssignment> getColumn()
 	{
 		return column;
+	}
+	
+	public ArrayList<String> getGradesList()
+	{
+		ArrayList<String> gradeScores = new ArrayList<String>(gradesList.size());
+		for(JTextField entry: gradesList)
+		{
+			gradeScores.add(entry.getText());
+		}
+		return gradeScores;
+	}
+	
+	public ArrayList<String> getCommentsList()
+	{
+		ArrayList<String> comments = new ArrayList<String>(commentsList.size());
+		for(JTextArea entry: commentsList)
+		{
+			comments.add(entry.getText());
+		}
+		return comments;
+	}
+	
+	public String getEnteredFName()
+	{
+		return firstNameField.getText();
+	}
+	
+	public String getEnteredLName()
+	{
+		return lastNameField.getText();
+	}
+	
+	public String getEnteredBUID()
+	{
+		return buidField.getText();
+	}
+	
+	public StudentStatus getSelectedStatus()
+	{
+		return (StudentStatus) statusSelector.getSelectedItem();
 	}
 
 }
