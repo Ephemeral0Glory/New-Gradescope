@@ -52,7 +52,6 @@ public class CourseView extends JPanel implements IGraderScreen
 		this.user = user;
 		this.course = course;
 		setupPanel();
-		
 	}
 	
 	private void setupPanel()
@@ -194,7 +193,7 @@ public class CourseView extends JPanel implements IGraderScreen
 //		addAssignmentButton.addActionListener(new AddAssignmentController(rootView, course));
 		gbc.gridwidth = 1;
 		gbc.gridy = greatestDepth;
-		header.add(addAssignmentButton, gbc);
+//		header.add(addAssignmentButton, gbc);
 		gbc.gridx += 1;
 		
 		// Final Grade
