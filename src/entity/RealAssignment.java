@@ -233,10 +233,18 @@ public class RealAssignment implements Gradeable {
         numSubAssignments += 1;
     }
 
+    /**
+     *  Removes the given assignment from the sub-assignment tree.
+     *  <p>
+     *  This may require going several layers deep into the tree. Removes the first
+     *  incidence of the given sub-assignment tree.
+     *  @param subAssignment  The sub-assignment to remove
+     *  @return  True if the sub-assignment existed in the tree (and was thus removed). False otherwise
+     */
     public boolean removeSubAssignment(Gradeable subAssignment) {
         boolean success = this.subAssignments.remove(subAssignment);
         
-        if(success) 
+        if(success)
         {
         	numSubAssignments -= 1;
         	
@@ -246,6 +254,26 @@ public class RealAssignment implements Gradeable {
         		// Add a NullAssignment
         		subAssignments.add(new NullAssignment(name, new Grade(grade.getScore(), grade.getComment())));
         	}
+        }
+        else  // Wasn't in this list of sub-assignments
+        {
+        	// If have sub-assignments to check
+        	if(numSubAssignments != 0)
+        	{
+        		// Check the sub-assignment tree
+        		for(Gradeable g: subAssignments)
+        		{
+        			// Can cast because checked for NullAssignment above
+        			RealAssignment ra = (RealAssignment) g;
+        			success = ra.removeSubAssignment(subAssignment);
+        			if(success)
+        			{
+        				// Removed first incidence of subAssignment
+        				break;
+        			}
+        		}
+        	}
+        	// Otherwise let it go through
         }
         
         return success;

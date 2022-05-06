@@ -11,5 +11,6 @@ public abstract interface IGraderFrame
 	public void update();
 	public void closeWindow();
 	public void setNewView(IGraderScreen gs);
+	public IGraderScreen getCurrentDisplay();
 
 }

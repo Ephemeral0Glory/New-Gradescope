@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controller.DeleteEntryController;
 import controller.UpdateEntryController;
 import entity.Entry;
 import entity.RealAssignment;
@@ -155,7 +156,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Buttons
 		JButton deleteButton = new JButton("Delete Entry");
 		deleteButton.setFont(panelFont);
-//		deleteButton.addActionListener(new DeleteEntryController(rootView, this));
+		deleteButton.addActionListener(new DeleteEntryController(rootView, entry));
 		gbc.gridx = 4;
 		gbc.gridy += 1;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -308,12 +309,12 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Add update grades, delete assignment buttons
 		JButton deleteAssignmentButton = new JButton("Delete Assignment");
 		deleteAssignmentButton.setFont(tableFont);
-		//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
+//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
 		gbc.gridx = 3;
 		infoPanel.add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");
 		updateGradesButton.setFont(tableFont);
-		//		updateGradesButton.addActionListener(new UpdateGradesController(rootView, course));
+//		updateGradesButton.addActionListener(new UpdateGradesController(rootView, course));
 		gbc.gridx = 4;
 		infoPanel.add(updateGradesButton, gbc);
 
@@ -329,8 +330,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	@Override
 	public void update()
 	{
-		// TODO Auto-generated method stub
-
+		// Ignore
 	}
 	
 	public Entry getEntry()
