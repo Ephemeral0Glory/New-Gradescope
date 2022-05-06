@@ -1,1 +1,2 @@
-<?xml version="1.0" ?><gradebook><gbid text="1"></gbid><owner><oid text="1"></oid><email text="bluehat2@bu.edu"></email><fname text="Seonghoon"></fname><lname text="Cho"></lname><password text="1449619136"></password></owner><semesters></semesters></gradebook>
+<?xml version="1.0" ?><gradebook><gbid text="1"></gbid><owner><oid text="1"></oid><email text="alex@bu.edu"></email><fname text="Alex"></fname><lname text="Titus"></lname><password text="1216985755"></password></owner><semesters><semester><sid text="1"></sid><season text="FALL"></season><year text="2022"></year><course><cid text="1"></cid><cname text="Fundamentals of Computer Science"></cname><ccode text="CS 101"></ccode></course></semester></semesters></gradebook>
+

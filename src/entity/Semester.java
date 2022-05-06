@@ -14,6 +14,7 @@ public class Semester {
     	this.id = IDFactory.generateSemesterID();
         this.season = Season.getSeason(season);
         this.year = year;
+        this.courses = new ArrayList<Course>();
     }
 
     public Semester(String season, int year, ArrayList<Course> courses) {

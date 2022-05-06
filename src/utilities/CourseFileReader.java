@@ -286,6 +286,11 @@ public class CourseFileReader extends DefaultHandler
 		{
 			templateNumSubAssignments = new Integer(atts.getValue("text"));
 		}
+		// Entries
+		else if(localName.equals("entries"))
+		{
+			entries = new ArrayList<Entry>(50);
+		}
 		// Entry ID
 		else if(localName.equals("eid"))
 		{

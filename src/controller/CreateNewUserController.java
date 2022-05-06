@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import utilities.ConfigFileReader;
+import utilities.ConfigFileWriter;
+import utilities.ConfigFileWriterException;
 import utilities.GradebookFileReader;
 import utilities.GradebookFileWriter;
 import utilities.GradebookFileWriterException;
+import utilities.IDFactory;
 import utilities.UserFileReader;
 import utilities.UserFileWriter;
 import utilities.UserFileWriterException;
@@ -73,6 +77,9 @@ public class CreateNewUserController implements ActionListener
 			// Create user directory and default gradebook file
 			createUserDirectory(user);
 			createGradebookFile(user);
+			
+			// Update config file
+			updateConfigFile();
 			
 			// Return to the log-in screen
 			OpenLogInController olc = new OpenLogInController(view);
@@ -179,6 +186,22 @@ public class CreateNewUserController implements ActionListener
 			writer.writeGradebook(gb);
 		}
 		catch (GradebookFileWriterException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateConfigFile()
+	{
+		try
+		{
+			ConfigFileWriter writer = new ConfigFileWriter(ConfigFileReader.configFileName);
+			
+			// Write out new config state
+			writer.writeConfig(IDFactory.getConfigs());
+		}
+		catch(ConfigFileWriterException e)
 		{
 			// TODO Notify user of problem
 			e.printStackTrace();

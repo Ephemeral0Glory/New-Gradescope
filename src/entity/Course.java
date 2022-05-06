@@ -95,18 +95,21 @@ public class Course {
     private void createAggregates()
     {
     	// Create sections
-    	ArrayList<Section> sl = new ArrayList<Section>();
-    	for(Entry e: entries)
-    	{
-    		Section s = e.getSection();
-    		if(!sl.contains(s))
-    		{
-    			sl.add(s);
-    		}
-    	}
-    	sections = sl;
+    	sections = new ArrayList<Section>();
+//    	ArrayList<Section> sl = new ArrayList<Section>();
+//    	for(Entry e: entries)
+//    	{
+//    		Section s = e.getSection();
+//    		if(!sl.contains(s))
+//    		{
+//    			sl.add(s);
+//    		}
+//    	}
+//    	sections = sl;
     	
     	// Create assignments
+    	assignments = new ArrayList<ArrayList<RealAssignment>>();
+    	assignments.add(new ArrayList<RealAssignment>());
     	// TODO Course.createAggregates need a better way to handle arbitrary sub-assignment depth, maybe keeps track of only the lowest (non-NullAssignment) level of assignments?
 //    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.size());
 //    	for(int i = 0; i < template.size(); i++)
@@ -125,18 +128,20 @@ public class Course {
     	
     	
     	// Create students
-    	ArrayList<Student> stl = new ArrayList<Student>(entries.size());
-    	for(Entry e: entries)
-    	{
-    		stl.add(e.getStudent());
-    	}
+    	students = new ArrayList<Student>();
+//    	ArrayList<Student> stl = new ArrayList<Student>(entries.size());
+//    	for(Entry e: entries)
+//    	{
+//    		stl.add(e.getStudent());
+//    	}
     	
     	// Create final grades
-    	ArrayList<Gradeable> gl = new ArrayList<Gradeable>(entries.size());
-    	for(Entry e: entries)
-    	{
-    		gl.add(e.getFinalGrade());
-    	}
+    	finalGrades = new ArrayList<Gradeable>();
+//    	ArrayList<Gradeable> gl = new ArrayList<Gradeable>(entries.size());
+//    	for(Entry e: entries)
+//    	{
+//    		gl.add(e.getFinalGrade());
+//    	}
     }
 
     public long getID() {
@@ -185,6 +190,11 @@ public class Course {
     public RealAssignment getTemplate()
     {
     	return this.template;
+    }
+    
+    public boolean hasTemplate()
+    {
+    	return (this.template != null);
     }
 
     public ArrayList<Gradeable> getFinalGrades() {
@@ -288,6 +298,12 @@ public class Course {
         {
         	e.updateGrade();
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return code + " " + name;
     }
 
 }

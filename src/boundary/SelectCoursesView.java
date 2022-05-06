@@ -3,37 +3,44 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.*;
-import utilities.GradebookFileReader;
 import utilities.GradebookFileReaderException;
 
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JList;
 import javax.swing.JLabel;
+
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.awt.Button;
+
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+
+import controller.OpenMainMenuController;
+import controller.SelectCourseController;
 
 /**
  * 
  *  @author David Sullo
+ *  @author Alex Titus
  */
 public class SelectCoursesView extends JPanel implements IGraderScreen {
+	private static final long serialVersionUID = 5906822060130097403L;
 	private IGraderFrame rootView;
 	private User user;
 	private Gradebook gradebook;
+	private JList<Course> courseList;
 	
 	public SelectCoursesView(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException {
 		this.rootView = rootView;
 		this.user = user;
 		this.gradebook = gradebook;
 		setupPanel();
-		
 	}
 
 	@Override
@@ -43,8 +50,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		// Ignore
 	}
 	
 	private void setupPanel() throws GradebookFileReaderException {
@@ -65,27 +71,22 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_titleLabel.gridy = 0;
 		add(titleLabel, gbc_titleLabel);
 
+		JScrollPane listScrollPane = new JScrollPane();
+		listScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		GridBagConstraints gbc_listScrollPane = new GridBagConstraints();
+		gbc_listScrollPane.gridwidth = 2;
+		gbc_listScrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_listScrollPane.fill = GridBagConstraints.BOTH;
+		gbc_listScrollPane.gridx = 0;
+		gbc_listScrollPane.gridy = 1;
+		add(listScrollPane, gbc_listScrollPane);
 		
-		
-		JList<Course> courseList = new JList<Course>(getCourses());
+		courseList = new JList<Course>(getCourses());
 		courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		GridBagConstraints gbc_courseList = new GridBagConstraints();
-		gbc_courseList.gridwidth = 2;
-		gbc_courseList.insets = new Insets(0, 0, 5, 5);
-		gbc_courseList.fill = GridBagConstraints.BOTH;
-		gbc_courseList.gridx = 0;
-		gbc_courseList.gridy = 1;
-		add(courseList, gbc_courseList);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		GridBagConstraints gbc_scrollBar = new GridBagConstraints();
-		gbc_scrollBar.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollBar.anchor = GridBagConstraints.EAST;
-		gbc_scrollBar.gridx = 2;
-		gbc_scrollBar.gridy = 1;
-		add(scrollBar, gbc_scrollBar);
+		listScrollPane.setViewportView(courseList);
 		
 		JButton selectButton = new JButton("Select");
+		selectButton.addActionListener(new SelectCourseController(rootView, this, user, gradebook));
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 0, 0, 5);
 		gbc_selectButton.gridx = 0;
@@ -93,6 +94,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new OpenMainMenuController(rootView, user));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 5);
 		gbc_cancelButton.gridx = 1;
@@ -101,18 +103,27 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 
 	}
 
-	private Course[] getCourses() throws GradebookFileReaderException {
+	private Course[] getCourses() {
 		ArrayList<Semester> semesters = gradebook.getSemesters();
-		ArrayList<Course> result = new ArrayList<Course>();
+		ArrayList<Course> allCourses = new ArrayList<Course>();
 		Semester currSemester;
 		for (int i = 0; i < semesters.size(); i++) {
 			currSemester = semesters.get(i);
 			for (int j = 0; j < currSemester.getCourses().size(); j++) {
-				result.add(currSemester.getCourses().get(j));
+				allCourses.add(currSemester.getCourses().get(j));
 			}
 		}
-		return (Course[]) result.toArray();
-
+		Course[] courses = new Course[allCourses.size()];
+		for(int i = 0; i < allCourses.size(); i++)
+		{
+			courses[i] = allCourses.get(i);
+		}
+		return courses;
+	}
+	
+	public Course getSelectedCourse()
+	{
+		return courseList.getSelectedValue();
 	}
 
 }
