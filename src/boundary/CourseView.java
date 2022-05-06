@@ -49,6 +49,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private Semester semester;
 	private JTextField searchField;
 	private CourseInfoView infoPanel;
+	private JPanel tableHeader;
 	
 	/**
 	 *  Constructor.
@@ -79,7 +80,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		JPanel entriesTable = createEntriesTable();
 		tableScrollPane.setViewportView(entriesTable);
 		
-		JPanel tableHeader = createTableHeader();
+		tableHeader = createTableHeader();
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
 		JScrollPane infoPanelScrollPane = new JScrollPane();
@@ -362,7 +363,11 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	@Override
 	public void update() {
+		// Update all grades in case anything changed 
 		course.updateGrades();
+		
+		// Update header if the assignments changed
+		
 	}
 	
 	/**

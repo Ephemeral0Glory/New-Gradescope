@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controller.DeleteAssignmentController;
 import controller.DeleteEntryController;
 import controller.UpdateEntryController;
 import controller.UpdateGradesController;
@@ -310,7 +311,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 		// Add update grades, delete assignment buttons
 		JButton deleteAssignmentButton = new JButton("Delete Assignment");
 		deleteAssignmentButton.setFont(tableFont);
-//		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, course));
+		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, this));
 		gbc.gridx = 3;
 		infoPanel.add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");

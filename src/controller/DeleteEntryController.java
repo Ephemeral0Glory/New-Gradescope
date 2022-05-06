@@ -40,6 +40,7 @@ public class DeleteEntryController implements ActionListener
 	public void delete()
 	{
 		// Get course
+		// Can cast because the only way to reach this method is via CourseView
 		Course c = ((CourseView) rootView.getCurrentDisplay()).getCourse();
 		
 		// Remove entry

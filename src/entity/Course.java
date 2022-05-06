@@ -305,19 +305,14 @@ public class Course {
         	e.removeAssignment(assignmentToRemove);
         }
         
-    	// Find column that has this assignment
-    	ArrayList<RealAssignment> columnToRemove = null;
-    	for(ArrayList<RealAssignment> column: assignments)
-    	{
-    		RealAssignment ra = column.get(0);
-    		if(ra.equals(assignmentToRemove))
-    		{
-    			columnToRemove = column;
-    		}
-    	}
+        // Remove this assignment from template
+        boolean retval = this.template.removeSubAssignment(assignmentToRemove);
+        
+        // Update aggregates
+        createAggregates();
     	
     	// Remove this column
-        return this.assignments.remove(columnToRemove);
+        return retval;
     }
     
     public ArrayList<RealAssignment> getAggregateAssignment(int index)
