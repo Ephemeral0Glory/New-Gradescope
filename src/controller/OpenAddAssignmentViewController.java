@@ -27,6 +27,7 @@ public class OpenAddAssignmentViewController implements ActionListener {
     public void open() {
         // Create new window
         GraderView gv = new GraderView("Add an Assignment");
+        gv.setClosePolicyPopUp();
 
         // Create add assignment screen
         AddAssignmentView asv = new AddAssignmentView(gv, rootView, user, course);

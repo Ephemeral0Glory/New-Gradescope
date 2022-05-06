@@ -9,8 +9,6 @@ import javax.swing.JTextField;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import javax.swing.SwingConstants;
-
 import controller.AddAssignmentController;
 import controller.ClosePopupWindowController;
 import controller.AddAssignmentController.*;
@@ -33,7 +31,6 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		this.user = user;
 		this.course = course;
 		setupPanel();
-		
 	}
 	
 	private void setupPanel() {
@@ -111,7 +108,6 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 	@Override
 	public void update() {
 		// Ignore
-
 	}
 
 	public Course getCourse() {
@@ -158,7 +154,6 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentName.gridy = y;
 		add(assignmentName, gbc_assignmentName);
 		
-		assignmentNameField = new JTextField();
 		GridBagConstraints gbc_assignmentNameField = new GridBagConstraints();
 		gbc_assignmentNameField.insets = new Insets(0, 0, 5, 0);
 		gbc_assignmentNameField.fill = GridBagConstraints.HORIZONTAL;
@@ -198,7 +193,6 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentWeight.gridy = y;
 		add(assignmentWeight, gbc_assignmentWeight);
 		
-		assignmentWeightField = new JTextField();
 		GridBagConstraints gbc_assignmentWeightField = new GridBagConstraints();
 		gbc_assignmentWeightField.insets = new Insets(0, 0, 5, 0);
 		gbc_assignmentWeightField.fill = GridBagConstraints.HORIZONTAL;
