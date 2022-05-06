@@ -3,18 +3,22 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+import javax.swing.JPanel;
 import utilities.ConfigFileReader;
 import utilities.ConfigFileWriter;
 import utilities.ConfigFileWriterException;
 import utilities.CourseFileWriter;
 import utilities.CourseFileWriterException;
 import utilities.GradebookFileReader;
+
 import utilities.GradebookFileReaderException;
 import utilities.GradebookFileWriter;
 import utilities.GradebookFileWriterException;
 import utilities.IDFactory;
 import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
+import boundary.ViewCourseInfoView;
 //import controller.CreateNewUserController.CreateProblem;
 import entity.Course;
 import entity.Gradebook;
@@ -77,7 +81,8 @@ public class CreateNewCourseController implements ActionListener {
 			createCourseFile(c);
 			
 			// Return to main menu screen
-			openMainMenu();
+//			openMainMenu();
+			openViewCourseInfoView(c);
 		} else {
 			// Display error
 			newCourseInfo.showCourseCreationFailed(error);
@@ -143,6 +148,20 @@ public class CreateNewCourseController implements ActionListener {
 		}
 	}
 	
+
+	private void openViewCourseInfoView(Course course) {
+//		OpenViewCourseInfoViewController ovcivc = new OpenViewCourseInfoViewController(rootView, user, course);
+		// Create menu
+		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
+		
+		// Display it
+		rootView.setNewView(vciv);
+		rootView.update();
+		rootView.display();
+	}
+	
+
+
 	private void updateGradebookFile()
 	{
 		try
@@ -195,4 +214,5 @@ public class CreateNewCourseController implements ActionListener {
 			e.printStackTrace();
 		}
 	}
+
 }

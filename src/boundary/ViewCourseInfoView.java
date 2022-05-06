@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
+
+import controller.OpenMainMenuController;
+
 import javax.swing.JButton;
 
 public class ViewCourseInfoView extends JPanel implements IGraderScreen {
@@ -34,20 +37,37 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		this.rootView = rootView;
 		this.user = user;	
 		this.course = course;
-		
+
 	
 		setupPanel();
 		// fill data
-		long numOfCurrentStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.ACTIVE).count();
-		long numOfDroppedStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.WITHDRAWN).count();
-		long numOfStartStudents = numOfCurrentStudents + numOfDroppedStudents;
-	
 		lblTitle.setText(course.getCode() + "(" + course.getName() + ")");
-		lblNumOfSectionsData.setText(String.valueOf(course.getSections().size()));
-		lblNumOfAssignmentsData.setText(String.valueOf(course.getAssignments().size()));
-		lblCurrentStudentsData.setText(String.valueOf(numOfCurrentStudents));
-		lblStartStudentsData.setText(String.valueOf(numOfStartStudents));
-		lblDroppedStudentsData.setText(String.valueOf(numOfDroppedStudents));
+
+		if (course.getSections() != null) {
+			lblNumOfSectionsData.setText(String.valueOf(course.getSections().size()));
+		} else {
+			lblNumOfAssignmentsData.setText("0");
+		}
+		
+		if (course.getStudents() != null) {
+			long numOfCurrentStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.ACTIVE).count();
+			long numOfDroppedStudents = course.getStudents().stream().filter(student -> student.getEnrollmentStatus() == StudentStatus.WITHDRAWN).count();
+			long numOfStartStudents = numOfCurrentStudents + numOfDroppedStudents;
+			
+			lblCurrentStudentsData.setText(String.valueOf(numOfCurrentStudents));
+			lblStartStudentsData.setText(String.valueOf(numOfStartStudents));
+			lblDroppedStudentsData.setText(String.valueOf(numOfDroppedStudents));
+		} else {
+			lblCurrentStudentsData.setText("0");
+			lblStartStudentsData.setText("0");
+			lblDroppedStudentsData.setText("0");
+		}
+		
+		if  (course.getAssignments() != null) {
+			lblNumOfAssignmentsData.setText(String.valueOf(course.getAssignments().size()));
+		} else {
+			lblNumOfAssignmentsData.setText("0");
+		}
 	}
 	
 	private void setupPanel() {
@@ -160,6 +180,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		
 		JButton btnOk = new JButton("Ok");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		btnOk.addActionListener(new OpenMainMenuController(rootView, user));
 		gbc_btnOk.gridx = 3;
 		gbc_btnOk.gridy = 10;
 		add(btnOk, gbc_btnOk);
@@ -168,7 +189,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	@Override
 	public JPanel getPanelContent() {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
