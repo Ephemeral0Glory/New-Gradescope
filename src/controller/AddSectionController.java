@@ -10,10 +10,9 @@ import boundary.AddSectionView;
 import boundary.IGraderFrame;
 
 /**
- * 
+ *  Opens the add section popup window.
  *  @author Seonghoon Steve Cho
  *  @author Alex Titus
- *
  */
 public class AddSectionController implements ActionListener {
 	
@@ -31,6 +30,14 @@ public class AddSectionController implements ActionListener {
 		this.addSectionView = addSectionView;
 	}
 
+	/**
+	 *  Validates the information entered and creates the new section.
+	 *  <p>
+	 *  If the entered information fails validation, displays the error
+	 *  on the add section screen. Closes the window after success.
+	 *  
+	 *  @param e  The initiating event, ignored
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		SectionProblem error = validateInformation();
@@ -43,8 +50,12 @@ public class AddSectionController implements ActionListener {
 			Section newSection = new Section(addSectionView.getName(), courseID, addSectionView.getCode());
 			course.addSection(newSection);
 			
-			// Close window
-			returnToParentView();
+			// Tell user
+			addSectionView.showSuccess();
+			
+			// Refresh main window
+			parentView.update();
+			parentView.display();
 		}
 		else  // Had a problem
 		{
@@ -74,15 +85,6 @@ public class AddSectionController implements ActionListener {
 		}
 		
 		return SectionProblem.NO_ERROR;
-	}
-	
-	private void returnToParentView() {
-		// Close the Add Section window
-		rootView.closeWindow();
-		
-		// Refresh the parent
-		parentView.update();
-		parentView.display();
 	}
 
 }

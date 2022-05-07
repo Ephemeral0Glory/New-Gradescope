@@ -29,6 +29,7 @@ import javax.swing.JButton;
 
 import controller.ColumnSelectedController;
 import controller.EntrySelectedController;
+import controller.OpenAddEntryWindowController;
 
 /**
  *  Displays the information about a course.
@@ -170,7 +171,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Add entry button
 		JButton addEntryButton = new JButton("Add Entry");
 		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, course));
+		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, user, course));
 		table.add(addEntryButton, gbc);
 		
 		return table;

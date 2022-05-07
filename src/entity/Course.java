@@ -354,6 +354,40 @@ public class Course {
         }
     }
     
+    /**
+     *  @param s  The student to look for
+     *  @return  True if the entries table contains this student, false otherwise.
+     */
+    public boolean hasEntry(Student s)
+    {
+    	// Check for this student in all entries in table
+    	for(Entry e: entries)
+    	{
+    		if(e.getStudent().equals(s))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	// If we get to here, student is not in table
+    	return false;
+    }
+    
+    public boolean hasEntryBUID(String buid)
+    {
+    	// Check for this BUID in all entries in table
+    	for(Entry e: entries)
+    	{
+    		if(e.getStudent().getBUID().equals(buid))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	// If we get here, this BUID is not in the table
+    	return false;
+    }
+    
     @Override
     public String toString()
     {

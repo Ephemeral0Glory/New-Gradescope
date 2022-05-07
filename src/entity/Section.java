@@ -130,5 +130,11 @@ public class Section {
     public boolean removeStudent(Student studentToRemove) {
         return this.students.remove(studentToRemove);
     }
+    
+    @Override
+    public String toString()
+    {
+    	return code + ": " + name;
+    }
 
 }

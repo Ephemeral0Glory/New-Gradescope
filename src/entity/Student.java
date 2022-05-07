@@ -115,5 +115,24 @@ public class Student {
     {
     	this.enrollmentStatus = newStatus;
     }
+    
+    /**
+     *  Uses unique ID to determine equality
+     *  @param o  The object being compared
+     *  @return  True if o is a Student with the same unique ID as this student
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+    	if(o instanceof Student)
+    	{
+    		Student s = (Student) o;
+    		return s.getID() == this.id;
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    }
 
 }

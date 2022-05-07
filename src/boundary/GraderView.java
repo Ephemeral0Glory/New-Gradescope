@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import controller.OpenAddAssignmentWindowController;
+import controller.OpenAddEntryWindowController;
 import controller.OpenAddSectionWindowController;
 import controller.OpenMainMenuController;
 import controller.SaveCourseDataController;
@@ -118,7 +119,7 @@ public class GraderView extends JFrame implements IGraderFrame
 				// Add entry
 		item = new JMenuItem("Add Entry");
 		item.setMnemonic(KeyEvent.VK_E);
-//		item.addActionListener(new OpenAddEntryWindowController(this, u, c));
+		item.addActionListener(new OpenAddEntryWindowController(this, u, c));
 		add.add(item);
 		edit.add(add);
 			// Remove submenu

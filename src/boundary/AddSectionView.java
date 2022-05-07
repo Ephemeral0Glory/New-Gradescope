@@ -143,7 +143,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gbc_btnConfirm.gridy = 9;
 		add(btnConfirm, gbc_btnConfirm);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton("Close");
 		btnCancel.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.WEST;
@@ -161,6 +161,13 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 	@Override
 	public void update() {
 		// Ignore
+	}
+	
+	public void showSuccess()
+	{
+		removeAll();
+		clearData();
+		setupPanelWithError(SectionProblem.NO_ERROR);
 	}
 	
 	public void showError(SectionProblem error)
@@ -285,6 +292,17 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gbc_btnAddStudent.gridy = y;
 		add(btnAddStudent, gbc_btnAddStudent);
 		
+		if(error == SectionProblem.NO_ERROR)
+		{
+			JLabel errorMessage = new JLabel("Section created!");
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.anchor = GridBagConstraints.NORTH;
+			gbc.gridx = 2;
+			gbc.gridy = y;
+			add(errorMessage, gbc);
+			y++;
+		}
+		
 		JButton btnConfirm = new JButton("Create");
 		btnConfirm.addActionListener(new AddSectionController(rootView, parentFrame, user, this));
 		GridBagConstraints gbc_btnConfirm = new GridBagConstraints();
@@ -293,7 +311,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gbc_btnConfirm.gridy = y;
 		add(btnConfirm, gbc_btnConfirm);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton("Close");
 		btnCancel.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.WEST;
@@ -301,6 +319,12 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gbc_btnCancel.gridx = 3;
 		gbc_btnCancel.gridy = y;
 		add(btnCancel, gbc_btnCancel);
+	}
+	
+	private void clearData()
+	{
+		txtSectionCode.setText("");
+		txtSectionName.setText("");
 	}
 	
 	public String getCode() {
