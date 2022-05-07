@@ -141,7 +141,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		for(int i = 0; i < finalGrade.getNumSubAssignments(); i++)
 		{
 			// Create parent label
-			// Can cast because finalGrade can never have a NullAssignment as a subassignment
+			// Can cast because checked above (numSubAssignments!=0)
 			RealAssignment a = (RealAssignment) finalGrade.getSubAssignment(i);
 			JLabel assignmentLabel = new JLabel(a.getName() + " " + a.getWeight() + "%");
 			assignmentLabel.setFont(panelFont);
@@ -163,10 +163,11 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		gbc.gridy += 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		add(deleteButton, gbc);
-		gbc.gridx += 1;
+		
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(panelFont);
 		updateButton.addActionListener(new UpdateEntryController(rootView, this));
+		gbc.gridx += 1;
 		add(updateButton, gbc);
 	}
 	
@@ -200,6 +201,8 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			gbc.gridx += 1;
 			JTextArea commentsArea = new JTextArea(a.getGrade().getComment());
 			commentsArea.setFont(panelFont);
+			commentsArea.setEditable(true);
+			commentsArea.setEnabled(true);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridheight = 2;
 			add(commentsArea, gbc);

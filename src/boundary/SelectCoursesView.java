@@ -142,6 +142,10 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private Course[] getCourses() {
 		// Get courses for selected semester
 		Semester semester = getSelectedSemester();
+		if(semester == null)  // If tried to access before creating course
+		{
+			return new Course[0];
+		}
 		ArrayList<Course> semesterCourses = semester.getCourses();
 		
 		// Convert to array for JList

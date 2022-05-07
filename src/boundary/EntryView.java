@@ -43,7 +43,7 @@ public class EntryView extends JPanel implements IGraderScreen
 		layout.columnWeights = calculateColumnWeights();
 		setLayout(layout);
 		
-		JLabel sectionLabel = new JLabel(entry.getSection().getName());
+		JLabel sectionLabel = new JLabel(entry.getSection().getCode());
 		sectionLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_sectionLabel = new GridBagConstraints();
 		gbc_sectionLabel.insets = new Insets(0, 0, 0, 5);

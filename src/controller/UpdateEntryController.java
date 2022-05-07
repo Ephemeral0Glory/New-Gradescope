@@ -77,11 +77,13 @@ public class UpdateEntryController implements ActionListener
 		
 		// Update grades
 		RealAssignment finalGrade = e.getFinalGrade();
+		scoresIndex = 0;  // Reset from last time
+		commentsIndex = 0;  // Reset from last time
 		// Go through tree of sub-assignments and update leaf node's grade scores and comments
 		for(int i = 0; i < finalGrade.getNumSubAssignments(); i++)
 		{
 			// Create parent label
-			// Can cast because finalGrade can never have a NullAssignment as a subassignment
+			// Can cast because checked above (numSubAssignments!=0)
 			RealAssignment a = (RealAssignment) finalGrade.getSubAssignment(i);
 			
 			// Recursively update grade score and comment for all sub-assignments
@@ -96,15 +98,16 @@ public class UpdateEntryController implements ActionListener
 		// Check if we've reached the bottom of the tree
 		if(a.getNumSubAssignments() == 0)
 		{
+			// Update the NullAssigment's grade that takes care of this RealAssignment
 			// Update Grade Score
 			float score = new Float(scores.get(scoresIndex));
 			scoresIndex++;
-			a.getGrade().setScore(score);
+			a.getSubAssignment(0).getGrade().setScore(score);
 			
 			// Comments
 			String comment = comments.get(commentsIndex);
 			commentsIndex++;
-			a.getGrade().setComment(comment);
+			a.getSubAssignment(0).getGrade().setComment(comment);
 		}
 		else  // Have sub-assignments
 		{

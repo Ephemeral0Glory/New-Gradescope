@@ -48,7 +48,9 @@ public class NullAssignment implements Gradeable {
      */
     public NullAssignment(long id, String name, Grade grade)
     {
-    	
+    	this.id = id;
+    	this.name = name;
+    	this.grade = grade;
     }
 
     public long getID() {
@@ -69,6 +71,7 @@ public class NullAssignment implements Gradeable {
         return this.name;
     }
 
+    @Override
     public Grade getGrade() {
         return this.grade;
     }

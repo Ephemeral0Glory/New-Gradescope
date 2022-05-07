@@ -50,8 +50,11 @@ public class CourseView extends JPanel implements IGraderScreen
 	private Course course;
 	private Semester semester;
 	private JTextField searchField;
-	private CourseInfoPanelView infoPanel;
+	private JScrollPane tableScrollPane;
 	private JPanel tableHeader;
+	private JPanel entriesTable;
+	private JScrollPane infoPanelScrollPane;
+	private CourseInfoPanelView infoPanel;
 	
 	/**
 	 *  Constructor.
@@ -75,16 +78,16 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		setLayout(new BorderLayout(0, 5));
 
-		JScrollPane tableScrollPane = new JScrollPane();
+		tableScrollPane = new JScrollPane();
 		add(tableScrollPane, BorderLayout.CENTER);
 
-		JPanel entriesTable = createEntriesTable();
+		entriesTable = createEntriesTable();
 		tableScrollPane.setViewportView(entriesTable);
 		
 		tableHeader = createTableHeader();
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
-		JScrollPane infoPanelScrollPane = new JScrollPane();
+		infoPanelScrollPane = new JScrollPane();
 		add(infoPanelScrollPane, BorderLayout.SOUTH);
 
 		infoPanel = new CourseInfoPanelView(rootView);
@@ -155,7 +158,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		// Add entries
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		for(Entry e: course.getEntries())
@@ -194,7 +197,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		{
 			// Add this label
 			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(ra.getName() + " " + ra.getWeight() + "%");
+			JLabel assignmentLabel = new JLabel(ra.getName() + " " + convert(ra.getWeight()) + "%");
 			assignmentLabel.setFont(headerFont);
 			if(ra.getNumSubAssignments() == 0)  // If a leaf node
 			{
@@ -250,6 +253,12 @@ public class CourseView extends JPanel implements IGraderScreen
 		header.add(idLabel, gbc);
 		
 		return header;
+	}
+	
+	private String convert(float weight)
+	{
+		float percentageWeight = weight * 100;
+		return String.format("%.00f", percentageWeight);
 	}
 	
 	private int[] calculateColumnWidths()
@@ -368,7 +377,12 @@ public class CourseView extends JPanel implements IGraderScreen
 		course.updateGrades();
 		
 		// Update header if the assignments changed
+		tableHeader = createTableHeader();
+		tableScrollPane.setColumnHeaderView(tableHeader);
 		
+		// Update entries table
+		entriesTable = createEntriesTable();
+		tableScrollPane.setViewportView(entriesTable);
 	}
 	
 	/**
@@ -378,6 +392,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	public void showEntryInfo(Entry e)
 	{
 		infoPanel.showEntry(e);
+		infoPanelScrollPane.setViewportView(infoPanel);
 	}
 	
 	/**

@@ -73,7 +73,7 @@ public class RealAssignment implements Gradeable {
     	
     	// Use template to create sub-assignments
     	subAssignments = copyTemplate(template, student);
-    	numSubAssignments = subAssignments.size();
+    	numSubAssignments = template.getNumSubAssignments();
     }
     
     /**
@@ -150,6 +150,7 @@ public class RealAssignment implements Gradeable {
         return this.name;
     }
 
+    @Override
     public Grade getGrade() {
         return this.grade;
     }

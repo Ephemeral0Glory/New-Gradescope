@@ -280,7 +280,7 @@ public class Course {
     		/* Can cast because we know that the first sub-assignment level of each
     		 * Entry's finalGrade member are the assignments.
     		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
-    		RealAssignment ra = (RealAssignment) e.getAssignment(assignments.size());
+    		RealAssignment ra = (RealAssignment) e.getAssignment(assignments.size()-1);
     		list.add(ra);
     	}
     	

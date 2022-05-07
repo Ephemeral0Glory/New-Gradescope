@@ -169,6 +169,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 		add(studentFirstNameLabel, gbc_studentFirstNameLabel);
 		
 		firstNameField = new JTextField();
+		firstNameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_firstNameField = new GridBagConstraints();
 		gbc_firstNameField.insets = new Insets(0, 0, 5, 0);
 		gbc_firstNameField.anchor = GridBagConstraints.WEST;
