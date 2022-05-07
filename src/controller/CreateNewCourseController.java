@@ -78,8 +78,7 @@ public class CreateNewCourseController implements ActionListener {
 			createCourseFile(c);
 			
 			// Return to main menu screen
-//			openMainMenu();
-			openViewCourseInfoView(c);
+			openMainMenu();
 		} else {
 			// Display error
 			newCourseInfo.showCourseCreationFailed(error);
@@ -143,12 +142,6 @@ public class CreateNewCourseController implements ActionListener {
 			// TODO Notify user of problem
 			e.printStackTrace();
 		}
-	}
-	
-
-	private void openViewCourseInfoView(Course course) {
-		OpenViewCourseInfoViewController ovcivc = new OpenViewCourseInfoViewController(rootView, user, course);
-		ovcivc.open();
 	}
 
 	private void updateGradebookFile()

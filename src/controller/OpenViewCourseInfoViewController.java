@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import boundary.GraderView;
 import boundary.IGraderFrame;
 //import boundary.UserOptionsMenuView;
 import boundary.ViewCourseInfoView;
@@ -49,11 +50,15 @@ public class OpenViewCourseInfoViewController implements ActionListener {
 	 */
 	public void open()
 	{
+		// Create new window
+		GraderView gv = new GraderView("Course Information");
+		gv.setClosePolicyPopUp();
+		
 		// Create menu
-		ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, user, course);
+		ViewCourseInfoView vciv = new ViewCourseInfoView(gv, rootView, user, course);
 
 		// Display it
-		rootView.setNewView(vciv);
+		gv.setNewView(vciv);
 		rootView.update();
 		rootView.display();
 	}

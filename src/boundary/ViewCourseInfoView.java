@@ -15,6 +15,7 @@ import java.awt.Insets;
 
 import javax.swing.SwingConstants;
 
+import controller.ClosePopupWindowController;
 import controller.OpenAddSectionWindowController;
 import controller.OpenMainMenuController;
 import controller.SaveCourseDataController;
@@ -30,6 +31,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 
 	private static final long serialVersionUID = 1L;
 	private IGraderFrame rootView;
+	private IGraderFrame parentView;
 	private User user;
 	private Course course;
 	
@@ -43,9 +45,10 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	/**
 	 * Create the panel.
 	 */
-	public ViewCourseInfoView(IGraderFrame rootView, User user, Course course) {
+	public ViewCourseInfoView(IGraderFrame rootView, IGraderFrame parentView, User user, Course course) {
 		super();
 		this.rootView = rootView;
+		this.parentView = parentView;
 		this.user = user;	
 		this.course = course;
 
@@ -156,18 +159,17 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		gbc_lblDroppedStudentsData.gridy = 7;
 		add(lblDroppedStudentsData, gbc_lblDroppedStudentsData);
 		
-		JButton btnAddSection = new JButton("Add section");
-		btnAddSection.addActionListener(new OpenAddSectionWindowController(rootView, user, course));
-		GridBagConstraints gbc_btnAddSection = new GridBagConstraints();
-		gbc_btnAddSection.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAddSection.gridx = 1;
-		gbc_btnAddSection.gridy = 10;
-		add(btnAddSection, gbc_btnAddSection);
+//		JButton btnAddSection = new JButton("Add section");
+//		btnAddSection.addActionListener(new OpenAddSectionWindowController(rootView, user, course));
+//		GridBagConstraints gbc_btnAddSection = new GridBagConstraints();
+//		gbc_btnAddSection.insets = new Insets(0, 0, 0, 5);
+//		gbc_btnAddSection.gridx = 1;
+//		gbc_btnAddSection.gridy = 10;
+//		add(btnAddSection, gbc_btnAddSection);
 		
-		JButton btnOk = new JButton("OK");
+		JButton btnOk = new JButton("Close");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		btnOk.addActionListener(new SaveCourseDataController(course));
-		btnOk.addActionListener(new OpenMainMenuController(rootView, user));
+		btnOk.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		gbc_btnOk.gridx = 3;
 		gbc_btnOk.gridy = 10;
 		add(btnOk, gbc_btnOk);
