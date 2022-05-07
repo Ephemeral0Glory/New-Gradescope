@@ -8,6 +8,7 @@ import entity.Entry;
 import entity.Grade;
 
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Insets;
@@ -37,7 +38,10 @@ public class EntryView extends JPanel implements IGraderScreen
 	
 	private void setupPanel()
 	{
-		setLayout(new GridBagLayout());
+		GridBagLayout layout = new GridBagLayout();
+		layout.columnWidths = calculateColumnWidths();
+		layout.columnWeights = calculateColumnWeights();
+		setLayout(layout);
 		
 		JLabel sectionLabel = new JLabel(entry.getSection().getName());
 		sectionLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -83,6 +87,42 @@ public class EntryView extends JPanel implements IGraderScreen
 		gbc_finalGradeLabel.gridx = gbc_assignmentGradeLabel.gridx;
 		gbc_finalGradeLabel.gridy = 0;
 		add(finalGradeLabel, gbc_finalGradeLabel);
+	}
+	
+	private int[] calculateColumnWidths()
+	{
+		int numColumns = entry.getFinalGrade().getNumSuccessors()+5+1;
+		int[] widths = new int[numColumns];
+		widths[0] = 75;  // Section
+		widths[1] = 75;  // Student
+		widths[2] = 75;  // BUID
+		for(int i = 3; i < numColumns-2; i++)  // Assignments
+		{
+			widths[i] = 75;
+		}
+		widths[numColumns-3] = 100;  // Add assignment button
+		widths[numColumns-2] = 75;  // Final Grade
+		widths[numColumns-1] = 0;  // Obligatory unused final column
+		
+		return widths;
+	}
+	
+	private double[] calculateColumnWeights()
+	{
+		int numColumns = entry.getFinalGrade().getNumSuccessors()+5+1;
+		double[] widths = new double[numColumns];
+		widths[0] = 0;  // Section
+		widths[1] = 0;  // Student
+		widths[2] = 0;  // BUID
+		for(int i = 3; i < numColumns-2; i++)  // Assignments
+		{
+			widths[i] = 0;
+		}
+		widths[numColumns-3] = 1.0;  // Add assignment button
+		widths[numColumns-2] = 0;  // Final Grade
+		widths[numColumns-1] = Double.MIN_VALUE;  // Obligatory unused final column
+		
+		return widths;
 	}
 
 	@Override

@@ -47,7 +47,6 @@ public class CourseView extends JPanel implements IGraderScreen
 	private static final long serialVersionUID = 3924557341183124315L;
 	private IGraderFrame rootView;
 	private User user;
-	private User owner;
 	private Course course;
 	private Semester semester;
 	private JTextField searchField;
@@ -60,14 +59,13 @@ public class CourseView extends JPanel implements IGraderScreen
 	 *  @param rootView
 	 *  @param user  The current user
 	 *  @param owner  The owner of the gradebook this course comes from
-	 *  @param course
+	 *  @param course  The course being modified
 	 */
-	public CourseView(IGraderFrame rootView, User user, User owner, Course course,
+	public CourseView(IGraderFrame rootView, User user, Course course,
 			Semester semester) {
 		super();
 		this.rootView = rootView;
 		this.user = user;
-		this.owner = owner;
 		this.course = course;
 		this.semester = semester;
 		setupPanel();
