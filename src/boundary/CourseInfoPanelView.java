@@ -352,9 +352,9 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 	public ArrayList<String> getGradesList()
 	{
 		ArrayList<String> gradeScores = new ArrayList<String>(gradesList.size());
-		for(JTextField entry: gradesList)
+		for(JTextField scoreEntry: gradesList)
 		{
-			gradeScores.add(entry.getText());
+			gradeScores.add(scoreEntry.getText());
 		}
 		return gradeScores;
 	}

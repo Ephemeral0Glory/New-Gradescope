@@ -33,8 +33,6 @@ public class UpdateEntryController implements ActionListener
 	{
 		this.rootView = rootView;
 		this.entryInfo = entryInfo;
-		scores = entryInfo.getGradesList();
-		comments = entryInfo.getCommentsList();
 		scoresIndex = 0;
 		commentsIndex = 0;
 	}
@@ -48,6 +46,10 @@ public class UpdateEntryController implements ActionListener
 	{
 		// Get entry
 		Entry e = entryInfo.getEntry();
+		
+		// Get score and comment info
+		scores = entryInfo.getGradesList();
+		comments = entryInfo.getCommentsList();
 		
 		// Update entry info
 		updateEntry(e);
