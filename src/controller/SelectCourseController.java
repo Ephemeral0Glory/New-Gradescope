@@ -58,7 +58,7 @@ public class SelectCourseController implements ActionListener
 			
 			// Create and display the course edit screen
 			OpenCourseController cv = new OpenCourseController(rootView, user,
-					gradebook.getOwner(), loadedCourse, selectionInfo.getSelectedSemester());
+					loadedCourse, selectionInfo.getSelectedSemester());
 			cv.open();
 		}
 		catch (CourseFileReaderException e)

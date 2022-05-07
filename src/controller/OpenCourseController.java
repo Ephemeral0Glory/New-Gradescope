@@ -18,7 +18,6 @@ public class OpenCourseController
 {
 	private IGraderFrame rootView;
 	private User user;
-	private User owner;
 	private Course course;
 	private Semester semester;
 	
@@ -30,12 +29,11 @@ public class OpenCourseController
 	 *  @param owner  The owner of the gradebook this course came from 
 	 *  @param course  The course to display
 	 */
-	public OpenCourseController(IGraderFrame rootView, User user, User owner,
+	public OpenCourseController(IGraderFrame rootView, User user,
 			Course course, Semester semester)
 	{
 		this.rootView = rootView;
 		this.user = user;
-		this.owner = owner;
 		this.course = course;
 		this.semester = semester;
 	}
@@ -49,7 +47,7 @@ public class OpenCourseController
 		GraderView gv = new GraderView();
 		
 		// Create and display course edit screen
-		gv.setNewView(new CourseView(gv, user, owner, course, semester));
+		gv.setNewView(new CourseView(gv, user, course, semester));
 		gv.setUpMenuBars(course, user);
 		gv.update();
 		gv.display();
