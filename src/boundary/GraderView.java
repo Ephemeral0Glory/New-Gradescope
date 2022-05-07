@@ -9,15 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import controller.ExitApplicationController;
-import controller.OpenAddAssignmentWindowController;
-import controller.OpenAddEntryWindowController;
-import controller.OpenAddSectionWindowController;
-import controller.OpenMainMenuController;
-import controller.OpenRemoveSectionWindowController;
-import controller.SaveCourseDataController;
-import entity.Course;
-import entity.User;
+import controller.*;
+import entity.*;
 
 /**
  *  The main frame for the Grader application.
@@ -111,7 +104,7 @@ public class GraderView extends JFrame implements IGraderFrame
 				// Add student
 		item = new JMenuItem("Add Student");
 		item.setMnemonic(KeyEvent.VK_S);
-//		item.addActionListener(new OpenAddStudentWindowController(this, u, c));
+		item.addActionListener(new OpenAddStudentController(this, u, c));
 		add.add(item);
 				// Add assignment
 		item = new JMenuItem("Add Assignment");
