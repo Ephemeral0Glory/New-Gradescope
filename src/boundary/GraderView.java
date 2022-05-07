@@ -15,6 +15,7 @@ import controller.OpenAddEntryWindowController;
 import controller.OpenAddSectionWindowController;
 import controller.OpenMainMenuController;
 import controller.OpenRemoveSectionWindowController;
+import controller.OpenRemoveStudentWindowController;
 import controller.SaveCourseDataController;
 import entity.Course;
 import entity.User;
@@ -135,7 +136,7 @@ public class GraderView extends JFrame implements IGraderFrame
 				// Add student
 		item = new JMenuItem("Remove Student");
 		item.setMnemonic(KeyEvent.VK_S);
-//		item.addActionListener(new OpenRemoveStudentWindowController(this, u, c));
+		item.addActionListener(new OpenRemoveStudentWindowController(this, u, c));
 		remove.add(item);
 				// Add assignment
 		item = new JMenuItem("Remove Assignment");
