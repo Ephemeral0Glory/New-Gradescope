@@ -2,6 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JTextField;
 
 import boundary.*;
 import entity.*;
@@ -30,7 +33,7 @@ public class OpenAddAssignmentWindowController implements ActionListener {
         gv.setClosePolicyPopUp();
 
         // Create add assignment screen
-        AddAssignmentView asv = new AddAssignmentView(gv, rootView, user, course);
+        AddAssignmentView asv = new AddAssignmentView(gv, rootView, user, course, new ArrayList<JTextField>(), new ArrayList<JTextField>());
 
         // Display
         gv.setNewView(asv);

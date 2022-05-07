@@ -2,11 +2,15 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JTextField;
+
 import entity.*;
 import boundary.*;
 
 public class AddAssignmentController implements ActionListener{
-    public static enum AssignmentProblem {NO_ERROR, EMPTY_NAME, DUPLICATED_NAME, BAD_FLOAT};
+    public static enum AssignmentProblem {NO_ERROR, EMPTY_NAME, DUPLICATED_NAME, BAD_FLOAT, EMPTY_SUB_NAME, DUPLICATE_SUB_NAME, BAD_SUB_WEIGHT, INVALID_SUB_WEIGHT}; // BAD_SUB_WEIGHT refers to incorrect input; INVALID_SUB_WEIGHT total either exceeds 100 or is below 0
     private IGraderFrame rootView;
     private IGraderFrame parentView;
     private User user;
@@ -30,6 +34,16 @@ public class AddAssignmentController implements ActionListener{
             // Create and add Assignment where appropriate
             assignmentWeight = addAssignmentView.getWeight();
             Gradeable newAssignment = new RealAssignment(assignmentName, assignmentWeight);
+            ArrayList<JTextField> subAssignmentNamesFields = addAssignmentView.getSubAssignmentNamesFields();
+            ArrayList<JTextField> subAssignmentWeightsFields = addAssignmentView.getSubAssignmentWeightsFields();
+            if (!(subAssignmentNamesFields.isEmpty() && subAssignmentWeightsFields.isEmpty())) {
+                for (int i = 0; i < subAssignmentNamesFields.size(); i++) {
+                    String currName = subAssignmentNamesFields.get(i).getText();
+                    Float currFloat = Float.valueOf(subAssignmentWeightsFields.get(i).getText());
+                    RealAssignment currSubAssignment = new RealAssignment(currName, currFloat);
+                    ((RealAssignment) newAssignment).addSubAssignment(currSubAssignment);
+                }
+            }
             Course course = addAssignmentView.getCourse();
             course.getTemplate().addSubAssignment(newAssignment);
             course.addAssignment((RealAssignment) newAssignment);
@@ -77,6 +91,46 @@ public class AddAssignmentController implements ActionListener{
         if (assigmentWeight < 0f || assigmentWeight > 100f) {
             return AssignmentProblem.BAD_FLOAT;
         }
+
+        // Checks for errors within the subassignments
+        ArrayList<JTextField> subAssignmentNamesFields = addAssignmentView.getSubAssignmentNamesFields();
+        ArrayList<JTextField> subAssignmentWeightsFields = addAssignmentView.getSubAssignmentWeightsFields();
+        if (!(subAssignmentNamesFields.isEmpty() && subAssignmentWeightsFields.isEmpty())) {
+            // Checks for errors with subassignment names
+            ArrayList<String> subAssignmentNames = new ArrayList<String>();
+            for (JTextField nameField: subAssignmentNamesFields) {
+                String currString = nameField.getText();
+                // Checks if its empty
+                if (currString.isEmpty()) {
+                    return AssignmentProblem.EMPTY_SUB_NAME;
+                }
+                // Checks if multiple subassignments have same name
+                if (subAssignmentNames.contains(currString)) {
+                    return AssignmentProblem.DUPLICATE_SUB_NAME;
+                }
+                subAssignmentNames.add(currString);
+            }
+            float totalWeight = 0f;
+            for (JTextField weightField: subAssignmentWeightsFields) {
+                float subAssignmentWeight = 0f;
+                try {
+                    subAssignmentWeight = Float.valueOf(weightField.getText());
+                }
+                catch (Exception e) {
+                    return AssignmentProblem.BAD_SUB_WEIGHT;
+                }
+        
+                if (assigmentWeight < 0f || assigmentWeight > 100f) {
+                    return AssignmentProblem.BAD_SUB_WEIGHT;
+                }
+                totalWeight += subAssignmentWeight;
+            }
+            if (totalWeight > 100f || totalWeight < 0f) {
+                return AssignmentProblem.INVALID_SUB_WEIGHT;
+            }
+
+        }
+
 
         return AssignmentProblem.NO_ERROR;
     }
