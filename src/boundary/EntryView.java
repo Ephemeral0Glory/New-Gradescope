@@ -3,6 +3,7 @@ package boundary;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import entity.Entry;
 import entity.Grade;
@@ -52,7 +53,9 @@ public class EntryView extends JPanel implements IGraderScreen
 		add(sectionLabel, gbc_sectionLabel);
 		
 		JLabel studentNameLabel = new JLabel(entry.getStudent().getFName() + " " + entry.getStudent().getLName());
+		studentNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_studentNameLabel = new GridBagConstraints();
+		gbc_studentNameLabel.anchor = GridBagConstraints.WEST;
 		gbc_studentNameLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_studentNameLabel.gridx = 1;
 		gbc_studentNameLabel.gridy = 0;
@@ -61,6 +64,7 @@ public class EntryView extends JPanel implements IGraderScreen
 		JLabel idLabel = new JLabel(entry.getStudent().getBUID());
 		idLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_idLabel = new GridBagConstraints();
+		gbc_idLabel.anchor = GridBagConstraints.WEST;
 		gbc_idLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_idLabel.gridx = 2;
 		gbc_idLabel.gridy = 0;
@@ -68,23 +72,30 @@ public class EntryView extends JPanel implements IGraderScreen
 		
 		// Print all assignment grades
 		GridBagConstraints gbc_assignmentGradeLabel = new GridBagConstraints();
-		gbc_assignmentGradeLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_assignmentGradeLabel.gridx = 3;
-		gbc_assignmentGradeLabel.gridy = 0;
-		for(Grade g: entry.getFinalGrade().getFlattenedSubAssignmentTreeGrades())
+		boolean haveAssignments = entry.getFinalGrade().getNumSubAssignments() != 0;
+		if(haveAssignments)  // Skip this if there are no assignments yet
 		{
-			String commentMark = g.getComment().isEmpty() ? "" : "*";  // Note if a comment is present
-			JLabel assignmentGradeLabel = new JLabel(g.getScore() + commentMark);
-			assignmentGradeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			add(assignmentGradeLabel, gbc_assignmentGradeLabel);
-			gbc_assignmentGradeLabel.gridx += 1;
+			gbc_assignmentGradeLabel.anchor = GridBagConstraints.WEST;
+			gbc_assignmentGradeLabel.insets = new Insets(0, 0, 0, 5);
+			gbc_assignmentGradeLabel.gridx = 3;
+			gbc_assignmentGradeLabel.gridy = 0;
+			for(Grade g: entry.getFinalGrade().getFlattenedSubAssignmentTreeGrades())
+			{
+				String commentMark = g.getComment().isEmpty() ? "" : "*";  // Note if a comment is present
+				JLabel assignmentGradeLabel = new JLabel(g.getScore() + commentMark);
+				assignmentGradeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				add(assignmentGradeLabel, gbc_assignmentGradeLabel);
+				gbc_assignmentGradeLabel.gridx += 1;
+			}
 		}
 		
 		// Print final grade
-		JLabel finalGradeLabel = new JLabel(entry.getFinalGrade().getGrade().getScore() + "");
+		JLabel finalGradeLabel = new JLabel(entry.getFinalGrade().getGrade().getScore()+"");
 		finalGradeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_finalGradeLabel = new GridBagConstraints();
-		gbc_finalGradeLabel.gridx = gbc_assignmentGradeLabel.gridx;
+		gbc_finalGradeLabel.anchor = GridBagConstraints.EAST;
+		gbc_finalGradeLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_finalGradeLabel.gridx = haveAssignments ? gbc_assignmentGradeLabel.gridx : 4;
 		gbc_finalGradeLabel.gridy = 0;
 		add(finalGradeLabel, gbc_finalGradeLabel);
 	}
@@ -93,8 +104,8 @@ public class EntryView extends JPanel implements IGraderScreen
 	{
 		int numColumns = entry.getFinalGrade().getNumSuccessors()+5+1;
 		int[] widths = new int[numColumns];
-		widths[0] = 75;  // Section
-		widths[1] = 75;  // Student
+		widths[0] = 60;  // Section
+		widths[1] = 90;  // Student
 		widths[2] = 75;  // BUID
 		for(int i = 3; i < numColumns-2; i++)  // Assignments
 		{

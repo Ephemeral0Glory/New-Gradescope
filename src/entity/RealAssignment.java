@@ -215,6 +215,8 @@ public class RealAssignment implements Gradeable {
     public ArrayList<Grade> getFlattenedSubAssignmentTreeGrades()
     {
     	ArrayList<Grade> list = new ArrayList<Grade>();
+    	
+    	// Fill grades from sub-assignments
     	for(Gradeable g: subAssignments)
     	{
     		list.addAll(g.getFlattenedSubAssignmentTreeGrades());

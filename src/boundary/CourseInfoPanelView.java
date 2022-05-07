@@ -131,6 +131,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		gbc.gridx += 1;
 		statusSelector = new JComboBox<StudentStatus>(new DefaultComboBoxModel<StudentStatus>(StudentStatus.values()));
 		statusSelector.setFont(panelFont);
+		statusSelector.setSelectedItem(entry.getStudent().getEnrollmentStatus());
 		gbc.anchor = GridBagConstraints.WEST;
 		add(statusSelector, gbc);
 		gbc.gridx = 0;

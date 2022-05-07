@@ -13,9 +13,11 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 
 import javax.swing.SwingConstants;
 
@@ -153,7 +155,8 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		// Set up panel
 		JPanel table = new JPanel();
-		table.setLayout(new GridBagLayout());
+		GridBagLayout layout = new GridBagLayout();
+		table.setLayout(layout);
 		
 		// Add entries
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -161,6 +164,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		for(Entry e: course.getEntries())
 		{
 			EntryView ev = new EntryView(e);
@@ -173,6 +177,9 @@ public class CourseView extends JPanel implements IGraderScreen
 		JButton addEntryButton = new JButton("Add Entry");
 		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, user, course));
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.weighty = 1.0;
 		table.add(addEntryButton, gbc);
 		
 		return table;
@@ -265,8 +272,8 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		int numColumns = course.getTemplate().getNumSuccessors()+5+1;
 		int[] widths = new int[numColumns];
-		widths[0] = 75;  // Section
-		widths[1] = 75;  // Student
+		widths[0] = 60;  // Section
+		widths[1] = 90;  // Student
 		widths[2] = 75;  // BUID
 		for(int i = 3; i < numColumns-2; i++)  // Assignments
 		{

@@ -45,7 +45,7 @@ public class OpenMainMenuController implements ActionListener
 		try {
 			open();
 		} catch (GradebookFileReaderException e1) {
-			// TODO Auto-generated catch block
+			// TODO Notify user of problem
 			e1.printStackTrace();
 		}
 	}
@@ -84,6 +84,12 @@ public class OpenMainMenuController implements ActionListener
 		{
 			// Create main menu screen
 			MainMenuView mmv = new MainMenuView(rootView, user, gb);
+			
+			// (Potentially) resize screen and remove any menu bars present
+			if(rootView instanceof GraderView)
+			{
+				((GraderView) rootView).removeMenuBars();
+			}
 			
 			// Swap displayed screen
 			rootView.setNewView(mmv);

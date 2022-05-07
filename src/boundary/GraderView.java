@@ -22,6 +22,7 @@ public class GraderView extends JFrame implements IGraderFrame
 {
 	private static final long serialVersionUID = 2471330856952055579L;
 	private IGraderScreen nowDisplaying;
+	private JMenuBar menu;
 	
 	/**
 	 *  Constructor.
@@ -43,6 +44,7 @@ public class GraderView extends JFrame implements IGraderFrame
 	public GraderView(String frameName)
 	{
 		super(frameName);
+		menu = new JMenuBar();
 		setupFrame();
 	}
 	
@@ -65,7 +67,7 @@ public class GraderView extends JFrame implements IGraderFrame
 		this.setBounds(50, 50, 1000, 600);
 		
 		// Create menu bar
-		JMenuBar menu = new JMenuBar();
+		menu = new JMenuBar();
 		
 		// File menu
 		JMenu file = new JMenu("File");
@@ -155,6 +157,12 @@ public class GraderView extends JFrame implements IGraderFrame
 		
 		// Add menu bar
 		this.setJMenuBar(menu);
+	}
+	
+	public void removeMenuBars()
+	{
+		remove(menu);
+		setupFrame();
 	}
 	
 	public void setClosePolicyPopUp()
