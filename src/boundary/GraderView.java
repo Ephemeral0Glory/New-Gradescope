@@ -9,6 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import controller.ExitApplicationController;
 import controller.OpenAddAssignmentWindowController;
 import controller.OpenAddEntryWindowController;
 import controller.OpenAddSectionWindowController;
@@ -91,7 +92,7 @@ public class GraderView extends JFrame implements IGraderFrame
 		item = new JMenuItem("Quit Grader");
 		item.setMnemonic(KeyEvent.VK_Q);
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
-//		item.addActionListener(new ExitApplicationController());
+		item.addActionListener(new ExitApplicationController(this));
 		file.add(item);
 		menu.add(file);
 		
