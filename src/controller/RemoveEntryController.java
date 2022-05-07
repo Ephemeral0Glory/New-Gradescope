@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import entity.Course;
 import entity.Entry;
-//import entity.Section;
-//import entity.Student;
+import entity.Section;
+import entity.Student;
 import entity.User;
 import boundary.IGraderFrame;
 import boundary.RemoveEntryView;
-//import boundary.RemoveStudentView;
+import boundary.RemoveStudentView;
 
 /**
  *  Removes a student from the course or displays an error message.

@@ -48,8 +48,7 @@ public class NullAssignment implements Gradeable {
      */
     public NullAssignment(long id, String name, Grade grade)
     {
-    	this(name, grade);
-    	this.id = id;
+    	
     }
 
     public long getID() {
