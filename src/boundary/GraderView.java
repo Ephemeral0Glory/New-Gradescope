@@ -128,12 +128,12 @@ public class GraderView extends JFrame implements IGraderFrame
 				// Add student
 		item = new JMenuItem("Remove Student");
 		item.setMnemonic(KeyEvent.VK_S);
-//		item.addActionListener(new OpenRemoveStudentWindowController(this, u, c));
+		item.addActionListener(new OpenRemoveStudentWindowController(this, u, c));
 		remove.add(item);
 				// Add assignment
 		item = new JMenuItem("Remove Assignment");
 		item.setMnemonic(KeyEvent.VK_A);
-//		item.addActionListener(new OpenRemoveAssignmentWindowController(this, u, c));
+		item.addActionListener(new OpenRemoveAssignmentWindowController(this, u, c));
 		remove.add(item);
 				// Add entry
 		item = new JMenuItem("Remove Entry");
