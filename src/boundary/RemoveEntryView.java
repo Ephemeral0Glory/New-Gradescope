@@ -35,7 +35,7 @@ import entity.Student;
 import entity.User;
 
 /**
- *  Allows the user to select a student to remove from the course.
+ *  Allows the user to select a entry to remove from the course.
  *  @author Seonghoon Cho
  */
 public class RemoveEntryView extends JPanel implements IGraderScreen
@@ -67,7 +67,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	}
 
 	/**
-	 *  @return  The remove student screen as a JPanel 
+	 *  @return  The remove entry screen as a JPanel 
 	 */
 	@Override
 	public JPanel getPanelContent()
@@ -114,8 +114,8 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		gbc_listScrollPane.weighty = 0.65;
 		add(listScrollPane, gbc_listScrollPane);
 		
-		entryList = new JList<Entry>();
-		entryList.setEnabled(false);  // Initially not selectable (also blank)
+		entryList = new JList<Entry>(createEntryModel());
+//		entryList.setEnabled(false);  // Initially not selectable (also blank)
 		entryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(entryList);
 		
@@ -163,7 +163,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	}
 	
 	/**
-	 *  Updates the list to show the students in the selected semester.
+	 *  Updates the list to show the entries in the selected semester.
 	 */
 	public void updateEntryListing()
 	{
@@ -174,7 +174,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	}
 	
 	/**
-	 *  @return  The student selected by the user.
+	 *  @return  The entry selected by the user.
 	 */
 	public Entry getSelectedEntry()
 	{
@@ -182,7 +182,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	}
 	
 	/**
-	 *  @return  The index in the list of the student selected by the user.
+	 *  @return  The index in the list of the entry selected by the user.
 	 */
 	public int getSelectedEntryIndex()
 	{
@@ -212,7 +212,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 //	}
 	
 	/**
-	 *  Displays a "student removed" message on this screen.
+	 *  Displays a "entry removed" message on this screen.
 	 */
 	public void showSuccess()
 	{
@@ -240,7 +240,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		setLayout(gridBagLayout);
 		int y = 0;  // First row
 		
-		JLabel titleLabel = new JLabel("Remove a Student");
+		JLabel titleLabel = new JLabel("Remove an Entry");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
@@ -302,7 +302,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		
 		if(message == RemoveEntryProblem.NO_ERROR)
 		{
-			JLabel messageLabel = new JLabel("Student removed.");
+			JLabel messageLabel = new JLabel("Entry removed.");
 			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -315,7 +315,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		}
 		if(message == RemoveEntryProblem.NO_ENTRY_SELECTION)
 		{
-			JLabel messageLabel = new JLabel("Please select a student to remove.");
+			JLabel messageLabel = new JLabel("Please select an entry to remove.");
 			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			messageLabel.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();

@@ -100,5 +100,10 @@ public class Entry {
     {
     	this.finalGrade.getWeightedGrade();
     }
+    
+    
+    public String toString() {
+    	return "section: " + section.getCode() + ", student name: " + student.getFName() + ", " + student.getLName();
+    }
 
 }
