@@ -27,7 +27,7 @@ import entity.StudentStatus;
  *  <p>
  *  Depending on what is displayed, this panel will contain either all of the details
  *  of an entry or for an assignment in editable form. Switch between the two modes with
- *  {@link CourseInfoView.showEntry} or {@link CourseInfoView.showColumn}.
+ *  {@link CourseInfoPanelView.showEntry} or {@link CourseInfoPanelView.showColumn}.
  *  <p>
  *  The entry display mode shows and allows the user to edit a single student's
  *  first and last name, BUID, and status (@link StudentStatus}. After that it
@@ -46,7 +46,7 @@ import entity.StudentStatus;
  *  @author Alex Titus
  *
  */
-public class CourseInfoView extends JPanel implements IGraderScreen
+public class CourseInfoPanelView extends JPanel implements IGraderScreen
 {
 	private static final long serialVersionUID = -1118231147797373119L;
 	private IGraderFrame rootView;
@@ -59,7 +59,7 @@ public class CourseInfoView extends JPanel implements IGraderScreen
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
 	
-	public CourseInfoView(IGraderFrame rootView)
+	public CourseInfoPanelView(IGraderFrame rootView)
 	{
 		this.rootView = rootView;
 	}

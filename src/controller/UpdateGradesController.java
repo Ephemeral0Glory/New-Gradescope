@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import entity.RealAssignment;
-import boundary.CourseInfoView;
+import boundary.CourseInfoPanelView;
 import boundary.IGraderFrame;
 
 /**
@@ -15,7 +15,7 @@ import boundary.IGraderFrame;
 public class UpdateGradesController implements ActionListener
 {
 	private IGraderFrame rootView;
-	private CourseInfoView gradesInfo;
+	private CourseInfoPanelView gradesInfo;
 	private ArrayList<String> scores;
 	private ArrayList<String> comments;
 	
@@ -25,7 +25,7 @@ public class UpdateGradesController implements ActionListener
 	 *  @param rootView  The application window frame
 	 *  @param gradesInfo  The screen with the grades information
 	 */
-	public UpdateGradesController(IGraderFrame rootView, CourseInfoView gradesInfo)
+	public UpdateGradesController(IGraderFrame rootView, CourseInfoPanelView gradesInfo)
 	{
 		this.rootView = rootView;
 		this.gradesInfo = gradesInfo;

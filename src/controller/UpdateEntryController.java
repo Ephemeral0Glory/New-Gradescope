@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import entity.Entry;
 import entity.RealAssignment;
 import entity.StudentStatus;
-import boundary.CourseInfoView;
+import boundary.CourseInfoPanelView;
 import boundary.IGraderFrame;
 
 /**
@@ -17,7 +17,7 @@ import boundary.IGraderFrame;
 public class UpdateEntryController implements ActionListener
 {
 	private IGraderFrame rootView;
-	private CourseInfoView entryInfo;
+	private CourseInfoPanelView entryInfo;
 	private ArrayList<String> scores;
 	private int scoresIndex;
 	private ArrayList<String> comments;
@@ -29,7 +29,7 @@ public class UpdateEntryController implements ActionListener
 	 *  @param rootView  The application window frame
 	 *  @param entryInfo  The panel with the new entry information
 	 */
-	public UpdateEntryController(IGraderFrame rootView, CourseInfoView entryInfo)
+	public UpdateEntryController(IGraderFrame rootView, CourseInfoPanelView entryInfo)
 	{
 		this.rootView = rootView;
 		this.entryInfo = entryInfo;

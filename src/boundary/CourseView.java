@@ -51,7 +51,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private Course course;
 	private Semester semester;
 	private JTextField searchField;
-	private CourseInfoView infoPanel;
+	private CourseInfoPanelView infoPanel;
 	private JPanel tableHeader;
 	
 	/**
@@ -89,7 +89,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		JScrollPane infoPanelScrollPane = new JScrollPane();
 		add(infoPanelScrollPane, BorderLayout.SOUTH);
 
-		infoPanel = new CourseInfoView(rootView);
+		infoPanel = new CourseInfoPanelView(rootView);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
