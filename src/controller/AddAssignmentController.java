@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import entity.*;
 import boundary.*;
-import controller.AddSectionController.SectionProblem;
 
 public class AddAssignmentController implements ActionListener{
     public static enum AssignmentProblem {NO_ERROR, EMPTY_NAME, DUPLICATED_NAME, BAD_FLOAT};
