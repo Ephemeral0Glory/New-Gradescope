@@ -74,7 +74,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		gbc_courseNameLabel.gridy = 4;
 		add(courseNameLabel, gbc_courseNameLabel);
 		
-		JLabel courseNameDataLabel = new JLabel("***");
+		courseNameDataLabel = new JLabel("***");
 		GridBagConstraints gbc_courseNameDataLabel = new GridBagConstraints();
 		gbc_courseNameDataLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_courseNameDataLabel.gridx = 3;
