@@ -149,7 +149,7 @@ public class GraderView extends JFrame implements IGraderFrame
 			// Show course info
 		item = new JMenuItem("Show Course Info");
 		item.setMnemonic(KeyEvent.VK_I);
-//		item.addActionListener(new OpenCourseInfoWindowController(this, u, c));
+		item.addActionListener(new OpenViewCourseInfoViewController(this, u, c));
 		analysis.add(item);
 		menu.add(analysis);
 		
