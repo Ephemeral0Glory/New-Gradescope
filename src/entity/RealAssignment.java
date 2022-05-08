@@ -102,6 +102,10 @@ public class RealAssignment implements Gradeable {
     	this.numSubAssignments = numSubAssignments;
     	this.subAssignments = subAssignments;
     }
+
+    public String toString() {
+        return this.name + " with weight: " + Float.toString(this.weight);
+    }
   
     private ArrayList<Gradeable> copyTemplate(RealAssignment template, Student owner)
     {
@@ -164,9 +168,9 @@ public class RealAssignment implements Gradeable {
         return this.weight;
     }
     
-    public void setWeight(int newWeight)
+    public void setWeight(Float updatedWeight)
     {
-    	this.weight = newWeight;
+    	this.weight = updatedWeight;
     }
     
     public Student getStudent()
