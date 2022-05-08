@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
+import java.awt.Font;
 
 public class AddStudentView extends JPanel implements IGraderScreen {
 	private static final long serialVersionUID = -5806686822559957555L;
@@ -32,13 +33,14 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 
 	public void setupPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel titleLabel = new JLabel("Add a student");
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
 		gbc_titleLabel.gridwidth = 2;
@@ -50,6 +52,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(titleLabel, gbc_titleLabel);
 		
 		JLabel courseCodeLabel = new JLabel("Course Code: ");
+		courseCodeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseCodeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_courseCodeLabel = new GridBagConstraints();
 		gbc_courseCodeLabel.anchor = GridBagConstraints.EAST;
@@ -60,7 +63,9 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseCodeLabel, gbc_courseCodeLabel);
 		
 		courseCodeDataLabel = new JLabel(course.getCode());
+		courseCodeDataLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_courseCodeDataLabel = new GridBagConstraints();
+		gbc_courseCodeDataLabel.anchor = GridBagConstraints.WEST;
 		gbc_courseCodeDataLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_courseCodeDataLabel.gridx = 1;
 		gbc_courseCodeDataLabel.gridy = 1;
@@ -68,6 +73,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseCodeDataLabel, gbc_courseCodeDataLabel);
 		
 		JLabel courseNameLabel = new JLabel("Course Name:");
+		courseNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_courseNameLabel = new GridBagConstraints();
 		gbc_courseNameLabel.anchor = GridBagConstraints.EAST;
@@ -78,7 +84,9 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseNameLabel, gbc_courseNameLabel);
 		
 		courseNameDataLabel = new JLabel(course.getName());
+		courseNameDataLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_courseNameDataLabel = new GridBagConstraints();
+		gbc_courseNameDataLabel.anchor = GridBagConstraints.WEST;
 		gbc_courseNameDataLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_courseNameDataLabel.gridx = 1;
 		gbc_courseNameDataLabel.gridy = 2;
@@ -86,6 +94,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseNameDataLabel, gbc_courseNameDataLabel);
 		
 		JLabel sectionLabel = new JLabel("Section: ");
+		sectionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sectionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_sectionLabel = new GridBagConstraints();
 		gbc_sectionLabel.anchor = GridBagConstraints.EAST;
@@ -96,18 +105,20 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(sectionLabel, gbc_sectionLabel);
 		
 		sectionSelector = new JComboBox<Section>();
+		sectionSelector.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sectionSelector.setModel(createComboBoxModel());
 		sectionSelector.setSelectedIndex(course.getSections().size() - 1);
 		sectionSelector.addActionListener(new AddStudentSectionChangeController(rootView, this));
 		GridBagConstraints gbc_sectionSelector = new GridBagConstraints();
+		gbc_sectionSelector.anchor = GridBagConstraints.WEST;
 		gbc_sectionSelector.insets = new Insets(0, 0, 5, 0);
-		gbc_sectionSelector.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sectionSelector.gridx = 1;
 		gbc_sectionSelector.gridy = 3;
 		gbc_sectionSelector.weighty = 0.1;
 		add(sectionSelector, gbc_sectionSelector);
 		
 		JLabel firstNameLabel = new JLabel("First Name: ");
+		firstNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.EAST;
@@ -118,16 +129,18 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(firstNameLabel, gbc_firstNameLabel);
 		
 		firstNameField = new JTextField();
+		firstNameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_firstNameField = new GridBagConstraints();
+		gbc_firstNameField.anchor = GridBagConstraints.WEST;
 		gbc_firstNameField.insets = new Insets(0, 0, 5, 0);
-		gbc_firstNameField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_firstNameField.gridx = 1;
 		gbc_firstNameField.gridy = 4;
 		gbc_firstNameField.weighty = 0.1;
 		add(firstNameField, gbc_firstNameField);
-		firstNameField.setColumns(10);
+		firstNameField.setColumns(20);
 		
 		JLabel lastNameLabel = new JLabel("Last Name: ");
+		lastNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
 		gbc_lastNameLabel.insets = new Insets(0, 0, 5, 5);
@@ -138,16 +151,18 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(lastNameLabel, gbc_lastNameLabel);
 		
 		lastNameField = new JTextField();
+		lastNameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lastNameField = new GridBagConstraints();
+		gbc_lastNameField.anchor = GridBagConstraints.WEST;
 		gbc_lastNameField.insets = new Insets(0, 0, 5, 0);
-		gbc_lastNameField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lastNameField.gridx = 1;
 		gbc_lastNameField.gridy = 5;
 		gbc_lastNameField.weighty = 0.1;
 		add(lastNameField, gbc_lastNameField);
-		lastNameField.setColumns(10);
+		lastNameField.setColumns(25);
 		
 		JLabel buidLabel = new JLabel("BU ID: ");
+		buidLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_buidLabel = new GridBagConstraints();
 		gbc_buidLabel.anchor = GridBagConstraints.EAST;
 		gbc_buidLabel.insets = new Insets(0, 0, 5, 5);
@@ -157,17 +172,19 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(buidLabel, gbc_buidLabel);
 		
 		buidField = new JTextField();
+		buidField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_buidField = new GridBagConstraints();
+		gbc_buidField.anchor = GridBagConstraints.WEST;
 		gbc_buidField.insets = new Insets(0, 0, 5, 0);
-		gbc_buidField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_buidField.gridx = 1;
 		gbc_buidField.gridy = 6;
 		gbc_buidField.weighty = 0.1;
 		add(buidField, gbc_buidField);
 		buidField.setColumns(10);
 		
-		JButton confirmButton = new JButton("Confirm");
-		confirmButton.addActionListener(new AddStudentController(rootView, parentFrame, this, user, course));
+		JButton confirmButton = new JButton("Create");
+		confirmButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmButton.addActionListener(new AddStudentController(rootView, this, user, course));
 		GridBagConstraints gbc_confirmButton = new GridBagConstraints();
 		gbc_confirmButton.insets = new Insets(0, 0, 0, 5);
 		gbc_confirmButton.gridx = 0;
@@ -176,9 +193,9 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(confirmButton, gbc_confirmButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		gbc_cancelButton.anchor = GridBagConstraints.WEST;
 		gbc_cancelButton.gridx = 1;
 		gbc_cancelButton.gridy = 7;
 		gbc_cancelButton.weighty = 0.3;
@@ -219,22 +236,39 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		// ignore
 
 	}
+	
+	public void showSuccess()
+	{
+		removeAll();
+		repaint();
+		clearData();
+		setupPanelWithError(AddStudentProblem.NO_ERROR);
+	}
+	
+	private void clearData()
+	{
+		firstNameField.setText("");
+		lastNameField.setText("");
+		buidField.setText("");
+	}
 
 	public void showError(AddStudentProblem error) {
 		removeAll();
+		repaint();
 		setupPanelWithError(error);
 	}
 
 	private void setupPanelWithError(AddStudentProblem error) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		int y = 0;  // First row
 		
 		JLabel titleLabel = new JLabel("Add a student");
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
 		gbc_titleLabel.gridwidth = 2;
@@ -247,6 +281,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel courseCodeLabel = new JLabel("Course Code: ");
+		courseCodeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseCodeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_courseCodeLabel = new GridBagConstraints();
 		gbc_courseCodeLabel.anchor = GridBagConstraints.EAST;
@@ -257,6 +292,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseCodeLabel, gbc_courseCodeLabel);
 		
 		GridBagConstraints gbc_courseCodeDataLabel = new GridBagConstraints();
+		gbc_courseCodeDataLabel.anchor = GridBagConstraints.WEST;
 		gbc_courseCodeDataLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_courseCodeDataLabel.gridx = 1;
 		gbc_courseCodeDataLabel.gridy = y;
@@ -265,6 +301,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel courseNameLabel = new JLabel("Course Name:");
+		courseNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_courseNameLabel = new GridBagConstraints();
 		gbc_courseNameLabel.anchor = GridBagConstraints.EAST;
@@ -275,6 +312,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(courseNameLabel, gbc_courseNameLabel);
 		
 		GridBagConstraints gbc_courseNameDataLabel = new GridBagConstraints();
+		gbc_courseNameDataLabel.anchor = GridBagConstraints.WEST;
 		gbc_courseNameDataLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_courseNameDataLabel.gridx = 1;
 		gbc_courseNameDataLabel.gridy = y;
@@ -283,6 +321,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel sectionLabel = new JLabel("Section: ");
+		sectionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sectionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_sectionLabel = new GridBagConstraints();
 		gbc_sectionLabel.anchor = GridBagConstraints.EAST;
@@ -293,8 +332,8 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(sectionLabel, gbc_sectionLabel);
 		
 		GridBagConstraints gbc_sectionSelector = new GridBagConstraints();
+		gbc_sectionSelector.anchor = GridBagConstraints.WEST;
 		gbc_sectionSelector.insets = new Insets(0, 0, 5, 0);
-		gbc_sectionSelector.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sectionSelector.gridx = 1;
 		gbc_sectionSelector.gridy = y;
 		gbc_sectionSelector.weighty = 0.1;
@@ -303,6 +342,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 
 		if (error == AddStudentProblem.NO_SECTION) {
 			JLabel errorMessage = new JLabel("Please choose a section.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -313,6 +353,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		}
 		
 		JLabel firstNameLabel = new JLabel("First Name: ");
+		firstNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.EAST;
@@ -324,16 +365,17 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		
 		GridBagConstraints gbc_firstNameField = new GridBagConstraints();
 		gbc_firstNameField.insets = new Insets(0, 0, 5, 0);
-		gbc_firstNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_firstNameField.anchor = GridBagConstraints.WEST;
 		gbc_firstNameField.gridx = 1;
 		gbc_firstNameField.gridy = y;
 		gbc_firstNameField.weighty = 0.1;
 		add(firstNameField, gbc_firstNameField);
-		firstNameField.setColumns(10);
+		firstNameField.setColumns(20);
 		y++;  // Next row
 
 		if (error == AddStudentProblem.NO_F_NAME) {
 			JLabel errorMessage = new JLabel("Please enter a first name.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -344,6 +386,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		}
 		
 		JLabel lastNameLabel = new JLabel("Last Name: ");
+		lastNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
 		gbc_lastNameLabel.insets = new Insets(0, 0, 5, 5);
@@ -355,16 +398,17 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		
 		GridBagConstraints gbc_lastNameField = new GridBagConstraints();
 		gbc_lastNameField.insets = new Insets(0, 0, 5, 0);
-		gbc_lastNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lastNameField.anchor = GridBagConstraints.WEST;
 		gbc_lastNameField.gridx = 1;
 		gbc_lastNameField.gridy = y;
 		gbc_lastNameField.weighty = 0.1;
 		add(lastNameField, gbc_lastNameField);
-		lastNameField.setColumns(10);
+		lastNameField.setColumns(25);
 		y++;  // Next row
 
 		if (error == AddStudentProblem.NO_L_NAME) {
 			JLabel errorMessage = new JLabel("Please enter a last name.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -375,6 +419,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		}
 		
 		JLabel buidLabel = new JLabel("BU ID: ");
+		buidLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_buidLabel = new GridBagConstraints();
 		gbc_buidLabel.anchor = GridBagConstraints.EAST;
 		gbc_buidLabel.insets = new Insets(0, 0, 5, 5);
@@ -385,7 +430,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		
 		GridBagConstraints gbc_buidField = new GridBagConstraints();
 		gbc_buidField.insets = new Insets(0, 0, 5, 0);
-		gbc_buidField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_buidField.anchor = GridBagConstraints.WEST;
 		gbc_buidField.gridx = 1;
 		gbc_buidField.gridy = y;
 		gbc_buidField.weighty = 0.1;
@@ -395,6 +440,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 
 		if (error == AddStudentProblem.NO_BUID) {
 			JLabel errorMessage = new JLabel("Please enter a BU ID.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -406,6 +452,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 
 		if (error == AddStudentProblem.BAD_BUID) {
 			JLabel errorMessage = new JLabel("Please enter a valid BU ID in the format 'UXXXXXXXX'.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -417,6 +464,7 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 
 		if (error == AddStudentProblem.DUPLICATED_STUDENT) {
 			JLabel errorMessage = new JLabel("A student with this BU ID already exists, please try again.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -425,9 +473,20 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 			add(errorMessage, gbc);
 			y++;  // Next row
 		}
+		if (error == AddStudentProblem.NO_ERROR) {
+			JLabel errorMessage = new JLabel("Student created.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.anchor = GridBagConstraints.NORTH;
+			gbc.gridx = 1;
+			gbc.gridy = y;
+			add(errorMessage, gbc);
+			y++;  // Next row
+		}
 		
-		JButton confirmButton = new JButton("Confirm");
-		confirmButton.addActionListener(new AddStudentController(rootView, parentFrame, this, user, course));
+		JButton confirmButton = new JButton("Create");
+		confirmButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmButton.addActionListener(new AddStudentController(rootView, this, user, course));
 		GridBagConstraints gbc_confirmButton = new GridBagConstraints();
 		gbc_confirmButton.insets = new Insets(0, 0, 0, 5);
 		gbc_confirmButton.gridx = 0;
@@ -436,9 +495,9 @@ public class AddStudentView extends JPanel implements IGraderScreen {
 		add(confirmButton, gbc_confirmButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		gbc_cancelButton.anchor = GridBagConstraints.WEST;
 		gbc_cancelButton.gridx = 1;
 		gbc_cancelButton.gridy = y;
 		gbc_cancelButton.weighty = 0.3;

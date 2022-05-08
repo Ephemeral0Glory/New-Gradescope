@@ -12,9 +12,9 @@ import entity.*;
  */
 public class AddStudentController implements ActionListener {
 
-    public static enum AddStudentProblem {NO_ERROR, NO_F_NAME, NO_L_NAME, NO_BUID, BAD_BUID, NO_SECTION, DUPLICATED_STUDENT};
+    public static enum AddStudentProblem {NO_ERROR, NO_F_NAME, NO_L_NAME,
+    	NO_BUID, BAD_BUID, NO_SECTION, DUPLICATED_STUDENT};
     private IGraderFrame rootView;
-    private IGraderFrame parentView;
     private AddStudentView studentInfo;
     private User user;
     private Course course;
@@ -27,9 +27,9 @@ public class AddStudentController implements ActionListener {
 	 *  @param user  The user currently working
 	 *  @param course  The course being worked on
 	 */
-    public AddStudentController(IGraderFrame rootView, IGraderFrame parentView, AddStudentView studentInfo, User user, Course course) {
+    public AddStudentController(IGraderFrame rootView, AddStudentView studentInfo,
+    		User user, Course course) {
         this.rootView = rootView;
-        this.parentView = parentView;
         this.studentInfo = studentInfo;
         this.user = user;
         this.course = course;
@@ -51,18 +51,19 @@ public class AddStudentController implements ActionListener {
             Student newStudent = new Student(firstName, lastName, buID, StudentStatus.ACTIVE);
             course.addStudent(newStudent);
             section.addStudent(newStudent);
-            // Close window
-            returnToParentView();
+            
+            // Tell user about success
+            studentInfo.showSuccess();
         }
         else { // Error occurred
 
             // Tell user about problem
             studentInfo.showError(error);
-            rootView.update();
-            rootView.display();
         }
 
-        
+        // Update display
+        rootView.update();
+        rootView.display();
     }
 
     private AddStudentProblem validateInformation() {
@@ -107,16 +108,6 @@ public class AddStudentController implements ActionListener {
         }
 
         return AddStudentProblem.NO_ERROR;
-    }
-
-    private void returnToParentView() {
-        // Close add student window
-        rootView.closeWindow();
-        
-        // Refresh parent
-        parentView.update();
-        parentView.display();
-
     }
     
 }

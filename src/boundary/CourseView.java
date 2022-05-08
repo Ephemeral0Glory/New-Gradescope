@@ -9,14 +9,13 @@ import entity.RealAssignment;
 import entity.Semester;
 import entity.User;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.SwingConstants;
 
 import java.awt.Insets;
@@ -72,10 +71,18 @@ public class CourseView extends JPanel implements IGraderScreen
 	
 	private void setupPanel()
 	{
-		setLayout(new BorderLayout(0, 5));
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc_global = new GridBagConstraints();
+		gbc_global.anchor = GridBagConstraints.CENTER;
+		gbc_global.fill = GridBagConstraints.BOTH;
+		gbc_global.insets = new Insets(0, 5, 5, 5);
+		gbc_global.weightx = 1.0;
 
 		tableScrollPane = new JScrollPane();
-		add(tableScrollPane, BorderLayout.CENTER);
+		gbc_global.gridx = 0;
+		gbc_global.gridy = 1;
+		gbc_global.weighty = 0.4;
+		add(tableScrollPane, gbc_global);
 
 		entriesTable = createEntriesTable("");
 		tableScrollPane.setViewportView(entriesTable);
@@ -84,13 +91,18 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
 		infoPanelScrollPane = new JScrollPane();
-		add(infoPanelScrollPane, BorderLayout.SOUTH);
+		gbc_global.gridy = 2;
+		gbc_global.weighty = 0.45;
+		add(infoPanelScrollPane, gbc_global);
 
 		infoPanel = new CourseInfoPanelView(rootView);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
-		add(topPanel, BorderLayout.NORTH);
+		gbc_global.insets = new Insets(5, 5, 5, 5);
+		gbc_global.gridy = 0;
+		gbc_global.weighty = 0.1;
+		add(topPanel, gbc_global);
 		GridBagLayout gbl_topPanel = new GridBagLayout();
 		gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_topPanel.rowHeights = new int[]{0, 0, 0};
@@ -189,40 +201,6 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		return table;
 	}
-
-//	private JPanel createEntriesTable()
-//	{
-//		// Set up panel
-//		JPanel table = new JPanel();
-//		GridBagLayout layout = new GridBagLayout();
-//		table.setLayout(layout);
-//
-//		// Add entries
-//		GridBagConstraints gbc = new GridBagConstraints();
-//		gbc.anchor = GridBagConstraints.WEST;
-//		gbc.fill = GridBagConstraints.HORIZONTAL;
-//		gbc.gridx = 0;
-//		gbc.gridy = 0;
-//		gbc.weightx = 1.0;
-//		for(Entry e: course.getEntries())
-//		{
-//			EntryView ev = new EntryView(e);
-//			ev.addMouseListener(new EntrySelectedController(rootView, this));
-//			table.add(ev, gbc);
-//			gbc.gridy += 1;
-//		}
-//
-//		// Add entry button
-//		JButton addEntryButton = new JButton("Add Entry");
-//		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, user, course));
-//		gbc.anchor = GridBagConstraints.NORTH;
-//		gbc.fill = GridBagConstraints.NONE;
-//		gbc.weighty = 1.0;
-//		table.add(addEntryButton, gbc);
-//
-//		return table;
-//	}
 	
 	private JPanel createTableHeader()
 	{
@@ -243,13 +221,13 @@ public class CourseView extends JPanel implements IGraderScreen
 		{
 			// Add this label
 			RealAssignment ra = (RealAssignment) template.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(ra.getName() + " " + convert(ra.getWeight()) + "%");
+			JLabel assignmentLabel = new JLabel(ra.getName() + " (" + convert(ra.getWeight()) + "%)");
 			assignmentLabel.setFont(headerFont);
 			if(ra.getNumSubAssignments() == 0)  // If a leaf node
 			{
 				assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
 			}
-			gbc.gridwidth = ra.getNumSuccessors() == 0 ? 1 : ra.getNumSuccessors();
+			gbc.gridwidth = ra.getNumLeaves() == 0 ? 1 : ra.getNumLeaves();
 			// Want all of the main grade-containing assignments on the bottom row
 			gbc.gridy = (ra.getNumSubAssignments() == 0) ? greatestDepth : 0;
 			header.add(assignmentLabel, gbc);
@@ -309,7 +287,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	
 	private int[] calculateColumnWidths()
 	{
-		int numColumns = course.getTemplate().getNumSuccessors()+5+1;
+		int numColumns = course.getTemplate().getNumLeaves()+5+1;
 		int[] widths = new int[numColumns];
 		widths[0] = 60;  // Section
 		widths[1] = 90;  // Student
@@ -327,7 +305,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	
 	private double[] calculateColumnWeights()
 	{
-		int numColumns = course.getTemplate().getNumSuccessors()+5+1;
+		int numColumns = course.getTemplate().getNumLeaves()+5+1;
 		double[] widths = new double[numColumns];
 		widths[0] = 0;  // Section
 		widths[1] = 0;  // Student
@@ -395,9 +373,13 @@ public class CourseView extends JPanel implements IGraderScreen
 			{
 				// Add this label
 				RealAssignment sa = (RealAssignment) ra.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(sa.getName() + " " + sa.getWeight() + "%");
+				JLabel assignmentLabel = new JLabel(sa.getName() + " (" + convert(sa.getWeight()) + "%)");
 				assignmentLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-				gbc.gridwidth = sa.getNumSuccessors() == 0 ? 1 : sa.getNumSuccessors();
+				if(sa.getNumSubAssignments() == 0)  // If a leaf node
+				{
+					assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
+				}
+				gbc.gridwidth = sa.getNumLeaves() == 0 ? 1 : sa.getNumLeaves();
 				gbc.gridy = sa.getNumSubAssignments() == 0 ? greatestDepth : currentDepth;
 				header.add(assignmentLabel, gbc);
 				gbc.gridx += 1;
@@ -470,11 +452,17 @@ public class CourseView extends JPanel implements IGraderScreen
 		infoPanelScrollPane.setViewportView(infoPanel);
 	}
 	
+	/**
+	 *  @return  The course being modified in this screen
+	 */
 	public Course getCourse()
 	{
 		return course;
 	}
 
+	/**
+	 *  @return  The text the user was searching for
+	 */
 	public String getSearchText() {
 		return searchField.getText();
 	}

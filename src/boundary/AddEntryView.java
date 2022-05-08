@@ -636,6 +636,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 		studentSelector = new JComboBox<Student>();
 		studentSelector.setEnabled(true);
 		studentSelector.setModel(createStudentComboBoxModel());
+		studentSelector.setSelectedIndex(-1);
 		add(studentSelector, gbc_studentSelector);
 	}
 	

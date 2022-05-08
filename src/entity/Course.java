@@ -133,7 +133,7 @@ public class Course {
     	// Create list of leaf node assignments from the assignment tree
     	ArrayList<ArrayList<RealAssignment>> aggregate = new ArrayList<ArrayList<RealAssignment>>();
     	// Initialize lists
-    	for(int i = 0; i < template.getNumSuccessors(); i++)
+    	for(int i = 0; i < template.getNumLeaves(); i++)
     	{
     		aggregate.add(new ArrayList<RealAssignment>());
     	}
@@ -145,7 +145,7 @@ public class Course {
     		ArrayList<RealAssignment> entryAssignments = getLeafAssignmentList(e.getFinalGrade());
     		
     		// Transfer the information to the aggregate list
-    		for(int i = 0; i < template.getNumSuccessors(); i++)
+    		for(int i = 0; i < template.getNumLeaves(); i++)
     		{
     			aggregate.get(i).add(entryAssignments.get(i));
     		}
@@ -161,7 +161,7 @@ public class Course {
     	// Check for leaf condition
     	if(ra.getNumSubAssignments() == 0)
     	{
-    		// Have a leaf, return
+    		// ra is a leaf, return
     		leafNodes.add(ra);
     		return leafNodes;
     	}

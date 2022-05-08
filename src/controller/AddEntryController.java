@@ -129,11 +129,13 @@ public class AddEntryController implements ActionListener
 		}
 		
 		// Duplicated student checks
-		if(course.hasEntry(entryInfo.getSelectedStudent()))
+		if(!entryInfo.creatingNewStudent()
+				&& course.hasEntry(entryInfo.getSelectedStudent()))
 		{
 			return EntryProblem.DUPLICATED_STUDENT;
 		}
-		if(course.hasEntryBUID(entryInfo.getEnteredBUID()))
+		if(entryInfo.creatingNewStudent()
+				&& course.hasEntryBUID(entryInfo.getEnteredBUID()))
 		{
 			return EntryProblem.DUPLICATED_STUDENT;
 		}

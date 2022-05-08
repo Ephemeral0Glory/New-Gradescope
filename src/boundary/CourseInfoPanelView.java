@@ -1,9 +1,11 @@
 package boundary;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -13,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Scrollable;
 
 import controller.DeleteAssignmentController;
 import controller.DeleteEntryController;
@@ -46,7 +49,7 @@ import entity.StudentStatus;
  *  @author Alex Titus
  *
  */
-public class CourseInfoPanelView extends JPanel implements IGraderScreen
+public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scrollable
 {
 	private static final long serialVersionUID = -1118231147797373119L;
 	private IGraderFrame rootView;
@@ -90,7 +93,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 6;
-		gbc.insets = new Insets(0, 0, 5, 5);
+		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
 		add(title, gbc);
 		gbc.gridy += 1;
@@ -101,15 +104,16 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		JLabel studentNameLabel = new JLabel("Student name:");
 		studentNameLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.insets = new Insets(0, 0, 5, 5);
 		add(studentNameLabel, gbc);
 		gbc.gridx += 1;
 		firstNameField = new JTextField(entry.getStudent().getFName());
 		firstNameField.setFont(panelFont);
-		gbc.anchor = GridBagConstraints.WEST;
 		add(firstNameField, gbc);
 		gbc.gridx += 1;
 		lastNameField = new JTextField(entry.getStudent().getLName());
 		lastNameField.setFont(panelFont);
+		gbc.anchor = GridBagConstraints.WEST;
 		add(lastNameField, gbc);
 		gbc.gridx += 1;
 			// ID
@@ -134,10 +138,10 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		statusSelector.setSelectedItem(entry.getStudent().getEnrollmentStatus());
 		gbc.anchor = GridBagConstraints.WEST;
 		add(statusSelector, gbc);
-		gbc.gridx = 0;
-		gbc.gridy += 1;
 		
 		// Assignments
+		gbc.gridx = 0;
+		gbc.gridy += 1;
 		RealAssignment finalGrade = entry.getFinalGrade();
 		for(int i = 0; i < finalGrade.getNumSubAssignments(); i++)
 		{
@@ -147,9 +151,11 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			JLabel assignmentLabel = new JLabel(a.getName() + " (" + convert(a.getWeight()) + "%)");
 			assignmentLabel.setFont(panelFont);
 			gbc.anchor = GridBagConstraints.EAST;
+			gbc.insets = new Insets(0, 5, 5, 5);
 			add(assignmentLabel, gbc);
 			gbc.gridx += 1;
 			gbc.gridy += 1;
+			gbc.insets = new Insets(0, 0, 5, 5);
 			
 			// Recursively add labels and grade/comment input fields for all sub-assignments
 			labelSubAssignments(a, gbc);
@@ -212,11 +218,13 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			commentsArea.setEnabled(true);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridheight = 2;
+			gbc.gridwidth = 2;
 			add(commentsArea, gbc);
 			commentsList.add(commentsArea);
 			
 			// Set for next call
 			gbc.gridheight = 1;
+			gbc.gridwidth = 1;
 			gbc.gridy += 2;
 			gbc.gridx -= 3;
 		}
@@ -229,7 +237,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 				// Create parent label
 				// Can cast because checked for sub-assignments above
 				RealAssignment sa = (RealAssignment) a.getSubAssignment(i);
-				JLabel assignmentLabel = new JLabel(sa.getName()+ " " + sa.getWeight() + "%");
+				JLabel assignmentLabel = new JLabel(sa.getName()+ " (" + convert(sa.getWeight()) + "%)");
 				assignmentLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				gbc.anchor = GridBagConstraints.EAST;
 				add(assignmentLabel, gbc);
@@ -405,6 +413,36 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 	public StudentStatus getSelectedStatus()
 	{
 		return (StudentStatus) statusSelector.getSelectedItem();
+	}
+
+	@Override
+	public Dimension getPreferredScrollableViewportSize()
+	{
+		return null;
+	}
+
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
+	{
+		return 25;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportHeight()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportWidth()
+	{
+		return false;
+	}
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
+	{
+		return 10;
 	}
 
 }

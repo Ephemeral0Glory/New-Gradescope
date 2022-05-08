@@ -101,9 +101,9 @@ public class NullAssignment implements Gradeable {
      *  @return  
      */
     @Override
-    public int getNumSuccessors()
+    public int getNumLeaves()
     {
-    	return 0;
+    	return 1;
     }
     
 }

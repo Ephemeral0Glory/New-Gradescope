@@ -30,6 +30,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ *  The create new course screen.
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class CreateNewCourseView extends JPanel implements IGraderScreen {
 	private static final long serialVersionUID = -5928149496471688167L;
 	private JTextField nameField;
@@ -42,6 +47,13 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 	private JCheckBox createNewSemesterBox;
 	private JComboBox<Semester> semesterSelector;
 	
+	/**
+	 *  Constructor.
+	 *  
+	 *  @param rootView  The application window frame
+	 *  @param user  The current user
+	 *  @param gradebook  The gradebook being modified
+	 */
 	public CreateNewCourseView(IGraderFrame rootView, User user, Gradebook gradebook) {
 		super();
 		this.rootView = rootView;
@@ -204,6 +216,9 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		return model;
 	}
 
+	/**
+	 *  @return  The create new course screen, as a JPanel
+	 */
 	@Override
 	public JPanel getPanelContent() {
 		return this;
@@ -228,31 +243,50 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		return codeField.getText();
 	}
 	
+	/**
+	 *  @return  The year for a new semester, as chosen by the user
+	 */
 	public int getEnteredSemesterYear()
 	{
 		return ((SpinnerNumberModel) newSemesterYearSelector.getModel()).getNumber().intValue();
 	}
 	
+	/**
+	 *  @return  Whether the create new semester box has been marked
+	 */
 	public boolean creatingNewSemester()
 	{
 		return createNewSemesterBox.isSelected();
 	}
 	
+	/**
+	 *  @return  The index of the selected semester. -1 means no selection.
+	 */
 	public int getSelectedSemesterIndex()
 	{
 		return semesterSelector.getSelectedIndex();
 	}
 	
+	/**
+	 *  @return  The selected Season for the new semester chosen by the user
+	 */
 	public Season getEnteredSemesterSeason()
 	{
 		return (Season) newSemesterSeasonSelector.getSelectedItem();
 	}
 	
+	/**
+	 *  @return The semester selected by the user. Null if there is no selection.
+	 */
 	public Semester getEnteredSemester()
 	{
 		return (Semester) semesterSelector.getSelectedItem();
 	}
 	
+	/**
+	 *  Updates the screen to show the error message.
+	 *  @param error  The error to display a message for
+	 */
 	public void showCourseCreationFailed(CreateCourseProblem error) {
 		removeAll();
 		repaint();

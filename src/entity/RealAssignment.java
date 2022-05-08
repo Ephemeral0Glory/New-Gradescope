@@ -205,12 +205,12 @@ public class RealAssignment implements Gradeable {
      *  @return  The total number of leaf nodes in this assignment's sub-assignment tree
      */
     @Override
-    public int getNumSuccessors()
+    public int getNumLeaves()
     {
-    	int successors = numSubAssignments;
+    	int successors = 0;
     	for(Gradeable g: subAssignments)
     	{
-    		successors += g.getNumSuccessors();
+    		successors += g.getNumLeaves();
     	}
     	
     	return successors;

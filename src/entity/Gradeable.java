@@ -6,7 +6,7 @@ public interface Gradeable {
 
     public float getWeightedGrade();
     public ArrayList<Grade> getFlattenedSubAssignmentTreeGrades();
-    public int getNumSuccessors();
+    public int getNumLeaves();
     public Grade getGrade();
 
 }

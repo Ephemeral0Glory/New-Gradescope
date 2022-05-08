@@ -54,6 +54,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		Font panelFont = new Font("Tahoma", Font.PLAIN, 16);
 		
 		JLabel title = new JLabel("Add a Section");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 32));
@@ -65,6 +66,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(title, gbc_title);
 		
 		JLabel lblCourseCode = new JLabel("Course code:");
+		lblCourseCode.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseCode = new GridBagConstraints();
 		gbc_lblCourseCode.anchor = GridBagConstraints.EAST;
 		gbc_lblCourseCode.insets = new Insets(0, 0, 5, 5);
@@ -73,13 +75,16 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblCourseCode, gbc_lblCourseCode);
 		
 		lblCourseCodeData = new JLabel("***");
+		lblCourseCodeData.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseCodeData = new GridBagConstraints();
+		gbc_lblCourseCodeData.anchor = GridBagConstraints.WEST;
 		gbc_lblCourseCodeData.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCourseCodeData.gridx = 1;
 		gbc_lblCourseCodeData.gridy = 1;
 		add(lblCourseCodeData, gbc_lblCourseCodeData);
 		
 		JLabel lblCourseName = new JLabel("Course name:");
+		lblCourseName.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseName = new GridBagConstraints();
 		gbc_lblCourseName.anchor = GridBagConstraints.EAST;
 		gbc_lblCourseName.insets = new Insets(0, 0, 5, 5);
@@ -88,13 +93,16 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblCourseName, gbc_lblCourseName);
 		
 		lblCourseNameData = new JLabel("***");
+		lblCourseNameData.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseNameData = new GridBagConstraints();
+		gbc_lblCourseNameData.anchor = GridBagConstraints.WEST;
 		gbc_lblCourseNameData.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCourseNameData.gridx = 1;
 		gbc_lblCourseNameData.gridy = 2;
 		add(lblCourseNameData, gbc_lblCourseNameData);
 		
 		JLabel lblSectionCode = new JLabel("Section code:");
+		lblSectionCode.setFont(panelFont);
 		GridBagConstraints gbc_lblSectionCode = new GridBagConstraints();
 		gbc_lblSectionCode.anchor = GridBagConstraints.EAST;
 		gbc_lblSectionCode.insets = new Insets(0, 0, 5, 5);
@@ -103,52 +111,52 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblSectionCode, gbc_lblSectionCode);
 		
 		txtSectionCode = new JTextField();
+		txtSectionCode.setFont(panelFont);
 		GridBagConstraints gbc_txtSectionCode = new GridBagConstraints();
+		gbc_txtSectionCode.anchor = GridBagConstraints.WEST;
 		gbc_txtSectionCode.insets = new Insets(0, 0, 5, 0);
-		gbc_txtSectionCode.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSectionCode.fill = GridBagConstraints.NONE;
 		gbc_txtSectionCode.gridx = 1;
 		gbc_txtSectionCode.gridy = 3;
 		add(txtSectionCode, gbc_txtSectionCode);
 		txtSectionCode.setColumns(10);
 		
 		JLabel lblSectionName = new JLabel("Section name:");
+		lblSectionName.setFont(panelFont);
 		GridBagConstraints gbc_lblSectionName = new GridBagConstraints();
+		gbc_lblSectionName.anchor = GridBagConstraints.EAST;
 		gbc_lblSectionName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSectionName.gridx = 0;
 		gbc_lblSectionName.gridy = 4;
 		add(lblSectionName, gbc_lblSectionName);
 		
 		txtSectionName = new JTextField();
+		txtSectionName.setFont(panelFont);
 		GridBagConstraints gbc_txtSectionName = new GridBagConstraints();
+		gbc_txtSectionName.anchor = GridBagConstraints.WEST;
 		gbc_txtSectionName.insets = new Insets(0, 0, 5, 0);
-		gbc_txtSectionName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSectionName.fill = GridBagConstraints.NONE;
 		gbc_txtSectionName.gridx = 1;
 		gbc_txtSectionName.gridy = 4;
 		add(txtSectionName, gbc_txtSectionName);
-		txtSectionName.setColumns(10);
+		txtSectionName.setColumns(25);
 		
-//		JButton btnAddStudent = new JButton("Add Student");
-//		GridBagConstraints gbc_btnAddStudent = new GridBagConstraints();
-//		gbc_btnAddStudent.insets = new Insets(0, 0, 0, 5);
-//		gbc_btnAddStudent.gridx = 0;
-//		gbc_btnAddStudent.gridy = 5;
-//		add(btnAddStudent, gbc_btnAddStudent);
-		
-		JButton btnConfirm = new JButton("Confirm");
-		btnConfirm.addActionListener(new AddSectionController(rootView, parentFrame, user, this));
+		JButton btnConfirm = new JButton("Create");
+		btnConfirm.setFont(panelFont);
+		btnConfirm.addActionListener(new AddSectionController(rootView, user, this));
 		GridBagConstraints gbc_btnConfirm = new GridBagConstraints();
 		gbc_btnConfirm.gridx = 0;
 		gbc_btnConfirm.gridy = 5;
 		add(btnConfirm, gbc_btnConfirm);
 		
-		JButton btnCancel = new JButton("Close");
-		btnCancel.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
-		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-		gbc_btnCancel.anchor = GridBagConstraints.WEST;
-		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
-		gbc_btnCancel.gridx = 1;
-		gbc_btnCancel.gridy = 5;
-		add(btnCancel, gbc_btnCancel);
+		JButton closeButton = new JButton("Close");
+		closeButton.setFont(panelFont);
+		closeButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
+		GridBagConstraints gbc_closeButton = new GridBagConstraints();
+		gbc_closeButton.insets = new Insets(0, 0, 0, 5);
+		gbc_closeButton.gridx = 1;
+		gbc_closeButton.gridy = 5;
+		add(closeButton, gbc_closeButton);
 	}
 	
 	@Override
@@ -182,6 +190,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		Font panelFont = new Font("Tahoma", Font.PLAIN, 16);
 		int y = 0;  // First row
 		
 		JLabel lblNewLabel = new JLabel("Add a Section");
@@ -195,6 +204,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel lblCourseCode = new JLabel("Course code:");
+		lblCourseCode.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseCode = new GridBagConstraints();
 		gbc_lblCourseCode.anchor = GridBagConstraints.EAST;
 		gbc_lblCourseCode.insets = new Insets(0, 0, 5, 5);
@@ -203,6 +213,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblCourseCode, gbc_lblCourseCode);
 		
 		GridBagConstraints gbc_lblCourseCodeData = new GridBagConstraints();
+		gbc_lblCourseCodeData.anchor = GridBagConstraints.WEST;
 		gbc_lblCourseCodeData.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCourseCodeData.gridx = 1;
 		gbc_lblCourseCodeData.gridy = y;
@@ -210,6 +221,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel lblCourseName = new JLabel("Course name:");
+		lblCourseName.setFont(panelFont);
 		GridBagConstraints gbc_lblCourseName = new GridBagConstraints();
 		gbc_lblCourseName.anchor = GridBagConstraints.EAST;
 		gbc_lblCourseName.insets = new Insets(0, 0, 5, 5);
@@ -218,6 +230,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblCourseName, gbc_lblCourseName);
 		
 		GridBagConstraints gbc_lblCourseNameData = new GridBagConstraints();
+		gbc_lblCourseNameData.anchor = GridBagConstraints.WEST;
 		gbc_lblCourseNameData.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCourseNameData.gridx = 1;
 		gbc_lblCourseNameData.gridy = y;
@@ -225,6 +238,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		y++;  // Next row
 		
 		JLabel lblSectionCode = new JLabel("Section code:");
+		lblSectionCode.setFont(panelFont);
 		GridBagConstraints gbc_lblSectionCode = new GridBagConstraints();
 		gbc_lblSectionCode.anchor = GridBagConstraints.EAST;
 		gbc_lblSectionCode.insets = new Insets(0, 0, 5, 5);
@@ -233,8 +247,9 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblSectionCode, gbc_lblSectionCode);
 		
 		GridBagConstraints gbc_txtSectionCode = new GridBagConstraints();
+		gbc_txtSectionCode.anchor = GridBagConstraints.WEST;
 		gbc_txtSectionCode.insets = new Insets(0, 0, 5, 0);
-		gbc_txtSectionCode.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSectionCode.fill = GridBagConstraints.NONE;
 		gbc_txtSectionCode.gridx = 1;
 		gbc_txtSectionCode.gridy = y;
 		add(txtSectionCode, gbc_txtSectionCode);
@@ -244,9 +259,10 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		if(error == SectionProblem.EMPTY_SECTION)
 		{
 			JLabel errorMessage = new JLabel("Please enter a section code.");
+			errorMessage.setFont(panelFont);
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTH;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
 			gbc.gridx = 1;
 			gbc.gridy = y;
 			add(errorMessage, gbc);
@@ -255,9 +271,10 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		if(error == SectionProblem.DUPLICATED_CODE)
 		{
 			JLabel errorMessage = new JLabel("This code already exists, please enter a different section code.");
+			errorMessage.setFont(panelFont);
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTH;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
 			gbc.gridx = 1;
 			gbc.gridy = y;
 			add(errorMessage, gbc);
@@ -265,6 +282,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		}
 		
 		JLabel lblSectionName = new JLabel("Section name:");
+		lblSectionName.setFont(panelFont);
 		GridBagConstraints gbc_lblSectionName = new GridBagConstraints();
 		gbc_lblSectionName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSectionName.gridx = 0;
@@ -272,24 +290,19 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		add(lblSectionName, gbc_lblSectionName);
 		
 		GridBagConstraints gbc_txtSectionName = new GridBagConstraints();
+		gbc_txtSectionName.anchor = GridBagConstraints.WEST;
 		gbc_txtSectionName.insets = new Insets(0, 0, 5, 0);
-		gbc_txtSectionName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSectionName.fill = GridBagConstraints.NONE;
 		gbc_txtSectionName.gridx = 1;
 		gbc_txtSectionName.gridy = y;
 		add(txtSectionName, gbc_txtSectionName);
-		txtSectionName.setColumns(10);
+		txtSectionName.setColumns(25);
 		y += 1;  // Next row
-		
-//		JButton btnAddStudent = new JButton("Add Student");
-//		GridBagConstraints gbc_btnAddStudent = new GridBagConstraints();
-//		gbc_btnAddStudent.insets = new Insets(0, 0, 0, 5);
-//		gbc_btnAddStudent.gridx = 0;
-//		gbc_btnAddStudent.gridy = y;
-//		add(btnAddStudent, gbc_btnAddStudent);
 		
 		if(error == SectionProblem.NO_ERROR)
 		{
-			JLabel errorMessage = new JLabel("Section created!");
+			JLabel errorMessage = new JLabel("Section created.");
+			errorMessage.setFont(panelFont);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
 			gbc.gridwidth = 2;
@@ -300,17 +313,20 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 		}
 		
 		JButton btnConfirm = new JButton("Create");
-		btnConfirm.addActionListener(new AddSectionController(rootView, parentFrame, user, this));
+		btnConfirm.setFont(panelFont);
+		btnConfirm.addActionListener(new AddSectionController(rootView, user, this));
 		GridBagConstraints gbc_btnConfirm = new GridBagConstraints();
+		gbc_btnConfirm.anchor = GridBagConstraints.CENTER;
 		gbc_btnConfirm.insets = new Insets(0, 0, 0, 5);
 		gbc_btnConfirm.gridx = 0;
 		gbc_btnConfirm.gridy = y;
 		add(btnConfirm, gbc_btnConfirm);
 		
 		JButton btnCancel = new JButton("Close");
+		btnCancel.setFont(panelFont);
 		btnCancel.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-		gbc_btnCancel.anchor = GridBagConstraints.WEST;
+		gbc_btnCancel.anchor = GridBagConstraints.CENTER;
 		gbc_btnCancel.insets = new Insets(0, 5, 0, 5);
 		gbc_btnCancel.gridx = 1;
 		gbc_btnCancel.gridy = y;

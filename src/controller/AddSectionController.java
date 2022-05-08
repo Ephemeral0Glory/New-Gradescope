@@ -18,14 +18,12 @@ public class AddSectionController implements ActionListener {
 	
 	public static enum SectionProblem { NO_ERROR, EMPTY_SECTION, DUPLICATED_CODE }
 	private IGraderFrame rootView;
-	private IGraderFrame parentView;
 	private User user;
 	private AddSectionView addSectionView;
 	
-	public AddSectionController(IGraderFrame rootView, IGraderFrame parentFrame,
-			User user, AddSectionView addSectionView) {
+	public AddSectionController(IGraderFrame rootView, User user,
+			AddSectionView addSectionView) {
 		this.rootView = rootView;
-		this.parentView = parentFrame;
 		this.user = user;
 		this.addSectionView = addSectionView;
 	}
@@ -50,15 +48,18 @@ public class AddSectionController implements ActionListener {
 			Section newSection = new Section(addSectionView.getName(), courseID, addSectionView.getCode());
 			course.addSection(newSection);
 
-			returnToParentView();
+			// Tell user of success
+			addSectionView.showSuccess();
 		}
 		else  // Had a problem
 		{
 			// Tell user about problem
 			addSectionView.showError(error);
-			rootView.update();
-			rootView.display();
 		}
+		
+		// Update display
+		rootView.update();
+		rootView.display();
 	}
 	
 	private SectionProblem validateInformation() {
@@ -79,16 +80,6 @@ public class AddSectionController implements ActionListener {
 		}
 		
 		return SectionProblem.NO_ERROR;
-	}
-
-	private void returnToParentView() {
-		// Close add student window
-		rootView.closeWindow();
-
-		// Refresh parent
-		parentView.update();
-		parentView.display();
-
 	}
 
 }

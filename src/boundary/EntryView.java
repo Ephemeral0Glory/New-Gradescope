@@ -102,7 +102,7 @@ public class EntryView extends JPanel implements IGraderScreen
 	
 	private int[] calculateColumnWidths()
 	{
-		int numColumns = entry.getFinalGrade().getNumSuccessors()+5+1;
+		int numColumns = entry.getFinalGrade().getNumLeaves()+5+1;
 		int[] widths = new int[numColumns];
 		widths[0] = 60;  // Section
 		widths[1] = 90;  // Student
@@ -120,7 +120,7 @@ public class EntryView extends JPanel implements IGraderScreen
 	
 	private double[] calculateColumnWeights()
 	{
-		int numColumns = entry.getFinalGrade().getNumSuccessors()+5+1;
+		int numColumns = entry.getFinalGrade().getNumLeaves()+5+1;
 		double[] widths = new double[numColumns];
 		widths[0] = 0;  // Section
 		widths[1] = 0;  // Student
