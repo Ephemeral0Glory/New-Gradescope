@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import boundary.AddAssignmentView;
 import boundary.IGraderFrame;
 
+/**
+ *  Adds a sub-assignment to the add assignment screen.
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class AddAssignmentAddSubController implements ActionListener {
  
     private IGraderFrame rootView;
@@ -33,6 +38,10 @@ public class AddAssignmentAddSubController implements ActionListener {
 	{
         // Extends each JTextField ArrayList by one with a new member
 		screen.addSubAssignmentFields();
+		
+		// Update display
+		screen.showNewSubAssignment();
+		
 		// Update screen
 		rootView.update();
 		rootView.display();

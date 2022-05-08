@@ -3,8 +3,6 @@ package boundary;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import entity.Entry;
 import entity.Grade;
 
