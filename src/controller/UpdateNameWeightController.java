@@ -28,10 +28,12 @@ public class UpdateNameWeightController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         UpdateNWProblem error = validateInformation();
 
-        String updatedName = editAssignmentView.getUpdatedName();
-        Float updatedWeight = 0f;
-        
+
         if (error == UpdateNWProblem.NO_ERROR) {
+            String updatedName = editAssignmentView.getUpdatedName();
+    //        Float updatedWeight = 0f;
+            Float updatedWeight = editAssignmentView.getUpdatedWeight();
+            System.out.println("proceed to update name and weight");
             this.parent.setName(updatedName);
             this.parent.setWeight(updatedWeight);
             // Close window
@@ -48,6 +50,7 @@ public class UpdateNameWeightController implements ActionListener {
 
         String updatedName = editAssignmentView.getUpdatedName();
         Float updatedWeight = 0f;
+//        Float updatedWeight = editAssignmentView.getUpdatedWeight();
 
         // Check empty name
         if (updatedName.isEmpty()) {
@@ -62,6 +65,9 @@ public class UpdateNameWeightController implements ActionListener {
         catch (Exception e) {
             return UpdateNWProblem.BAD_FLOAT;
         }
+        System.out.println("In validateInformation");
+        System.out.println("updateName: " + updatedName);
+        System.out.println("updateWeight: " + updatedWeight);
         // TODO possibly figure out how to check if float is invalid now
         return UpdateNWProblem.NO_ERROR;
     }
