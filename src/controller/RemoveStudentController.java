@@ -53,7 +53,10 @@ public class RemoveStudentController implements ActionListener
 			
 			// Remove student from section
 			s.removeStudent(st);
-			
+
+			// update list
+			studentInfo.updateStudentListing();
+
 			// Inform user
 			studentInfo.showSuccess();
 			

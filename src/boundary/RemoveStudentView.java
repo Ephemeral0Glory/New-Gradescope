@@ -188,6 +188,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 	 */
 	public void updateStudentListing()
 	{
+		System.out.println("in updateStudentListing");
 		studentList = new JList<Student>();
 		studentList.setModel(createStudentsModel());
 		studentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -232,6 +233,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 	public void showSuccess()
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(RemoveStudentProblem.NO_ERROR);
 	}
 	
@@ -242,6 +244,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 	public void showError(RemoveStudentProblem error)
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(error);
 	}
 	
