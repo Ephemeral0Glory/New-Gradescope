@@ -3,9 +3,13 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.ConfigFileReader;
+import utilities.ConfigFileWriter;
+import utilities.ConfigFileWriterException;
 import utilities.CourseFileWriter;
 import utilities.CourseFileWriterException;
 import utilities.GradebookFileReader;
+import utilities.IDFactory;
 import entity.Course;
 
 /**
@@ -48,8 +52,16 @@ public class SaveCourseDataController implements ActionListener
 			
 			// Write the new course
 			writer.writeCourse(course);
+			
+			// Also save configurations
+			ConfigFileWriter cwriter = new ConfigFileWriter(ConfigFileReader.configFileName);
+			cwriter.writeConfig(IDFactory.getConfigs());
 		}
 		catch (CourseFileWriterException e)
+		{
+			// TODO Notify user of problem
+			e.printStackTrace();
+		} catch (ConfigFileWriterException e)
 		{
 			// TODO Notify user of problem
 			e.printStackTrace();

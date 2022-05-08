@@ -32,7 +32,11 @@ public class AddAssignmentController implements ActionListener{
 
         if (error == AssignmentProblem.NO_ERROR) {
             // Create and add Assignment where appropriate
+<<<<<<< HEAD
             assignmentWeight = addAssignmentView.getWeight() / 100;
+=======
+            assignmentWeight = addAssignmentView.getWeight() / 100.0f;
+>>>>>>> 8e746dd60a3bba6e6bc77b1b7b1e8e4e74a51e9d
             Gradeable newAssignment = new RealAssignment(assignmentName, assignmentWeight);
             ArrayList<JTextField> subAssignmentNamesFields = addAssignmentView.getSubAssignmentNamesFields();
             ArrayList<JTextField> subAssignmentWeightsFields = addAssignmentView.getSubAssignmentWeightsFields();

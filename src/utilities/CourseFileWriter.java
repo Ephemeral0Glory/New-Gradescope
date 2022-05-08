@@ -211,6 +211,7 @@ public class CourseFileWriter
 		writer.writeAttribute("sid", s.getID()+"");
 		writer.writeAttribute("fname", s.getFName());
 		writer.writeAttribute("lname", s.getLName());
+		writer.writeAttribute("buid", s.getBUID());
 		writer.writeAttribute("status", s.getEnrollmentStatus().toString());
 		
 		// End student tag

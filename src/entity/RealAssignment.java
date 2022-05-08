@@ -70,6 +70,7 @@ public class RealAssignment implements Gradeable {
     {
     	this(name, weight);
     	subAssignments = new ArrayList<Gradeable>();
+    	this.student = student;
     	
     	// Use template to create sub-assignments
     	subAssignments = copyTemplate(template, student);
@@ -131,7 +132,7 @@ public class RealAssignment implements Gradeable {
     	else  // Have a NullAssignment
     	{
     		NullAssignment na = (NullAssignment) g;
-    		NullAssignment copy = new NullAssignment(na.getName(), na.getGrade());
+    		NullAssignment copy = new NullAssignment(na.getName(), new Grade());
     		return copy;
     	}
     }
@@ -200,6 +201,9 @@ public class RealAssignment implements Gradeable {
     	return numSubAssignments;
     }
     
+    /**
+     *  @return  The total number of leaf nodes in this assignment's sub-assignment tree
+     */
     @Override
     public int getNumSuccessors()
     {

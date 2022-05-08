@@ -63,7 +63,11 @@ public class AddEntryController implements ActionListener
 			Student s;
 			if(entryInfo.creatingNewStudent())
 			{
+				// Create student
 				s = createNewStudent();
+				
+				// Add student to section
+				entryInfo.getSelectedSection().addStudent(s);
 			}
 			else  // Selected one
 			{

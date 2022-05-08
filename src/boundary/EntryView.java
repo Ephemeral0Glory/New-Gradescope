@@ -88,7 +88,9 @@ public class EntryView extends JPanel implements IGraderScreen
 		}
 		
 		// Print final grade
-		JLabel finalGradeLabel = new JLabel(entry.getFinalGrade().getGrade().getScore()+"");
+		JLabel finalGradeLabel = new JLabel(
+				String.format("%.00f",
+						entry.getFinalGrade().getGrade().getScore()));
 		finalGradeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_finalGradeLabel = new GridBagConstraints();
 		gbc_finalGradeLabel.anchor = GridBagConstraints.EAST;

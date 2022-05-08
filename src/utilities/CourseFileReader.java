@@ -207,6 +207,7 @@ public class CourseFileReader extends DefaultHandler
 			sections = new HashMap<Long, Section>();
 			students = new HashMap<Long, Student>();
 		}
+
 		// Section
 		else if(localName.equals("section"))
 		{
@@ -215,6 +216,7 @@ public class CourseFileReader extends DefaultHandler
 		// Section ID
 		else if(localName.equals("sid"))
 		{
+
 			section_id = new Long(atts.getValue("text"));
 		}
 		// Section name
@@ -225,11 +227,13 @@ public class CourseFileReader extends DefaultHandler
 		// Section code
 		else if(localName.equals("seccode"))
 		{
+
 			sectionCode = atts.getValue("text");
 		}
 		// Student
 		else if(localName.equals("student"))
 		{
+
 			long student_id = new Long(atts.getValue("sid"));
 			String fname = atts.getValue("fname");
 			String lname = atts.getValue("lname");
@@ -242,21 +246,25 @@ public class CourseFileReader extends DefaultHandler
 		// Course ID
 		else if(localName.equals("cid"))
 		{
+
 			course_id = new Long(atts.getValue("text"));
 		}
 		// Course name
 		else if(localName.equals("cname"))
 		{
+
 			courseName = atts.getValue("text");
 		}
 		// Course code
 		else if(localName.equals("ccode"))
 		{
+
 			courseCode = atts.getValue("text");
 		}
 		// Owner
 		else if(localName.equals("owner"))
 		{
+
 			long owner_id = new Long(atts.getValue("oid"));
 			String email = atts.getValue("email");
 			String fname = atts.getValue("fname");
@@ -287,36 +295,43 @@ public class CourseFileReader extends DefaultHandler
 		// Template weight
 		else if(localName.equals("tweight"))
 		{
+
 			templateWeight = new Float(atts.getValue("text"));
 		}
 		// Template grade
 		else if(localName.equals("tgrade"))
 		{
+
 			templateGrade = new Grade(new Float(atts.getValue("score")), atts.getValue("comment"));
 		}
 		// Template number of sub-assignments
 		else if(localName.equals("tnumsa"))
 		{
+
 			templateNumSubAssignments = new Integer(atts.getValue("text"));
 		}
 		// Entries
 		else if(localName.equals("entries"))
 		{
+
 			entries = new ArrayList<Entry>(50);
 		}
 		// Entry ID
 		else if(localName.equals("eid"))
 		{
+
 			entry_id = new Long(atts.getValue("text"));
 		}
 		// Entry student ID
 		else if(localName.equals("esid"))
 		{
+
 			entryStudentID = new Long(atts.getValue("text"));
 		}
 		// Entry section ID
 		else if(localName.equals("esecid"))
 		{
+
 			entrySectionID = new Long(atts.getValue("text"));
 		}
 		// Final grade ID
@@ -327,61 +342,73 @@ public class CourseFileReader extends DefaultHandler
 		// Final grade name
 		else if(localName.equals("fgname"))
 		{
+
 			fgName = atts.getValue("text");
 		}
 		// Final grade student id
 		else if(localName.equals("fgstudent"))
 		{
-			fgStudentID = new Long(atts.getValue("sid"));
+//			fgStudentID = new Long(atts.getValue("sid"));
+//			fgStudentID = Long.valueOf(atts.getValue("sid"));
+			fgStudentID = Long.valueOf(atts.getValue("text"));
 		}
 		// Final grade weight
 		else if(localName.equals("fgweight"))
 		{
-			fgWeight = new Float(atts.getValue("text"));
+//			fgWeight = new Float(atts.getValue("text"));
+			fgWeight = Float.valueOf(atts.getValue("text"));
 		}
 		// Final grade grade
 		else if(localName.equals("fggrade"))
 		{
+
 			fgGrade = new Grade(new Float(atts.getValue("score")), atts.getValue("comment"));
 		}
 		// Final grade number of sub-assignments
 		else if(localName.equals("fgnumsa"))
 		{
+
 			fgNumSubAssignments = new Integer(atts.getValue("text"));
 		}
 		// Sub-assignment list
 		else if(localName.equals("salist"))
 		{
+
 			// Create a new list of sub-assignments and push it onto the stack
 			assignmentSubAssignmentLists.push(new ArrayList<Gradeable>());
 		}
 		// Assignment ID
 		else if(localName.equals("aid"))
 		{
+
 			// Push it onto the stack
 			assignment_ids.push(new Long(atts.getValue("text")));
 		}
 		// Assignment name
 		else if(localName.equals("aname"))
 		{
+
 			// Push it onto the stack
 			assignmentNames.push(atts.getValue("text"));
 		}
 		// Assignment student
 		else if(localName.equals("asid"))
 		{
+
 			// Push it onto the stack
 			assignmentStudentIDs.push(new Long(atts.getValue("text")));
 		}
 		// Assignment weight
 		else if(localName.equals("aweight"))
 		{
+
 			// Push it onto the stack
 			assignmentWeights.push(new Float(atts.getValue("text")));
 		}
 		// Assignment weight
 		else if(localName.equals("agrade"))
 		{
+
 			// Create grade
 			Grade grade = new Grade(new Float(atts.getValue("score")), atts.getValue("comment"));
 			// Push it onto the stack
@@ -390,6 +417,7 @@ public class CourseFileReader extends DefaultHandler
 		// Assignment number of sub-assignments
 		else if(localName.equals("numsa"))
 		{
+
 			// Push it onto the stack
 			assignmentNumSubAssignments.push(new Integer(atts.getValue("text")));
 		}

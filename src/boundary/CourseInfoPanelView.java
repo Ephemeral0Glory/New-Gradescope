@@ -90,7 +90,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 6;
-		gbc.insets = new Insets(0, 0, 5, 0);
+		gbc.insets = new Insets(0, 0, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
 		add(title, gbc);
 		gbc.gridy += 1;
@@ -144,7 +144,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			// Create parent label
 			// Can cast because checked above (numSubAssignments!=0)
 			RealAssignment a = (RealAssignment) finalGrade.getSubAssignment(i);
-			JLabel assignmentLabel = new JLabel(a.getName() + " " + a.getWeight() + "%");
+			JLabel assignmentLabel = new JLabel(a.getName() + " (" + convert(a.getWeight()) + "%)");
 			assignmentLabel.setFont(panelFont);
 			gbc.anchor = GridBagConstraints.EAST;
 			add(assignmentLabel, gbc);
@@ -170,6 +170,12 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		updateButton.addActionListener(new UpdateEntryController(rootView, this));
 		gbc.gridx += 1;
 		add(updateButton, gbc);
+	}
+	
+	private String convert(float weight)
+	{
+		float percentageWeight = weight * 100;
+		return String.format("%.00f", percentageWeight);
 	}
 	
 	private void labelSubAssignments(RealAssignment a, GridBagConstraints gbc)
@@ -200,7 +206,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			gbc.anchor = GridBagConstraints.EAST;
 			add(commentsLabel, gbc);
 			gbc.gridx += 1;
-			JTextArea commentsArea = new JTextArea(a.getGrade().getComment());
+			JTextArea commentsArea = new JTextArea(a.getGrade().getComment(), 3, 20);
 			commentsArea.setFont(panelFont);
 			commentsArea.setEditable(true);
 			commentsArea.setEnabled(true);
@@ -250,30 +256,33 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		createInfoPanelColumn(column);
 	}
 	
-	private JPanel createInfoPanelColumn(ArrayList<RealAssignment> column)
+	private void createInfoPanelColumn(ArrayList<RealAssignment> column)
 	{
 		// Set up panel
-		JPanel infoPanel = new JPanel();
-		infoPanel.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 
 		// Title
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 5;
 		String assignmentName = column.isEmpty() ? "No Assignment" : column.get(0).getName();
 		JLabel title = new JLabel(assignmentName);
-		title.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		infoPanel.add(title, gbc);
+		title.setFont(new Font("Tahoma", Font.BOLD, 16));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 0, 5, 5);
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.gridwidth = 5;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(title, gbc);
 
 		// Fill panel
+		int x = 0;
+		int y = 1;
 		Font tableFont = new Font("Tahoma", Font.PLAIN, 12);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.gridx = x;
+		gbc.gridy = y;
 		// This assumes that only columns of assignments with no sub-assignments
 		// can be selected
 		for(RealAssignment ra: column)
@@ -281,50 +290,59 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			// Get name of student for assignment
 			JLabel studentName = new JLabel(ra.getStudentName());
 			studentName.setFont(tableFont);
-			infoPanel.add(studentName, gbc);
-			gbc.gridx++;
+			gbc.gridx = x;
+			add(studentName, gbc);
+			x++;  // Next column
 
 			// Get assignment grade
 			JLabel gradeLabel = new JLabel("Grade:");
 			gradeLabel.setFont(tableFont);
-			infoPanel.add(gradeLabel, gbc);
-			gbc.gridx++;
-			JTextField gradeField = new JTextField();
+			gbc.gridx = x;
+			add(gradeLabel, gbc);
+			x++;  // Next column
+			JTextField gradeField = new JTextField(ra.getGrade().getScore()+"");
 			gradeField.setFont(tableFont);
 			gradeField.setText(ra.getGrade().getScore() + "");
-			infoPanel.add(gradeField, gbc);
-			gbc.gridx++;
+			gbc.gridx = x;
+			add(gradeField, gbc);
+			gradesList.add(gradeField);
+			x++;  // Next column
 
 			// Get assignment comments
 			JLabel commentsLabel = new JLabel("Comments:");
 			commentsLabel.setFont(tableFont);
-			infoPanel.add(commentsLabel, gbc);
-			gbc.gridx++;
-			JTextArea commentsArea = new JTextArea();
-			commentsArea.setFont(tableFont);
-			commentsArea.setText(ra.getGrade().getComment());
+			gbc.gridx = x;
+			add(commentsLabel, gbc);
+			x++;  // Next column
+			
+			JTextArea commentsArea = new JTextArea(ra.getGrade().getComment(), 3, 20);
+			gbc.gridx = x;
 			gbc.gridheight = 2;
-			infoPanel.add(commentsArea, gbc);
+			add(commentsArea, gbc);
+			commentsList.add(commentsArea);
+			x++;  // Next column
 
 			// Reset constraints
+			y += 2;  // Next row
+			x = 0;
 			gbc.gridheight = 1;
-			gbc.gridx = 0;
-			gbc.gridy += 2;
+			gbc.gridx = x;
+			gbc.gridy = y;
 		}
 
 		// Add update grades, delete assignment buttons
+		y++;
+		gbc.gridy = y;
 		JButton deleteAssignmentButton = new JButton("Delete Assignment");
 		deleteAssignmentButton.setFont(tableFont);
-		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, column.get(0)));
+		deleteAssignmentButton.addActionListener(new DeleteAssignmentController(rootView, column));
 		gbc.gridx = 3;
-		infoPanel.add(deleteAssignmentButton, gbc);
+		add(deleteAssignmentButton, gbc);
 		JButton updateGradesButton = new JButton("Update Grades");
 		updateGradesButton.setFont(tableFont);
 		updateGradesButton.addActionListener(new UpdateGradesController(rootView, this));
 		gbc.gridx = 4;
-		infoPanel.add(updateGradesButton, gbc);
-
-		return infoPanel;
+		add(updateGradesButton, gbc);
 	}
 
 	@Override

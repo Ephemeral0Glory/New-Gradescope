@@ -112,22 +112,6 @@ public class Course {
     	 *  described by the template. 
     	 */
     	assignments = createAssignmentAggregate();
-    	assignments.add(new ArrayList<RealAssignment>());
-    	ArrayList<ArrayList<RealAssignment>> all = new ArrayList<ArrayList<RealAssignment>>(template.getNumSubAssignments()+1);
-    	for(int i = 0; i < template.getNumSuccessors(); i++)
-    	{
-    		ArrayList<RealAssignment> al = new ArrayList<RealAssignment>(entries.size());
-    		for(Entry e: entries)
-    		{
-    			/* Can cast because we know that the first sub-assignment level of each
-        		 * Entry's finalGrade member are the assignments.
-        		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
-    			RealAssignment a = (RealAssignment) e.getAssignment(i);
-    			al.add(a);
-    		}
-    		all.add(al);
-    	}
-    	
     	
     	// Create students
     	students = new ArrayList<Student>(entries.size());
@@ -146,7 +130,7 @@ public class Course {
     
     private ArrayList<ArrayList<RealAssignment>> createAssignmentAggregate()
     {
-    	// Create list of leaf node assignments from the assignment tree 
+    	// Create list of leaf node assignments from the assignment tree
     	ArrayList<ArrayList<RealAssignment>> aggregate = new ArrayList<ArrayList<RealAssignment>>();
     	// Initialize lists
     	for(int i = 0; i < template.getNumSuccessors(); i++)
@@ -262,31 +246,21 @@ public class Course {
     /**
      *  Adds the given assignment to the table.
      *  <p>
-     *  First adds the assignment to each entry in the database. Then it creates
-     *  a list of references to those assignments and adds it to Course.assignments.
-     *  @param assignment
+     *  First adds the assignment to each entry in the database. Then it updates
+     *  the aggregates.
+     *  @param templateNewAssignment
      */
-    public void addAssignment(RealAssignment assignment) {
+    public void addAssignment(RealAssignment templateNewAssignment) {
         // Add assignment to each entry
         for(Entry e: entries)
         {
-        	e.addAssignment(new RealAssignment(assignment.getName(), assignment.getWeight()));
+        	e.addAssignment(new RealAssignment(templateNewAssignment.getName(),
+        			templateNewAssignment.getWeight(), e.getStudent(),
+        			templateNewAssignment));
         }
         
-    	// Create list of assignments from each row in entries
-    	ArrayList<RealAssignment> list = new ArrayList<RealAssignment>(entries.size());
-    	for(Entry e: entries)
-    	{
-    		/* Can cast because we know that the first sub-assignment level of each
-    		 * Entry's finalGrade member are the assignments.
-    		 * That is, Entry.finalGrade will never have NullAssignment as its subAssignment */
-    		RealAssignment ra = (RealAssignment) e.getAssignment(assignments.size()-1);
-    		list.add(ra);
-    	}
-    	
-    	// Add list to end of assignments list
-        this.assignments.add(list);
-        
+    	// Update aggregates
+        createAggregates();
     }
 
     /**
@@ -311,7 +285,6 @@ public class Course {
         // Update aggregates
         createAggregates();
     	
-    	// Remove this column
         return retval;
     }
     
@@ -330,18 +303,34 @@ public class Course {
 
     public void addStudent(Student student) {
         this.students.add(student);
+        
+        // Update aggregates
+        createAggregates();
     }
 
     public boolean removeStudent(Student studentToRemove) {
-        return this.students.remove(studentToRemove);
+        boolean retval = this.students.remove(studentToRemove);
+        
+        // Update aggregates
+        createAggregates();
+        
+        return retval;
     }
 
     public void addEntry(Entry entry) {
         this.entries.add(entry);
+        
+        // Update aggregates
+        createAggregates();
     }
 
     public boolean removeEntry(Entry entryToRemove) {
-        return this.entries.remove(entryToRemove);
+    	boolean retval = this.entries.remove(entryToRemove);
+        
+        // Update aggregates
+        createAggregates();
+        
+        return retval;
     }
 
     /**

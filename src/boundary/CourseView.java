@@ -2,6 +2,7 @@ package boundary;
 
 import javax.swing.JPanel;
 
+import controller.*;
 import entity.Course;
 import entity.Entry;
 import entity.RealAssignment;
@@ -21,17 +22,14 @@ import java.awt.GridLayout;
 
 import javax.swing.SwingConstants;
 
-import controller.OpenAddAssignmentWindowController;
-
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
-import controller.ColumnSelectedController;
-import controller.EntrySelectedController;
-import controller.OpenAddEntryWindowController;
 
 /**
  *  Displays the information about a course.
@@ -83,7 +81,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableScrollPane = new JScrollPane();
 		add(tableScrollPane, BorderLayout.CENTER);
 
-		entriesTable = createEntriesTable();
+		entriesTable = createEntriesTable("");
 		tableScrollPane.setViewportView(entriesTable);
 		
 		tableHeader = createTableHeader();
@@ -125,6 +123,7 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		JButton searchButton = new JButton("Search");
 		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		searchButton.addActionListener(new SearchController(rootView, user, this));
 		GridBagConstraints gbc_searchButton = new GridBagConstraints();
 		gbc_searchButton.gridx = 4;
 		gbc_searchButton.gridy = 1;
@@ -150,14 +149,14 @@ public class CourseView extends JPanel implements IGraderScreen
 		topPanel.add(searchField, gbc_searchField);
 		searchField.setColumns(15);
 	}
-	
-	private JPanel createEntriesTable()
+
+	private JPanel createEntriesTable(String searchText)
 	{
 		// Set up panel
 		JPanel table = new JPanel();
 		GridBagLayout layout = new GridBagLayout();
 		table.setLayout(layout);
-		
+
 		// Add entries
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
@@ -165,14 +164,24 @@ public class CourseView extends JPanel implements IGraderScreen
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 1.0;
-		for(Entry e: course.getEntries())
+		List<Entry> filteredEntry;
+		if (!searchText.isEmpty())
+		{
+			filteredEntry = course.getEntries().stream()
+					 .filter(entry -> entry.getStudent().getFName().toLowerCase().contains(searchText.toLowerCase()))
+					 .collect(Collectors.toList());
+		} else {
+			filteredEntry = course.getEntries();
+		}
+
+		for(Entry e: filteredEntry)
 		{
 			EntryView ev = new EntryView(e);
 			ev.addMouseListener(new EntrySelectedController(rootView, this));
 			table.add(ev, gbc);
 			gbc.gridy += 1;
 		}
-		
+
 		// Add entry button
 		JButton addEntryButton = new JButton("Add Entry");
 		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -181,9 +190,43 @@ public class CourseView extends JPanel implements IGraderScreen
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weighty = 1.0;
 		table.add(addEntryButton, gbc);
-		
+
 		return table;
 	}
+
+//	private JPanel createEntriesTable()
+//	{
+//		// Set up panel
+//		JPanel table = new JPanel();
+//		GridBagLayout layout = new GridBagLayout();
+//		table.setLayout(layout);
+//
+//		// Add entries
+//		GridBagConstraints gbc = new GridBagConstraints();
+//		gbc.anchor = GridBagConstraints.WEST;
+//		gbc.fill = GridBagConstraints.HORIZONTAL;
+//		gbc.gridx = 0;
+//		gbc.gridy = 0;
+//		gbc.weightx = 1.0;
+//		for(Entry e: course.getEntries())
+//		{
+//			EntryView ev = new EntryView(e);
+//			ev.addMouseListener(new EntrySelectedController(rootView, this));
+//			table.add(ev, gbc);
+//			gbc.gridy += 1;
+//		}
+//
+//		// Add entry button
+//		JButton addEntryButton = new JButton("Add Entry");
+//		addEntryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//		addEntryButton.addActionListener(new OpenAddEntryWindowController(rootView, user, course));
+//		gbc.anchor = GridBagConstraints.NORTH;
+//		gbc.fill = GridBagConstraints.NONE;
+//		gbc.weighty = 1.0;
+//		table.add(addEntryButton, gbc);
+//
+//		return table;
+//	}
 	
 	private JPanel createTableHeader()
 	{
@@ -380,15 +423,34 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	@Override
 	public void update() {
-		// Update all grades in case anything changed 
+		// Update all grades in case anything changed
 		course.updateGrades();
-		
+
 		// Update header if the assignments changed
 		tableHeader = createTableHeader();
 		tableScrollPane.setColumnHeaderView(tableHeader);
-		
+
+		// read searchText
+
 		// Update entries table
-		entriesTable = createEntriesTable();
+		entriesTable = createEntriesTable(getSearchText());
+		tableScrollPane.setViewportView(entriesTable);
+	}
+
+
+	/**
+	 * @param searchText
+	 */
+	public void update(String searchText) {
+		// Update all grades in case anything changed
+		course.updateGrades();
+
+		// Update header if the assignments changed
+		tableHeader = createTableHeader();
+		tableScrollPane.setColumnHeaderView(tableHeader);
+
+		// Update entries table
+		entriesTable = createEntriesTable(searchText);
 		tableScrollPane.setViewportView(entriesTable);
 	}
 	
@@ -409,11 +471,16 @@ public class CourseView extends JPanel implements IGraderScreen
 	public void showColumnInfo(ArrayList<RealAssignment> column)
 	{
 		infoPanel.showColumn(column);
+		infoPanelScrollPane.setViewportView(infoPanel);
 	}
 	
 	public Course getCourse()
 	{
 		return course;
+	}
+
+	public String getSearchText() {
+		return searchField.getText();
 	}
 
 }

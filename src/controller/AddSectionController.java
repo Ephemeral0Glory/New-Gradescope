@@ -49,13 +49,15 @@ public class AddSectionController implements ActionListener {
 			// Create and add new section
 			Section newSection = new Section(addSectionView.getName(), courseID, addSectionView.getCode());
 			course.addSection(newSection);
-			
-			// Tell user
-			addSectionView.showSuccess();
-			
-			// Refresh main window
-			parentView.update();
-			parentView.display();
+
+			returnToParentView();
+//
+//			// Tell user
+//			addSectionView.showSuccess();
+//
+//			// Refresh main window
+//			parentView.update();
+//			parentView.display();
 		}
 		else  // Had a problem
 		{
@@ -64,7 +66,6 @@ public class AddSectionController implements ActionListener {
 			rootView.update();
 			rootView.display();
 		}
-		
 	}
 	
 	private SectionProblem validateInformation() {
@@ -85,6 +86,16 @@ public class AddSectionController implements ActionListener {
 		}
 		
 		return SectionProblem.NO_ERROR;
+	}
+
+	private void returnToParentView() {
+		// Close add student window
+		rootView.closeWindow();
+
+		// Refresh parent
+		parentView.update();
+		parentView.display();
+
 	}
 
 }
