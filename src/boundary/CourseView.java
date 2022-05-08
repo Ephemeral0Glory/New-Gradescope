@@ -419,18 +419,18 @@ public class CourseView extends JPanel implements IGraderScreen
 	/**
 	 * @param searchText
 	 */
-	public void update(String searchText) {
-		// Update all grades in case anything changed
-		course.updateGrades();
-
-		// Update header if the assignments changed
-		tableHeader = createTableHeader();
-		tableScrollPane.setColumnHeaderView(tableHeader);
-
-		// Update entries table
-		entriesTable = createEntriesTable(searchText);
-		tableScrollPane.setViewportView(entriesTable);
-	}
+//	public void update(String searchText) {
+//		// Update all grades in case anything changed
+//		course.updateGrades();
+//
+//		// Update header if the assignments changed
+//		tableHeader = createTableHeader();
+//		tableScrollPane.setColumnHeaderView(tableHeader);
+//
+//		// Update entries table
+//		entriesTable = createEntriesTable(searchText);
+//		tableScrollPane.setViewportView(entriesTable);
+//	}
 	
 	/**
 	 *  Update info panel to show the entry's information.
@@ -440,6 +440,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		infoPanel.showEntry(e);
 		infoPanelScrollPane.setViewportView(infoPanel);
+		infoPanelScrollPane.setVisible(true);
 	}
 	
 	/**
@@ -467,4 +468,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		return searchField.getText();
 	}
 
+	public void hideInfoPaneScrollPane() {
+		infoPanelScrollPane.setVisible(false);
+	}
 }

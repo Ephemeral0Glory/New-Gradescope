@@ -41,7 +41,7 @@ public class SearchController implements ActionListener {
 
 			// send serchText to courseView
 			courseView.update();
-//			courseView.hideInfoPaneScrollPane();
+			courseView.hideInfoPaneScrollPane();
 
 		} else {
 			// Display error
