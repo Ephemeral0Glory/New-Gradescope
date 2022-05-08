@@ -36,6 +36,7 @@ public class OpenCreateNewUserController implements ActionListener
 		view.setNewView(cnuv);
 		view.update();
 		view.display();
+		cnuv.focusFirstNameField();
 	}
 
 }
