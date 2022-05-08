@@ -59,8 +59,8 @@ public class OpenViewCourseInfoViewController implements ActionListener {
 
 		// Display it
 		gv.setNewView(vciv);
-		rootView.update();
-		rootView.display();
+		gv.update();
+		gv.display();
 	}
 
 }

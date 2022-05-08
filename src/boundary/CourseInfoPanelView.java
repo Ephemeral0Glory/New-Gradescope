@@ -267,6 +267,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		title.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 0, 5, 5);
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 5;
 		gbc.gridx = 0;
@@ -279,7 +280,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 		Font tableFont = new Font("Tahoma", Font.PLAIN, 12);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridwidth = 0;
+		gbc.gridwidth = 1;
 		gbc.gridx = x;
 		gbc.gridy = y;
 		// This assumes that only columns of assignments with no sub-assignments
@@ -304,6 +305,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			gradeField.setText(ra.getGrade().getScore() + "");
 			gbc.gridx = x;
 			add(gradeField, gbc);
+			gradesList.add(gradeField);
 			x++;  // Next column
 
 			// Get assignment comments
@@ -317,6 +319,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen
 			gbc.gridx = x;
 			gbc.gridheight = 2;
 			add(commentsArea, gbc);
+			commentsList.add(commentsArea);
 			x++;  // Next column
 
 			// Reset constraints

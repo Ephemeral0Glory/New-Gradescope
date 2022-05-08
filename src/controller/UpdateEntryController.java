@@ -107,9 +107,11 @@ public class UpdateEntryController implements ActionListener
 			a.getSubAssignment(0).getGrade().setScore(score);
 			
 			// Comments
+			// Update both the NullAssignment's grade.comment and this assignment's comment
 			String comment = comments.get(commentsIndex);
 			commentsIndex++;
 			a.getSubAssignment(0).getGrade().setComment(comment);
+			a.getGrade().setComment(comment);
 		}
 		else  // Have sub-assignments
 		{
