@@ -51,13 +51,6 @@ public class AddSectionController implements ActionListener {
 			course.addSection(newSection);
 
 			returnToParentView();
-//
-//			// Tell user
-//			addSectionView.showSuccess();
-//
-//			// Refresh main window
-//			parentView.update();
-//			parentView.display();
 		}
 		else  // Had a problem
 		{

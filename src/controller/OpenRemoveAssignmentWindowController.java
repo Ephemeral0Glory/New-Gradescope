@@ -8,7 +8,6 @@ import entity.User;
 import boundary.GraderView;
 import boundary.IGraderFrame;
 import boundary.RemoveAssignmentView;
-import boundary.RemoveSectionView;
 
 /**
  *  Opens the Remove Assignment window from the Course Edit screen.

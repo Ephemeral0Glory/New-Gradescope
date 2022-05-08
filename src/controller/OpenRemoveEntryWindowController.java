@@ -8,7 +8,6 @@ import entity.User;
 import boundary.GraderView;
 import boundary.IGraderFrame;
 import boundary.RemoveEntryView;
-import boundary.RemoveStudentView;
 
 /**
  *  Opens the Remove Student window from the Course Edit screen.

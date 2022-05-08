@@ -16,10 +16,6 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 
 import controller.ClosePopupWindowController;
-import controller.OpenAddSectionWindowController;
-import controller.OpenMainMenuController;
-import controller.SaveCourseDataController;
-
 import javax.swing.JButton;
 
 /**

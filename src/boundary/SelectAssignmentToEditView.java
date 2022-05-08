@@ -1,8 +1,6 @@
 package boundary;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -21,6 +19,7 @@ import javax.swing.SwingConstants;
 import controller.*;
 
 public class SelectAssignmentToEditView extends JPanel implements IGraderScreen {
+	private static final long serialVersionUID = -3213344054405525640L;
 	private IGraderFrame rootView;
 	private IGraderFrame parentFrame;
 	private User user;

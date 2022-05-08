@@ -30,13 +30,15 @@ public class AddEntryController implements ActionListener
 	public static enum EntryProblem { NO_ERROR, EMPTY_SECTION, EMPTY_STUDENT, DUPLICATED_STUDENT,
 		EMPTY_STUDENT_FNAME, EMPTY_STUDENT_LNAME, EMPTY_STUDENT_BUID }
 	private IGraderFrame rootView;
+	private IGraderFrame parentView;
 	private User user;
 	private Course course;
 	private AddEntryView entryInfo;
 	
-	public AddEntryController(IGraderFrame rootView, User user, Course course, AddEntryView entryInfo)
+	public AddEntryController(IGraderFrame rootView, IGraderFrame parentView, User user, Course course, AddEntryView entryInfo)
 	{
 		this.rootView = rootView;
+		this.parentView = parentView;
 		this.user = user;
 		this.course = course;
 		this.entryInfo = entryInfo;
@@ -83,6 +85,10 @@ public class AddEntryController implements ActionListener
 			
 			// Tell user
 			entryInfo.showSuccess();
+			
+			// Update parent view as well
+			parentView.update();
+			parentView.display();
 		}
 		else
 		{

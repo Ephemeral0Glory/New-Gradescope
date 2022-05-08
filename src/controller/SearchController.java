@@ -1,11 +1,8 @@
 package controller;
 
 import boundary.CourseView;
-import boundary.CreateNewCourseView;
 import boundary.IGraderFrame;
 import entity.*;
-import utilities.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,17 +20,14 @@ public class SearchController implements ActionListener {
 	 *  <li> SELECT_SEMESTER: a semester was not selected and the box marking create new semester mode was unmarked </li>
 	 */
 	public static enum SearchProblem { NO_ERROR, BAD_SEARCHTEXT }
-//	private CreateNewCourseView newCourseInfo;
-	private CourseView courseView;
 	private IGraderFrame rootView;
+	private CourseView courseView;
 	private User user;
-//	private Gradebook gradebook;
 
 	public SearchController(IGraderFrame rootView, User user, CourseView courseView) {
 		this.rootView = rootView;
 		this.courseView = courseView;
 		this.user = user;
-//		this.gradebook = gradebook;
 	}
 
 	@Override
@@ -49,7 +43,6 @@ public class SearchController implements ActionListener {
 			courseView.update();
 		} else {
 			// Display error
-//			newCourseInfo.showCourseCreationFailed(error);
 		}
 
 		// Update display

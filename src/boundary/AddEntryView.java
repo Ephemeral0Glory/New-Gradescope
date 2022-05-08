@@ -256,7 +256,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 		
 		JButton createButton = new JButton("Create");
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createButton.addActionListener(new AddEntryController(rootView, user, course, this));
+		createButton.addActionListener(new AddEntryController(rootView, parentView, user, course, this));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
 		gbc_createButton.insets = new Insets(0, 0, 0, 5);
 		gbc_createButton.gridx = 0;
@@ -302,6 +302,15 @@ public class AddEntryView extends JPanel implements IGraderScreen
 	public void showSuccess()
 	{
 		removeAll();
+		
+		// Clear previous data
+		firstNameField.setText("");
+		lastNameField.setText("");
+		buidField.setText("");
+		studentSelector.setSelectedIndex(-1);
+		studentStatusSelector.setSelectedIndex(0);
+		
+		// Update screen with success message
 		setupPanelWithError(EntryProblem.NO_ERROR);
 	}
 	
@@ -602,7 +611,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 		
 		JButton createButton = new JButton("Create");
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createButton.addActionListener(new AddEntryController(rootView, user, course, this));
+		createButton.addActionListener(new AddEntryController(rootView, parentView, user, course, this));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
 		gbc_createButton.insets = new Insets(0, 0, 0, 5);
 		gbc_createButton.gridx = 0;

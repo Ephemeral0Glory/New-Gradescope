@@ -5,15 +5,12 @@ import java.awt.event.ActionListener;
 
 import entity.Course;
 import entity.Entry;
-import entity.Section;
-import entity.Student;
 import entity.User;
 import boundary.IGraderFrame;
 import boundary.RemoveEntryView;
-import boundary.RemoveStudentView;
 
 /**
- *  Removes a student from the course or displays an error message.
+ *  Removes an entry from the course or displays an error message.
  *  @author Seonghoon Cho
  */
 public class RemoveEntryController implements ActionListener
@@ -35,7 +32,7 @@ public class RemoveEntryController implements ActionListener
 	}
 
 	/**
-	 *  Removes a section from the course or displays an error message.
+	 *  Removes an entry from the course or displays an error message.
 	 *  
 	 *  @param ae  The initiating event, ignored
 	 */
@@ -48,15 +45,12 @@ public class RemoveEntryController implements ActionListener
 		// Take action
 		if(error == RemoveEntryProblem.NO_ERROR)
 		{
-			// Get student to remove
+			// Get entry to remove
 			Entry e = entryInfo.getSelectedEntry();
 			
-			// Get section to remove from
-//			Section s = entryInfo.getSelectedSection();
+			// Get course to remove from
 			Course course = entryInfo.getCourse();
 			
-			// Remove student from section
-//			s.removeStudent(e);
 			// Remove entry from course
 			course.removeEntry(e);
 			
@@ -80,12 +74,6 @@ public class RemoveEntryController implements ActionListener
 	
 	private RemoveEntryProblem validateInformation()
 	{
-		// Check that a selection was made
-//		if(entryInfo.getSelectedSectionIndex() == -1)
-//		{
-//			// No section selection
-//			return RemoveEntryProblem.NO_SECTION_SELECTION;
-//		}
 		if(entryInfo.getSelectedEntryIndex() == -1)
 		{
 			// No student selection

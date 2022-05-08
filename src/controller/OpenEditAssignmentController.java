@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +9,10 @@ import javax.swing.JTextField;
 import boundary.*;
 import entity.*;
 
+/**
+ * 
+ *  @author David Sullo
+ */
 public class OpenEditAssignmentController implements ActionListener {
 
     private IGraderFrame rootView;
@@ -17,7 +20,8 @@ public class OpenEditAssignmentController implements ActionListener {
     private Course course;
     private SelectAssignmentToEditView selectAssignmentToEditView;
     
-    public OpenEditAssignmentController(IGraderFrame rootView, User user, Course course, SelectAssignmentToEditView selectAssignmentToEditView) {
+    public OpenEditAssignmentController(IGraderFrame rootView, User user,
+    		Course course, SelectAssignmentToEditView selectAssignmentToEditView) {
         this.rootView = rootView;
         this.user = user;
         this.course = course;

@@ -13,10 +13,8 @@ import javax.swing.JLabel;
 
 import java.awt.Insets;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -25,13 +23,8 @@ import javax.swing.SwingConstants;
 import controller.ClosePopupWindowController;
 import controller.RemoveEntryController;
 import controller.RemoveEntryController.RemoveEntryProblem;
-import controller.RemoveStudentController;
-import controller.RemoveStudentController.RemoveStudentProblem;
-import controller.RemoveStudentsSectionChangeController;
 import entity.Course;
 import entity.Entry;
-import entity.Section;
-import entity.Student;
 import entity.User;
 
 /**
@@ -137,16 +130,6 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		gbc_cancelButton.weighty = 0.15;
 		add(cancelButton, gbc_cancelButton);
 
-	}
-	
-	private DefaultComboBoxModel<Section> createComboBoxModel()
-	{
-		DefaultComboBoxModel<Section> model = new DefaultComboBoxModel<Section>();
-		for(Section s: course.getSections())
-		{
-			model.addElement(s);
-		}
-		return model;
 	}
 
 	private ListModel<Entry> createEntryModel()

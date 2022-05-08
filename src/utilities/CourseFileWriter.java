@@ -243,6 +243,7 @@ public class CourseFileWriter
 		writer.writeAttribute("fname", owner.getFName());
 		writer.writeAttribute("lname", owner.getLName());
 		writer.writeAttribute("password", owner.getHashedPW()+"");
+		writer.writeEndElement();
 		
 		// Template
 		writeTemplate(course.getTemplate());	

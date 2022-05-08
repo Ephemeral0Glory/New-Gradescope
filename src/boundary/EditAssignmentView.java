@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.*;
-import controller.AddAssignmentController.AssignmentProblem;
 import controller.UpdateNameWeightController.UpdateNWProblem;
 import entity.*;
 import java.awt.GridBagLayout;
@@ -19,6 +18,7 @@ import javax.swing.SwingConstants;
 
 
 public class EditAssignmentView extends JPanel implements IGraderScreen {
+	private static final long serialVersionUID = -3143859592543000705L;
 	private IGraderFrame rootView;
 	private IGraderFrame parentFrame;
 	private User user;

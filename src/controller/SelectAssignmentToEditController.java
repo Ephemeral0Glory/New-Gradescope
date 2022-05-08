@@ -2,8 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import entity.*;
 import boundary.*;
 
@@ -32,7 +30,7 @@ public class SelectAssignmentToEditController implements ActionListener {
             // Do nothing
             return;
         }
-        OpenEditAssignmentController opeac = new OpenEditAssignmentController(rootView, user, course, (RealAssignment) selectedAssignment);
+        OpenEditAssignmentController opeac = new OpenEditAssignmentController(rootView, user, course, selectAssignmentToEditView);
         opeac.open();
     }
     
