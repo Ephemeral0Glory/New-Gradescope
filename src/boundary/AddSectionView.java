@@ -172,6 +172,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 	public void showSuccess()
 	{
 		removeAll();
+		repaint();
 		clearData();
 		setupPanelWithError(SectionProblem.NO_ERROR);
 	}
@@ -179,6 +180,7 @@ public class AddSectionView extends JPanel implements IGraderScreen {
 	public void showError(SectionProblem error)
 	{
 		removeAll();
+		repaint();
 		setupPanelWithError(error);
 	}
 	
