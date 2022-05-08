@@ -473,4 +473,8 @@ public class CreateNewUserView extends JPanel implements IGraderScreen
 		// Ignore
 	}
 
+	public void focusFirstNameField() {
+		firstNameField.requestFocus();
+	}
+
 }
