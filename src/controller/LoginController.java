@@ -2,6 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.security.Key;
 import java.util.ArrayList;
 
 import utilities.GradebookFileReaderException;
@@ -17,7 +20,7 @@ import entity.User;
  *  given username and password combination was incorrect.
  *  @author Alex Titus
  */
-public class LoginController implements ActionListener{
+public class LoginController implements ActionListener, KeyListener {
 	private LogInView view;
 	
 	public LoginController(LogInView view)
@@ -28,32 +31,7 @@ public class LoginController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		ArrayList<User> users = view.getUsers();
-		User user = determineUser(users, view.getEnteredUsername());
-		
-		// If couldn't find user for that username
-		if(user == null)
-		{
-			// Display bad login message and end
-			view.showBadLogin();
-			view.update();
-			view.display();
-			return;
-		}
-		
-		// Have user, check password
-		if(user.checkPassword(view.getEnteredPassword()))
-		{
-			// Correct password, go to main menu
-			createMainMenu(user);
-		}
-		else
-		{
-			// Bad password, show bad login message
-			view.showBadLogin();
-			view.update();
-			view.display();
-		}
+		proceedToLogin();
 	}
 	
 	private User determineUser(ArrayList<User> users, String username)
@@ -84,4 +62,49 @@ public class LoginController implements ActionListener{
 		}
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			proceedToLogin();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
+
+	public void proceedToLogin() {
+		ArrayList<User> users = view.getUsers();
+		User user = determineUser(users, view.getEnteredUsername());
+
+		// If couldn't find user for that username
+		if(user == null)
+		{
+			// Display bad login message and end
+			view.showBadLogin();
+			view.update();
+			view.display();
+			return;
+		}
+
+		// Have user, check password
+		if(user.checkPassword(view.getEnteredPassword()))
+		{
+			// Correct password, go to main menu
+			createMainMenu(user);
+		}
+		else
+		{
+			// Bad password, show bad login message
+			view.showBadLogin();
+			view.update();
+			view.display();
+		}
+	}
 }

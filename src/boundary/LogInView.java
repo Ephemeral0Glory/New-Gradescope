@@ -124,6 +124,7 @@ public class LogInView extends JFrame implements IGraderFrame {
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.LEFT);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		passwordField.addKeyListener(new LoginController(this));
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.anchor = GridBagConstraints.WEST;
 		gbc_passwordField.weighty = 1.0;
