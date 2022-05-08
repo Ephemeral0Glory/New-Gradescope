@@ -81,10 +81,42 @@ public class Semester {
         return this.courses.remove(courseToRemove);
     }
     
+    public boolean containsCourse(Course testCourse)
+    {
+    	return this.courses.contains(testCourse);
+    }
+    
     @Override
     public String toString()
     {
     	return season.toString() + " " + year;
+    }
+    
+    /**
+     *  @param o  The object being compared
+     *  @return  True if the given object is a Semester with the same year and season as this one.
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+    	if(o instanceof Semester)
+    	{
+    		Semester s = (Semester) o;
+    		
+    		if(s.getYear() == this.year && s.getSeason() == this.season)
+    		{
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	else
+    	{
+    		// Not a semester, not equal
+    		return false;
+    	}
     }
 
 }

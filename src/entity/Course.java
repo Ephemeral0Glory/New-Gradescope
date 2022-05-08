@@ -382,5 +382,32 @@ public class Course {
     {
     	return code + " " + name;
     }
+    
+    /**
+     *  @param o  The object being compared
+     *  @return  True if the object being compared is a Course with the same code (case insensitive) as this one.
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+    	if(o instanceof Course)
+    	{
+    		Course c = (Course) o;
+    		// Equal if they have the same code
+    		if(c.getCode().equalsIgnoreCase(this.code))
+    		{
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	else
+    	{
+    		// Not a course, not equal
+    		return false;
+    	}
+    }
 
 }

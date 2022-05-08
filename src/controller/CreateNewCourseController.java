@@ -35,8 +35,11 @@ public class CreateNewCourseController implements ActionListener {
 	 *  <ul><li> BAD_COURSENAME: course name was left empty </li>
 	 *  <li> BAD_COURSECODE: either course code conflicted with existing one, or it was left empty </li>
 	 *  <li> SELECT_SEMESTER: a semester was not selected and the box marking create new semester mode was unmarked </li> 
+	 *  <li> DUPLICATE_SEMESTER: the newly created semester already exists in this gradebook </li>
+	 *  <li> DUPLICATE_COURSE: the newly created course already exists in this semester </li>
 	 */
-	public static enum CreateCourseProblem { NO_ERROR, BAD_COURSENAME, BAD_COURSECODE, SELECT_SEMESTER }
+	public static enum CreateCourseProblem { NO_ERROR, BAD_COURSENAME, BAD_COURSECODE, SELECT_SEMESTER,
+		DUPLICATE_SEMESTER, DUPLICATE_COURSE }
 	private CreateNewCourseView newCourseInfo;
 	private IGraderFrame rootView;
 	private User user;
@@ -53,17 +56,14 @@ public class CreateNewCourseController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Validate the course information
-		String newCoursename = newCourseInfo.getEnteredCoursename();
-		String newCoursecode = newCourseInfo.getEnteredCoursecode();
-		
-		CreateCourseProblem error = validateInfo(newCoursename, newCoursecode);
+		CreateCourseProblem error = validateInfo();
 		
 		if (error == CreateCourseProblem.NO_ERROR) {
 			// Determine whether to use an existing semester or to create a new one
 			Semester semesterToAddTo = getSemesterToAddTo();
 			
 			// Create course
-			Course c = new Course(newCoursename, newCoursecode, user);
+			Course c = createNewCourse();
 			
 			// Add course to semester
 			semesterToAddTo.addCourse(c);
@@ -87,6 +87,47 @@ public class CreateNewCourseController implements ActionListener {
 		// Update display
 		rootView.update();
 		rootView.display();
+	}
+	
+	private CreateCourseProblem validateInfo() {
+		// Empty values check
+		if (newCourseInfo.getEnteredCoursename().isEmpty()) {
+			return CreateCourseProblem.BAD_COURSENAME;
+		}
+		
+		if (newCourseInfo.getEnteredCoursecode().isEmpty()) {
+			return CreateCourseProblem.BAD_COURSECODE;
+		}
+		if (!newCourseInfo.creatingNewSemester() &&
+				newCourseInfo.getSelectedSemesterIndex() == -1)
+		{
+			return CreateCourseProblem.SELECT_SEMESTER;
+		}
+		
+		// Duplicate semester check
+		if (newCourseInfo.creatingNewSemester())
+		{
+			// Create a test semester
+			int year = newCourseInfo.getEnteredSemesterYear();
+			Season season = newCourseInfo.getEnteredSemesterSeason();
+			Semester s = new Semester(season.toString(), year);
+			if(gradebook.containsSemester(s))
+			{
+				return CreateCourseProblem.DUPLICATE_SEMESTER;
+			}
+		}
+		// Duplicate course check
+		else
+		{
+			Course testCourse = createNewCourse();
+			Semester selectedSemester = newCourseInfo.getEnteredSemester();
+			if(selectedSemester.containsCourse(testCourse))
+			{
+				return CreateCourseProblem.DUPLICATE_COURSE;
+			}
+		}
+		
+		return CreateCourseProblem.NO_ERROR;
 	}
 	
 	private Semester getSemesterToAddTo()
@@ -114,22 +155,12 @@ public class CreateNewCourseController implements ActionListener {
 		}
 	}
 	
-	private CreateCourseProblem validateInfo(String newCoursename, String newCoursecode) {
-		// Empty values check
-		if (newCoursename.isEmpty()) {
-			return CreateCourseProblem.BAD_COURSENAME;
-		}
+	private Course createNewCourse()
+	{
+		String newCoursename = newCourseInfo.getEnteredCoursename();
+		String newCoursecode = newCourseInfo.getEnteredCoursecode();
 		
-		if (newCoursecode.isEmpty()) {
-			return CreateCourseProblem.BAD_COURSECODE;
-		}
-		if (!newCourseInfo.creatingNewSemester() &&
-				newCourseInfo.getSelectedSemesterIndex() == -1)
-		{
-			return CreateCourseProblem.SELECT_SEMESTER;
-		}
-		
-		return CreateCourseProblem.NO_ERROR;
+		return new Course(newCoursename, newCoursecode, user);
 	}
 	
 	private void openMainMenu() {

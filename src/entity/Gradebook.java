@@ -77,4 +77,9 @@ public class Gradebook {
         return this.semesters.remove(semesterToRemove);
     }
     
+    public boolean containsSemester(Semester testSemester)
+    {
+    	return this.semesters.contains(testSemester);
+    }
+    
 }

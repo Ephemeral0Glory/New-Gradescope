@@ -211,8 +211,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 
 	@Override
 	public void update() {
-//		removeAll();
-//		setupPanel();
+		// Ignore
 	}
 	
 	/**
@@ -256,6 +255,7 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 	
 	public void showCourseCreationFailed(CreateCourseProblem error) {
 		removeAll();
+		repaint();
 		setupPanelWithErrorMessage(error);
 	}
 	
@@ -354,6 +354,19 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		add(newSemesterSeasonSelector, gbc_newSemesterSeasonSelector);
 		y++;  // Next row
 		
+		if(error.equals(CreateCourseProblem.DUPLICATE_SEMESTER))
+		{
+			JLabel errorMessage = new JLabel("This semester already exists, please select it above.");
+			errorMessage.setForeground(Color.RED);
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.insets = new Insets(0, 0, 10, 5);
+			gbc.gridx = 1;
+			gbc.gridy = y;
+			add(errorMessage, gbc);
+			y++;
+		}
+		
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.gridwidth = 2;
@@ -415,6 +428,19 @@ public class CreateNewCourseView extends JPanel implements IGraderScreen {
 		if(error.equals(CreateCourseProblem.BAD_COURSECODE))
 		{
 			JLabel errorMessage = new JLabel("Please enter a code for this course.");
+			errorMessage.setForeground(Color.RED);
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.insets = new Insets(0, 0, 10, 5);
+			gbc.gridx = 1;
+			gbc.gridy = y;
+			add(errorMessage, gbc);
+			y++;
+		}
+		
+		if(error.equals(CreateCourseProblem.DUPLICATE_COURSE))
+		{
+			JLabel errorMessage = new JLabel("This course already exists for this semester.");
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTHWEST;
