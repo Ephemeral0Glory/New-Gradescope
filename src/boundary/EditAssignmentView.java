@@ -205,7 +205,7 @@ public class EditAssignmentView extends JPanel implements IGraderScreen {
 		gbc_updateElemButton.gridy = y;
 		add(updateElemButton, gbc_updateElemButton);
 		
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Close");
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 5);
@@ -222,7 +222,7 @@ public class EditAssignmentView extends JPanel implements IGraderScreen {
 
 	@Override
 	public void update() {
-		// ignore
+		// Ignore
 	}
 
 	public String getUpdatedName() {
@@ -235,11 +235,14 @@ public class EditAssignmentView extends JPanel implements IGraderScreen {
 
 	public void showError(UpdateNWProblem error) {
 		removeAll();
+		repaint();
 		setupPanel(error);
 	}
 
 	public void showNewSubAssignment()
 	{
+		removeAll();
+		repaint();
 		showError(UpdateNWProblem.NO_ERROR);
 	}
 

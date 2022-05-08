@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import entity.*;
 import boundary.*;
-import controller.AddAssignmentController.AssignmentProblem;
 
 public class UpdateNameWeightController implements ActionListener {
     public static enum UpdateNWProblem {NO_ERROR, EMPTY_NAME, BAD_FLOAT};
