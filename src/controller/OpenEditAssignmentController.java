@@ -15,13 +15,13 @@ public class OpenEditAssignmentController implements ActionListener {
     private IGraderFrame rootView;
     private User user;
     private Course course;
-    private RealAssignment parent;
+    private SelectAssignmentToEditView selectAssignmentToEditView;
     
-    public OpenEditAssignmentController(IGraderFrame rootView, User user, Course course, RealAssignment parent) {
+    public OpenEditAssignmentController(IGraderFrame rootView, User user, Course course, SelectAssignmentToEditView selectAssignmentToEditView) {
         this.rootView = rootView;
         this.user = user;
         this.course = course;
-        this.parent = parent;
+        this.selectAssignmentToEditView = selectAssignmentToEditView;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class OpenEditAssignmentController implements ActionListener {
         // Create new window
         GraderView gv = new GraderView("Edit an Assignment");
         gv.setClosePolicyPopUp();
-
+        RealAssignment parent = (RealAssignment) selectAssignmentToEditView.getSelectedAssignment();
         // Create edit assignment screen
         ArrayList<Gradeable> subAssignments = parent.getSubAssignments();
         ArrayList<JTextField> subAssignmentNames = new ArrayList<JTextField>();

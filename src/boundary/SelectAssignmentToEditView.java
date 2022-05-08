@@ -78,7 +78,7 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 		listScrollPane.setViewportView(assignmentList);
 		
 		JButton editButton = new JButton("Edit");
-		editButton.addActionListener(new OpenEditAssignmentController(rootView, user, course, parent));
+		editButton.addActionListener(new OpenEditAssignmentController(rootView, user, course, this));
 		editButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
 		gbc_editButton.anchor = GridBagConstraints.EAST;
