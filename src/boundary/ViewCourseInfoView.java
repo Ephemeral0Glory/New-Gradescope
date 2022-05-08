@@ -16,6 +16,8 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 
 import controller.ClosePopupWindowController;
+import controller.OpenMainMenuController;
+
 import javax.swing.JButton;
 
 /**
@@ -30,6 +32,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	private IGraderFrame parentView;
 	private User user;
 	private Course course;
+	private boolean toMainMenu;
 	
 	private JLabel lblTitle;
 	private JLabel lblNumOfSectionsData;
@@ -41,12 +44,14 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	/**
 	 * Create the panel.
 	 */
-	public ViewCourseInfoView(IGraderFrame rootView, IGraderFrame parentView, User user, Course course) {
+	public ViewCourseInfoView(IGraderFrame rootView, IGraderFrame parentView,
+			User user, Course course, boolean toMainMenu) {
 		super();
 		this.rootView = rootView;
 		this.parentView = parentView;
 		this.user = user;	
 		this.course = course;
+		this.toMainMenu = toMainMenu;
 
 	
 		setupPanel();
@@ -155,17 +160,18 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		gbc_lblDroppedStudentsData.gridy = 7;
 		add(lblDroppedStudentsData, gbc_lblDroppedStudentsData);
 		
-//		JButton btnAddSection = new JButton("Add section");
-//		btnAddSection.addActionListener(new OpenAddSectionWindowController(rootView, user, course));
-//		GridBagConstraints gbc_btnAddSection = new GridBagConstraints();
-//		gbc_btnAddSection.insets = new Insets(0, 0, 0, 5);
-//		gbc_btnAddSection.gridx = 1;
-//		gbc_btnAddSection.gridy = 10;
-//		add(btnAddSection, gbc_btnAddSection);
-		
 		JButton btnOk = new JButton("Close");
+		if(toMainMenu)
+		{
+			// On close, return to main menu
+			btnOk.addActionListener(new OpenMainMenuController(rootView, user));
+		}
+		else
+		{
+			// On close, close window and return to course edit screen
+			btnOk.addActionListener(new ClosePopupWindowController(rootView, parentView));
+		}
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		btnOk.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		gbc_btnOk.gridx = 3;
 		gbc_btnOk.gridy = 10;
 		add(btnOk, gbc_btnOk);

@@ -19,7 +19,6 @@ import controller.LogOutController;
 import controller.OpenNewCourseController;
 import controller.OpenSelectCoursesController;
 import controller.OpenUserOptionsController;
-import controller.OpenViewCoursesInfoController;
 import controller.QuitController;
 
 /**
@@ -79,7 +78,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton selectCoursesButton = new JButton("Select Course");
 		selectCoursesButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser, gradebook));
+		selectCoursesButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser, gradebook, true));
 		GridBagConstraints gbc_manageCoursesButton = new GridBagConstraints();
 		gbc_manageCoursesButton.weighty = 0.1;
 		gbc_manageCoursesButton.weightx = 1.0;
@@ -91,7 +90,7 @@ public class MainMenuView extends JPanel implements IGraderScreen
 		
 		JButton viewCourseInfoButton = new JButton("View Course Info");
 		viewCourseInfoButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		viewCourseInfoButton.addActionListener(new OpenViewCoursesInfoController(rootView, currentUser, gradebook));
+		viewCourseInfoButton.addActionListener(new OpenSelectCoursesController(rootView, currentUser, gradebook, false));
 		GridBagConstraints gbc_viewCourseInfoButton = new GridBagConstraints();
 		gbc_viewCourseInfoButton.weightx = 1.0;
 		gbc_viewCourseInfoButton.weighty = 0.1;

@@ -3,8 +3,6 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.*;
-import utilities.GradebookFileReaderException;
-
 import javax.swing.JScrollPane;
 
 import java.awt.GridBagLayout;
@@ -24,11 +22,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import controller.OpenMainMenuController;
+import controller.OpenViewCoursesInfoController;
 import controller.SelectCourseController;
 import controller.SelectCoursesSemesterChangeController;
 
 /**
- * 
+ *  Allows the user to select a course to open for a selected semester.
  *  @author David Sullo
  *  @author Alex Titus
  */
@@ -37,14 +36,17 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private User user;
 	private Gradebook gradebook;
+	private boolean editingCourse;
 	private JScrollPane listScrollPane;
 	private JList<Course> courseList;
 	private JComboBox<Semester> semesterSelector;
 	
-	public SelectCoursesView(IGraderFrame rootView, User user, Gradebook gradebook) throws GradebookFileReaderException {
+	public SelectCoursesView(IGraderFrame rootView, User user, Gradebook gradebook,
+			boolean editingCourse) {
 		this.rootView = rootView;
 		this.user = user;
 		this.gradebook = gradebook;
+		this.editingCourse = editingCourse;
 		setupPanel();
 	}
 
@@ -58,7 +60,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		// Ignore
 	}
 	
-	private void setupPanel() throws GradebookFileReaderException {
+	private void setupPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
@@ -112,7 +114,14 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		listScrollPane.setViewportView(courseList);
 		
 		JButton selectButton = new JButton("Select");
-		selectButton.addActionListener(new SelectCourseController(rootView, this, user, gradebook));
+		if(editingCourse)  // Opening course edit
+		{
+			selectButton.addActionListener(new SelectCourseController(rootView, this, user, gradebook));
+		}
+		else  // Opening info
+		{
+			selectButton.addActionListener(new OpenViewCoursesInfoController(rootView, this, user, gradebook));
+		}
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
 		gbc_selectButton.gridx = 0;
