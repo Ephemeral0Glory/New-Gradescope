@@ -81,7 +81,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableScrollPane = new JScrollPane();
 		gbc_global.gridx = 0;
 		gbc_global.gridy = 1;
-		gbc_global.weighty = 0.4;
+		gbc_global.weighty = 0.3;
 		add(tableScrollPane, gbc_global);
 
 		entriesTable = createEntriesTable("");
@@ -92,7 +92,7 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		infoPanelScrollPane = new JScrollPane();
 		gbc_global.gridy = 2;
-		gbc_global.weighty = 0.45;
+		gbc_global.weighty = 0.6;
 		add(infoPanelScrollPane, gbc_global);
 
 		infoPanel = new CourseInfoPanelView(rootView);
@@ -408,7 +408,8 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableHeader = createTableHeader();
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
-		// read searchText
+		// Update course info panel
+		infoPanel.update();
 
 		// Update entries table
 		entriesTable = createEntriesTable(getSearchText());

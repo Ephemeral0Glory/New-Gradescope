@@ -77,6 +77,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		
 		// Change this to display the entry
 		this.removeAll();
+		repaint();
 		createInfoPanelRow(entry);
 	}
 	
@@ -92,9 +93,10 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		title.setFont(panelFont);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 6;
+		gbc.gridwidth = 2;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 1.0;
 		add(title, gbc);
 		gbc.gridy += 1;
 		gbc.gridwidth = 1;
@@ -105,43 +107,52 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		studentNameLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(0, 0, 5, 5);
+		gbc.weightx = 0.4;
 		add(studentNameLabel, gbc);
 		gbc.gridx += 1;
 		firstNameField = new JTextField(entry.getStudent().getFName());
 		firstNameField.setFont(panelFont);
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.weightx = 0.3;
 		add(firstNameField, gbc);
 		gbc.gridx += 1;
 		lastNameField = new JTextField(entry.getStudent().getLName());
 		lastNameField.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 0.3;
 		add(lastNameField, gbc);
 		gbc.gridx += 1;
 			// ID
 		JLabel idLabel = new JLabel("BUID:");
 		idLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.weightx = 0.5;
 		add(idLabel, gbc);
 		gbc.gridx += 1;
 		buidField = new JTextField(entry.getStudent().getBUID());
 		buidField.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 0.5;
 		add(buidField, gbc);
 		gbc.gridx += 1;
 			// Status
 		JLabel statusLabel = new JLabel("Status:");
 		statusLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.weightx = 0.5;
 		add(statusLabel, gbc);
 		gbc.gridx += 1;
 		statusSelector = new JComboBox<StudentStatus>(new DefaultComboBoxModel<StudentStatus>(StudentStatus.values()));
 		statusSelector.setFont(panelFont);
 		statusSelector.setSelectedItem(entry.getStudent().getEnrollmentStatus());
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 0.5;
 		add(statusSelector, gbc);
 		
 		// Assignments
 		gbc.gridx = 0;
 		gbc.gridy += 1;
+		gbc.weightx = 0.1;
 		RealAssignment finalGrade = entry.getFinalGrade();
 		for(int i = 0; i < finalGrade.getNumSubAssignments(); i++)
 		{
@@ -166,7 +177,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		JButton deleteButton = new JButton("Delete Entry");
 		deleteButton.setFont(panelFont);
 		deleteButton.addActionListener(new DeleteEntryController(rootView, entry));
-		gbc.gridx = 4;
+		gbc.gridx = 0;
 		gbc.gridy += 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		add(deleteButton, gbc);
@@ -174,6 +185,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(panelFont);
 		updateButton.addActionListener(new UpdateEntryController(rootView, this));
+		gbc.gridwidth = 2;
 		gbc.gridx += 1;
 		add(updateButton, gbc);
 	}
@@ -261,6 +273,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		
 		// Change this to display the column
 		this.removeAll();
+		repaint();
 		createInfoPanelColumn(column);
 	}
 	
@@ -362,7 +375,15 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	@Override
 	public void update()
 	{
-		// Ignore
+		// Recreate either the row or column being displayed
+		if(entry != null)
+		{
+			showEntry(entry);
+		}
+		if(column != null)
+		{
+			showColumn(column);
+		}
 	}
 	
 	public Entry getEntry()
