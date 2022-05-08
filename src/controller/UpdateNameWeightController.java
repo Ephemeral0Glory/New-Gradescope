@@ -1,10 +1,13 @@
 package controller;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import entity.*;
 import boundary.*;
+
+import javax.swing.*;
 
 public class UpdateNameWeightController implements ActionListener {
     public static enum UpdateNWProblem {NO_ERROR, EMPTY_NAME, BAD_FLOAT};
@@ -34,8 +37,14 @@ public class UpdateNameWeightController implements ActionListener {
     //        Float updatedWeight = 0f;
             Float updatedWeight = editAssignmentView.getUpdatedWeight();
             System.out.println("proceed to update name and weight");
+
+            // first update entity information
+            updateAllEntityInformation(updatedName, updatedWeight);
+
+            // after updating entity update real assignment information
             this.parent.setName(updatedName);
             this.parent.setWeight(updatedWeight);
+
             // Close window
             returnToParentView();
         }
@@ -65,9 +74,9 @@ public class UpdateNameWeightController implements ActionListener {
         catch (Exception e) {
             return UpdateNWProblem.BAD_FLOAT;
         }
-        System.out.println("In validateInformation");
-        System.out.println("updateName: " + updatedName);
-        System.out.println("updateWeight: " + updatedWeight);
+//        System.out.println("In validateInformation");
+//        System.out.println("updateName: " + updatedName);
+//        System.out.println("updateWeight: " + updatedWeight);
         // TODO possibly figure out how to check if float is invalid now
         return UpdateNWProblem.NO_ERROR;
     }
@@ -79,5 +88,26 @@ public class UpdateNameWeightController implements ActionListener {
         // Refresh the parent
         parentView.update();
         parentView.display();
+    }
+
+    private void updateAllEntityInformation(String updatedName, float updatedWeight) {
+        course.getEntries().stream()
+                .map(entry -> entry.getFinalGrade())
+                .forEach(realAssignment -> updateRAInformation(realAssignment, updatedName, updatedWeight));
+    }
+
+    private void updateRAInformation(RealAssignment ra, String updatedName, float updatedWeight) {
+//        System.out.println("in updateRAInformation");
+        for (int i=0; i< ra.getNumSubAssignments(); i++) {
+            RealAssignment subRa = (RealAssignment) ra.getSubAssignment(i);
+//            System.out.println("parent name: " + parent.getName() + " weight: " + parent.getWeight());
+//            System.out.println("subRa name: " + subRa.getName() + " weight: " + subRa.getWeight());
+//
+            if (subRa.getName().equals(parent.getName()) && subRa.getWeight() == parent.getWeight()) {
+//                System.out.println("update name and weight");
+                subRa.setName(updatedName);
+                subRa.setWeight(updatedWeight);
+            }
+        }
     }
 }
