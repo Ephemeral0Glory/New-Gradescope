@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import entity.Course;
 import entity.RealAssignment;
@@ -21,12 +22,15 @@ public class DeleteAssignmentController implements ActionListener
 	 *  Constructor.
 	 *  
 	 *  @param rootView  The application window frame
-	 *  @param assignmentInfo  The screen with the information about the assignments
+	 *  @param column  The column of assignments
 	 */
-	public DeleteAssignmentController(IGraderFrame rootView, RealAssignment ra)
+	public DeleteAssignmentController(IGraderFrame rootView, ArrayList<RealAssignment> column)
 	{
 		this.rootView = rootView;
-		this.ra = ra;
+		if(column.size() > 0)
+		{
+			this.ra = column.get(0);
+		}
 	}
 
 	/**

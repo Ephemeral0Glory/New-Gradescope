@@ -409,6 +409,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	public void showColumnInfo(ArrayList<RealAssignment> column)
 	{
 		infoPanel.showColumn(column);
+		infoPanelScrollPane.setViewportView(infoPanel);
 	}
 	
 	public Course getCourse()
