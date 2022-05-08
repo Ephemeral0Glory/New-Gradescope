@@ -3,6 +3,7 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.Course;
+import entity.NullAssignment;
 import entity.StudentStatus;
 import entity.User;
 
@@ -202,7 +203,12 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		}
 		
 		if  (course.getAssignments() != null) {
-			lblNumOfAssignmentsData.setText(String.valueOf(course.getAssignments().size()));
+			long realAssmtCount =
+					course.getTemplate().getSubAssignments().stream()
+							.filter(suba -> suba instanceof NullAssignment ? false : true)
+									.count();
+
+			lblNumOfAssignmentsData.setText(String.valueOf(realAssmtCount));
 		} else {
 			lblNumOfAssignmentsData.setText("0");
 		}
