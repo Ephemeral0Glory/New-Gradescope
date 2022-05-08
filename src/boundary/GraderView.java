@@ -161,10 +161,7 @@ public class GraderView extends JFrame implements IGraderFrame
 	
 	public void removeMenuBars()
 	{
-		if (menu instanceof JMenuBar)
-		{
-			remove(menu);
-		}
+		remove(menu);
 		setupFrame();
 	}
 	
