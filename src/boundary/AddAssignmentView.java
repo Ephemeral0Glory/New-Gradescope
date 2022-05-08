@@ -21,7 +21,13 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ *  @author David Sullo
+ *  @author Alex Titus
+ */
 public class AddAssignmentView extends JPanel implements IGraderScreen {
+	private static final long serialVersionUID = -7291848300196513947L;
 	private IGraderFrame rootView;
 	private IGraderFrame parentFrame;
 	private User user;
@@ -45,8 +51,8 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		int y = 0;
 		
@@ -58,7 +64,6 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_titleLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_titleLabel.gridx = 0;
 		gbc_titleLabel.gridy = y;
-		gbc_titleLabel.weightx = 0.3;
 		gbc_titleLabel.weighty = 0.3;
 		add(titleLabel, gbc_titleLabel);
 		y += 2;
@@ -69,17 +74,16 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentName.insets = new Insets(0, 0, 5, 5);
 		gbc_assignmentName.gridx = 1;
 		gbc_assignmentName.gridy = y;
-		gbc_assignmentName.weightx = 0.1;
 		gbc_assignmentName.weighty = 0.1;
 		add(assignmentName, gbc_assignmentName);
 		
-		assignmentNameField = new JTextField();
+		assignmentNameField = (assignmentNameField == null)? new JTextField() : assignmentNameField;
 		GridBagConstraints gbc_assignmentNameField = new GridBagConstraints();
+		gbc_assignmentNameField.anchor = GridBagConstraints.WEST;
 		gbc_assignmentNameField.insets = new Insets(0, 0, 5, 0);
-		gbc_assignmentNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_assignmentNameField.fill = GridBagConstraints.NONE;
 		gbc_assignmentNameField.gridx = 2;
 		gbc_assignmentNameField.gridy = y;
-		gbc_assignmentNameField.weightx = 0.1;
 		gbc_assignmentNameField.weighty = 0.1;
 		add(assignmentNameField, gbc_assignmentNameField);
 		assignmentNameField.setColumns(10);
@@ -89,24 +93,22 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			JLabel errorMessage = new JLabel("Please enter an assignment name.");
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTH;
-			gbc.gridx = 2;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.gridx = 1;
 			gbc.gridy = y;
-			
-			
+			gbc.gridwidth = 2;
 			add(errorMessage, gbc);
 			y++;
 		}
 
 		if (error == AssignmentProblem.DUPLICATED_NAME) {
-			JLabel errorMessage = new JLabel("An assignment already exists with this name. Please try again");
+			JLabel errorMessage = new JLabel("An assignment already exists with this name. Please try again.");
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTH;
-			gbc.gridx = 2;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.gridx = 1;
 			gbc.gridy = y;
-			
-			
+			gbc.gridwidth = 2;
 			add(errorMessage, gbc);
 			y++;
 		}
@@ -117,30 +119,29 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentWeight.insets = new Insets(0, 0, 5, 5);
 		gbc_assignmentWeight.gridx = 1;
 		gbc_assignmentWeight.gridy = y;
-		gbc_assignmentWeight.weightx = 0.1;
 		gbc_assignmentWeight.weighty = 0.1;		
 		add(assignmentWeight, gbc_assignmentWeight);
 		
-		assignmentWeightField = new JTextField();
+		assignmentWeightField = (assignmentWeightField == null) ? new JTextField() : assignmentWeightField;
 		GridBagConstraints gbc_assignmentWeightField = new GridBagConstraints();
+		gbc_assignmentWeightField.anchor = GridBagConstraints.WEST;
 		gbc_assignmentWeightField.insets = new Insets(0, 0, 5, 0);
-		gbc_assignmentWeightField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_assignmentWeightField.fill = GridBagConstraints.NONE;
 		gbc_assignmentWeightField.gridx = 2;
 		gbc_assignmentWeightField.gridy = y;
-		gbc_assignmentWeightField.weightx = 0.1;
 		gbc_assignmentWeightField.weighty = 0.1;
 		add(assignmentWeightField, gbc_assignmentWeightField);
 		assignmentWeightField.setColumns(10);
 		y+=2;
 
 		if (error == AssignmentProblem.BAD_FLOAT) {
-			JLabel errorMessage = new JLabel("Please enter a valid assignment weight between 0.0 and 100.0");
+			JLabel errorMessage = new JLabel("Please enter an assignment weight between 0.0 and 100.0");
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTH;
-			gbc.gridx = 2;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.gridx = 1;
 			gbc.gridy = y;
-			
+			gbc.gridwidth = 2;
 			
 			add(errorMessage, gbc);
 			y++;
@@ -154,25 +155,24 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			gbc_subAssignmentLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_subAssignmentLabel.gridx = 0;
 			gbc_subAssignmentLabel.gridy = y;
-			gbc_subAssignmentLabel.weightx = 0.1;
 			gbc_subAssignmentLabel.weighty = 0.1;
 			add(subAssignmentLabel, gbc_subAssignmentLabel);
 			
 			JLabel subNameLabel = new JLabel("Name");
 			GridBagConstraints gbc_subNameLabel = new GridBagConstraints();
+			gbc_subNameLabel.anchor = GridBagConstraints.WEST;
 			gbc_subNameLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_subNameLabel.gridx = 1;
 			gbc_subNameLabel.gridy = y;
-			gbc_subNameLabel.weightx = 0.1;
 			gbc_subNameLabel.weighty = 0.1;
 			add(subNameLabel, gbc_subNameLabel);
 			
 			JLabel subWeightLabel = new JLabel("Weight");
 			GridBagConstraints gbc_subWeightLabel = new GridBagConstraints();
+			gbc_subWeightLabel.anchor = GridBagConstraints.WEST;
 			gbc_subWeightLabel.insets = new Insets(0, 0, 5, 0);
 			gbc_subWeightLabel.gridx = 2;
 			gbc_subWeightLabel.gridy = y; // formerly 5
-			gbc_subWeightLabel.weightx = 0.1;
 			gbc_subWeightLabel.weighty = 0.1;
 			add(subWeightLabel, gbc_subWeightLabel);
 			y++; // before loop, currently at 6	
@@ -180,22 +180,22 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			for (int i = 0; i < subAssignmentNamesFields.size(); i++) {
 				JTextField subAssignmentNameField = subAssignmentNamesFields.get(i);
 				GridBagConstraints gbc_subAssignmentNameField = new GridBagConstraints();
+				gbc_subAssignmentNameField.anchor = GridBagConstraints.WEST;
 				gbc_subAssignmentNameField.insets = new Insets(0, 0, 5, 5);
 				gbc_subAssignmentNameField.fill = GridBagConstraints.HORIZONTAL;
 				gbc_subAssignmentNameField.gridx = 1;
 				gbc_subAssignmentNameField.gridy = y;
-				gbc_subAssignmentNameField.weightx = 0.1;
 				gbc_subAssignmentNameField.weighty = 0.1;
 				add(subAssignmentNameField, gbc_subAssignmentNameField);
 				subAssignmentNameField.setColumns(10);
 				
 				JTextField subAssignmentWeightField = subAssignmentWeightsFields.get(i);
 				GridBagConstraints gbc_subAssignmentWeightField = new GridBagConstraints();
+				gbc_subAssignmentWeightField.anchor = GridBagConstraints.WEST;
 				gbc_subAssignmentWeightField.insets = new Insets(0, 0, 5, 0);
-				gbc_subAssignmentWeightField.fill = GridBagConstraints.HORIZONTAL;
+				gbc_subAssignmentWeightField.fill = GridBagConstraints.NONE;
 				gbc_subAssignmentWeightField.gridx = 2;
 				gbc_subAssignmentWeightField.gridy = y;
-				gbc_subAssignmentWeightField.weightx = 0.1;
 				gbc_subAssignmentWeightField.weighty = 0.1;
 				add(subAssignmentWeightField, gbc_subAssignmentWeightField);
 				subAssignmentWeightField.setColumns(10);
@@ -203,81 +203,85 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			}
 			// add error handling if one of these is invalid
 			if (error == AssignmentProblem.EMPTY_SUB_NAME) {
-				JLabel errorMessage = new JLabel("One or more of your subassignments is missing a name. Please try again");
+				JLabel errorMessage = new JLabel("One or more of your subassignments is missing a name.");
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.anchor = GridBagConstraints.NORTH;
-				gbc.gridx = 2;
+				gbc.anchor = GridBagConstraints.NORTHWEST;
+				gbc.gridx = 1;
 				gbc.gridy = y;
-				
-				
+				gbc.gridwidth = 2;
 				add(errorMessage, gbc);
 				y++;
 			}
 			if (error == AssignmentProblem.DUPLICATE_SUB_NAME) {
-				JLabel errorMessage = new JLabel("One or more of your subassignments has the same name. Please try again");
+				JLabel errorMessage = new JLabel("One or more of your subassignments has the same name.");
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.anchor = GridBagConstraints.NORTH;
-				gbc.gridx = 2;
+				gbc.anchor = GridBagConstraints.NORTHWEST;
+				gbc.gridx = 1;
 				gbc.gridy = y;
-				
-				
+				gbc.gridwidth = 2;
 				add(errorMessage, gbc);
 				y++;
 			}
 			if (error == AssignmentProblem.BAD_SUB_WEIGHT) {
-				JLabel errorMessage = new JLabel("One or more of your subassignments has an invalid weight. Please try again");
+				JLabel errorMessage = new JLabel("One or more of your subassignments has an invalid weight.");
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.anchor = GridBagConstraints.NORTH;
-				gbc.gridx = 2;
+				gbc.anchor = GridBagConstraints.NORTHWEST;
+				gbc.gridx = 1;
 				gbc.gridy = y;
-				
-				
+				gbc.gridwidth = 2;
 				add(errorMessage, gbc);
 				y++;
 			}
 			if (error == AssignmentProblem.INVALID_SUB_WEIGHT) {
-				JLabel errorMessage = new JLabel("The total weight of subassignments must be between 0.0 and 100. Please try again");
+				JLabel errorMessage = new JLabel("The total weight of subassignments must be between 0.0 and 100.");
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.anchor = GridBagConstraints.NORTH;
-				gbc.gridx = 2;
+				gbc.anchor = GridBagConstraints.NORTHWEST;
+				gbc.gridx = 1;
 				gbc.gridy = y;
-				
-				
+				gbc.gridwidth = 2;
 				add(errorMessage, gbc);
 				y++;
 			}
 			y += 2;
 		}
+		
 		JButton addSubButton = new JButton("Add Subassignment");
 		addSubButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		// add action listener to recall this page to update with new row
 		addSubButton.addActionListener(new AddAssignmentAddSubController(rootView, this));
 		GridBagConstraints gbc_addSubButton = new GridBagConstraints();
-		gbc_addSubButton.anchor = GridBagConstraints.EAST;
-		gbc_addSubButton.insets = new Insets(0, 0, 0, 5);
+		gbc_addSubButton.anchor = GridBagConstraints.WEST;
+		gbc_addSubButton.insets = new Insets(0, 5, 0, 5);
 		gbc_addSubButton.gridx = 0;
 		gbc_addSubButton.gridy = y;
+		gbc_addSubButton.weighty = 0.3;
+		gbc_addSubButton.weightx = 0.3;
 		add(addSubButton, gbc_addSubButton);
-		
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.setHorizontalAlignment(SwingConstants.LEFT);
-		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		
 		JButton createButton = new JButton("Create");
 		createButton.addActionListener(new AddAssignmentController(rootView, parentFrame, user, this));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
+		gbc_createButton.anchor = GridBagConstraints.CENTER;
 		gbc_createButton.insets = new Insets(0, 0, 0, 5);
 		gbc_createButton.gridx = 1;
 		gbc_createButton.gridy = y;
+		gbc_createButton.weighty = 0.3;
+		gbc_createButton.weightx = 0.3;
 		add(createButton, gbc_createButton);
+		
+		JButton cancelButton = new JButton("Close");
+		cancelButton.setHorizontalAlignment(SwingConstants.LEFT);
+		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.anchor = GridBagConstraints.WEST;
 		gbc_cancelButton.gridx = 2;
 		gbc_cancelButton.gridy = y;
+		gbc_cancelButton.weighty = 0.3;
+		gbc_cancelButton.weightx = 0.3;
 		add(cancelButton, gbc_cancelButton);
 	}
 	
@@ -314,6 +318,11 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 	public void showError(AssignmentProblem error) {
 		removeAll();
 		setupPanel(error);
+	}
+	
+	public void showNewSubAssignment()
+	{
+		showError(AssignmentProblem.NO_ERROR);
 	}
 
 	public void addSubAssignmentFields() {
