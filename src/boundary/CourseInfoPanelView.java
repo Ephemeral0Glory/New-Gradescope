@@ -61,10 +61,13 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	private JComboBox<StudentStatus> statusSelector;
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
+
+	private CourseView courseView;
 	
-	public CourseInfoPanelView(IGraderFrame rootView)
+	public CourseInfoPanelView(IGraderFrame rootView, CourseView courseView)
 	{
 		this.rootView = rootView;
+		this.courseView = courseView;
 	}
 	
 	public void showEntry(Entry entry)
@@ -84,16 +87,21 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	private void createInfoPanelRow(Entry entry)
 	{
 		// Set up panel
+//		setPreferredSize(courseView.getPreferredSize());
+		setPreferredSize(courseView.getInfoPaneScrollPanelSize());
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.fill = GridBagConstraints.BOTH;
 		Font panelFont = new Font("Tahoma", Font.PLAIN, 12);
-		
+
 		// Title
 		JLabel title = new JLabel("Course information for student:");
 		title.setFont(panelFont);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 2;
+//		gbc.gridwidth = 2;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.weightx = 1.0;
