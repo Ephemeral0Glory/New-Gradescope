@@ -64,7 +64,7 @@ public class GraderView extends JFrame implements IGraderFrame
 	public void setUpMenuBars(Course c, User u)
 	{
 		// Resize window for course edit screen
-		this.setBounds(50, 50, 1000, 600);
+		this.setBounds(50, 50, 1000, 700);
 		
 		// Create menu bar
 		menu = new JMenuBar();

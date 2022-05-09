@@ -51,7 +51,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	private JTextField searchField;
 	private JScrollPane tableScrollPane;
 	private JPanel tableHeader;
-	private ArrayList<Integer> headerColumnSizes;
+	private int[] headerColumnWidths;
 	private JPanel entriesTable;
 	private JScrollPane infoPanelScrollPane;
 	private CourseInfoPanelView infoPanel;
@@ -86,7 +86,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableScrollPane = new JScrollPane();
 		gbc_global.gridx = 0;
 		gbc_global.gridy = 1;
-		gbc_global.weighty = 0.3;
+		gbc_global.weighty = 0.4;
 		add(tableScrollPane, gbc_global);
 		
 		tableHeader = createTableHeader();
@@ -110,7 +110,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		JPanel topPanel = new JPanel();
 		gbc_global.insets = new Insets(5, 5, 5, 5);
 		gbc_global.gridy = 0;
-		gbc_global.weighty = 0.1;
+		gbc_global.weighty = 0;
 		add(topPanel, gbc_global);
 		GridBagLayout gbl_topPanel = new GridBagLayout();
 		gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
@@ -193,7 +193,7 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		for(Entry e: filteredEntry)
 		{
-			EntryView ev = new EntryView(e, headerColumnSizes);
+			EntryView ev = new EntryView(e, headerColumnWidths);
 			ev.addMouseListener(new EntrySelectedController(rootView, this));
 			table.add(ev, gbc);
 			gbc.gridy += 1;
@@ -213,16 +213,15 @@ public class CourseView extends JPanel implements IGraderScreen
 	
 	private JPanel createTableHeader()
 	{
-		headerColumnSizes = new ArrayList<Integer>();
+		headerColumnWidths = calculateColumnWidths();
 		JPanel header = new JPanel();
 		GridBagLayout headerLayout = new GridBagLayout();
-//		headerLayout.columnWidths = calculateColumnWidths();
-//		headerLayout.columnWeights = calculateColumnWeights();
+		headerLayout.columnWidths = headerColumnWidths;
 		header.setLayout(headerLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(1, 1, 1, 1);
-		gbc.weightx = 1;
+		gbc.insets = new Insets(0, 5, 0, 0);
+		gbc.weightx = 0;
 		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
 		
 		// Assignments
@@ -240,7 +239,6 @@ public class CourseView extends JPanel implements IGraderScreen
 			if(ra.getNumSubAssignments() == 0)  // If a leaf node
 			{
 				assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
-				headerColumnSizes.add(assignmentLabel.getSize().width);
 			}
 			if(ra.getNumLeaves() == 1)  // If this is a leaf node
 			{
@@ -274,38 +272,33 @@ public class CourseView extends JPanel implements IGraderScreen
 		gbc.gridwidth = 1;
 		gbc.gridy = greatestDepth;
 		header.add(addAssignmentButton, gbc);
-		headerColumnSizes.add(addAssignmentButton.getSize().width);
 		gbc.gridx += 1;
 		
 		// Final Grade
 		JLabel finalGradeLabel = new JLabel("Final Grade");
 		finalGradeLabel.setFont(headerFont);
-		gbc.insets = new Insets(0, 0, 0, 5);
+		gbc.insets = new Insets(5, 5, 0, 5);
 		header.add(finalGradeLabel, gbc);
-		headerColumnSizes.add(finalGradeLabel.getSize().width);
 		
 		// Section
 		JLabel sectionLabel = new JLabel("Section");
 		sectionLabel.setFont(headerFont);
 		gbc.gridx = 0;
 		gbc.gridy = greatestDepth;
-		gbc.insets = new Insets(0, 5, 0, 0);
+		gbc.insets = new Insets(5, 5, 0, 0);
 		header.add(sectionLabel, gbc);
-		headerColumnSizes.add(0, sectionLabel.getSize().width);
 		
 		// BUID
 		JLabel idLabel = new JLabel("BUID");
 		idLabel.setFont(headerFont);
 		gbc.gridx = 1;
 		header.add(idLabel, gbc);
-		headerColumnSizes.add(0, idLabel.getSize().width);
 		
 		// Student
 		JLabel studentLabel = new JLabel("Student");
 		studentLabel.setFont(headerFont);
 		gbc.gridx = 2;
 		header.add(studentLabel, gbc);
-		headerColumnSizes.add(0, studentLabel.getSize().width);
 		
 		return header;
 	}
@@ -318,40 +311,58 @@ public class CourseView extends JPanel implements IGraderScreen
 	
 	private int[] calculateColumnWidths()
 	{
-		int numColumns = course.getTemplate().getNumLeaves()+5+1;
-		int[] widths = new int[numColumns];
-		widths[0] = 60;  // Section
-		widths[1] = 120;  // Student
-		widths[2] = 85;  // BUID
-		for(int i = 3; i < numColumns-2; i++)  // Assignments
-		{
-			widths[i] = 100;
-		}
-		widths[numColumns-3] = 100;  // Add assignment button
-		widths[numColumns-2] = 75;  // Final Grade
-		widths[numColumns-1] = 0;  // Obligatory unused final column
+		int[] columns = new int[course.getTemplate().getNumLeaves()+5+1];
 		
-		return widths;
+		// Fill data
+		columns[0] = 70;  // "Section"
+		columns[1] = 80;  // "BUID"
+		columns[2] = 150; // "Student"
+		// Assignments
+		ArrayList<Integer> estimates = estimateAssignmentColWidths(course.getTemplate());
+		for(int i = 0; i < estimates.size(); i++)
+		{
+			columns[i+3] = estimates.get(i);
+		}
+		columns[columns.length-3] = 125;  // "Add Assignment" button
+		columns[columns.length-2] = 128;  // "Final Grade"
+		columns[columns.length-1] = 0;  // Obligatory final column
+		
+		return columns;
 	}
 	
-	private double[] calculateColumnWeights()
+	/*
+	 *  This should overestimate the actual display width of the assignment's labels
+	 *  by a little bit.
+	 */
+	private ArrayList<Integer> estimateAssignmentColWidths(RealAssignment ra)
 	{
-		// +5 for section, student, BUID, button, final grade
-		// +1 for obligatory final column
-		int numColumns = course.getTemplate().getNumLeaves()+5+1;
-		double[] widths = new double[numColumns];
-		widths[0] = 0.1;  // Section
-		widths[1] = 0.2;  // BUID
-		widths[2] = 0.2;  // Student
-		for(int i = 3; i < numColumns-2; i++)  // Assignments
-		{
-			widths[i] = 0.15;
-		}
-		widths[numColumns-3] = 0.2;  // Add assignment button
-		widths[numColumns-2] = 0.1;  // Final Grade
-		widths[numColumns-1] = Double.MIN_VALUE;  // Obligatory unused final column
+		ArrayList<Integer> estimates = new ArrayList<Integer>();
 		
-		return widths;
+		// If there are no sub-assignments
+		if(ra.getNumSubAssignments() == 0)
+		{
+			// Have leaf node, estimate size and add to list
+			int nameLen = ra.getName().length();
+			int estSize = nameLen * 11 + 70;  // +75 for weight printout
+			estimates.add(estSize);
+			return estimates;
+		}
+		else  // Have sub-assignments to estimate size for
+		{
+			for(int i = 0; i < ra.getNumSubAssignments(); i++)
+			{
+				// Get sub-assignment
+				RealAssignment sa = (RealAssignment) ra.getSubAssignment(i);
+
+				// Recursively estimate sub-assignment widths
+				ArrayList<Integer> subAssignmentEstimates = estimateAssignmentColWidths(sa);
+				
+				// Transfer
+				estimates.addAll(subAssignmentEstimates);
+			}
+		}
+		
+		return estimates;
 	}
 	
 	private int calculateSubAssignmentTreeDepth(RealAssignment template)
@@ -412,7 +423,6 @@ public class CourseView extends JPanel implements IGraderScreen
 				if(sa.getNumSubAssignments() == 0)  // If a leaf node
 				{
 					assignmentLabel.addMouseListener(new ColumnSelectedController(rootView, this, gbc.gridx));
-					headerColumnSizes.add(assignmentLabel.getSize().width);
 				}
 				if(sa.getNumLeaves() == 1)  // If this is a leaf node
 				{
@@ -454,12 +464,12 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableHeader = createTableHeader();
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
-		// Update course info panel
-		infoPanel.update();
-
 		// Update entries table
 		entriesTable = createEntriesTable(getSearchText());
 		tableScrollPane.setViewportView(entriesTable);
+
+		// Update course info panel
+		infoPanel.update();
 	}
 	
 	/**
