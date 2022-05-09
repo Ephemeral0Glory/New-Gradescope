@@ -12,13 +12,10 @@ import entity.User;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 
 import javax.swing.SwingConstants;
 
-import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,11 +88,13 @@ public class CourseView extends JPanel implements IGraderScreen
 		tableScrollPane.setColumnHeaderView(tableHeader);
 
 		infoPanelScrollPane = new JScrollPane();
+		gbc_global.fill = GridBagConstraints.BOTH;
+		gbc_global.gridx = 0;
 		gbc_global.gridy = 2;
 		gbc_global.weighty = 0.6;
 		add(infoPanelScrollPane, gbc_global);
 
-		infoPanel = new CourseInfoPanelView(rootView);
+		infoPanel = new CourseInfoPanelView(rootView, this);
 		infoPanelScrollPane.setViewportView(infoPanel);
 
 		JPanel topPanel = new JPanel();
@@ -471,5 +470,9 @@ public class CourseView extends JPanel implements IGraderScreen
 
 	public void hideInfoPaneScrollPane() {
 		infoPanelScrollPane.setVisible(false);
+	}
+
+	public Dimension getInfoPaneScrollPanelSize() {
+		return infoPanelScrollPane.getSize();
 	}
 }
