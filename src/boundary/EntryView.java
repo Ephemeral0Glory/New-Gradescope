@@ -12,7 +12,6 @@ import entity.Grade;
 import javax.swing.JLabel;
 import javax.swing.border.EtchedBorder;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Insets;
@@ -100,7 +99,6 @@ public class EntryView extends JPanel implements IGraderScreen
 				JLabel assignmentGradeLabel = new JLabel(String.format("%.00f", g.getScore()) + commentMark);
 				assignmentGradeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				assignmentGradeLabel.setHorizontalAlignment(SwingConstants.LEADING);
-				assignmentGradeLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 				gbc_assignmentGradeLabel.gridx = x;
 				add(assignmentGradeLabel, gbc_assignmentGradeLabel);
 				x++;
