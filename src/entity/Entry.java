@@ -116,5 +116,11 @@ public class Entry {
     {
     	this.finalGrade.getWeightedGrade();
     }
+    
+    @Override
+    public String toString()
+    {
+    	return "Section " + section.getCode() + ":   " + student.getLName() + ", " + student.getFName() + "   ID: " + student.getBUID(); 
+    }
 
 }

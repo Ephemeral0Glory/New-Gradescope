@@ -55,7 +55,7 @@ public class OpenViewCourseInfoViewController implements ActionListener {
 		gv.setClosePolicyPopUp();
 		
 		// Create menu
-		ViewCourseInfoView vciv = new ViewCourseInfoView(gv, rootView, user, course, false);
+		ViewCourseInfoView vciv = new ViewCourseInfoView(gv, rootView, user, null, course, false);
 
 		// Display it
 		gv.setNewView(vciv);

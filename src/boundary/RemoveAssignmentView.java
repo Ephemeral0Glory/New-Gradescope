@@ -79,7 +79,7 @@ public class RemoveAssignmentView extends JPanel implements IGraderScreen
 		
 		JScrollPane assignmentsScrollPane = new JScrollPane();
 		GridBagConstraints gbc_assignmentsScrollPane = new GridBagConstraints();
-		gbc_assignmentsScrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_assignmentsScrollPane.insets = new Insets(0, 5, 5, 5);
 		gbc_assignmentsScrollPane.weighty = 0.65;
 		gbc_assignmentsScrollPane.gridwidth = 2;
 		gbc_assignmentsScrollPane.fill = GridBagConstraints.BOTH;

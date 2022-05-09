@@ -3,6 +3,7 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.Course;
+import entity.Gradebook;
 import entity.NullAssignment;
 import entity.StudentStatus;
 import entity.User;
@@ -17,9 +18,11 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 
 import controller.ClosePopupWindowController;
-import controller.OpenMainMenuController;
+import controller.OpenSelectCoursesController;
 
 import javax.swing.JButton;
+
+import java.awt.Font;
 
 /**
  *  
@@ -32,8 +35,9 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	private IGraderFrame rootView;
 	private IGraderFrame parentView;
 	private User user;
+	private Gradebook gradebook;
 	private Course course;
-	private boolean toMainMenu;
+	private boolean toSelectCourses;
 	
 	private JLabel lblTitle;
 	private JLabel lblNumOfSectionsData;
@@ -46,13 +50,14 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 	 * Create the panel.
 	 */
 	public ViewCourseInfoView(IGraderFrame rootView, IGraderFrame parentView,
-			User user, Course course, boolean toMainMenu) {
+			User user, Gradebook gradebook, Course course, boolean toMainMenu) {
 		super();
 		this.rootView = rootView;
 		this.parentView = parentView;
-		this.user = user;	
+		this.user = user;
+		this.gradebook = gradebook;
 		this.course = course;
-		this.toMainMenu = toMainMenu;
+		this.toSelectCourses = toMainMenu;
 
 	
 		setupPanel();
@@ -69,103 +74,134 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		setLayout(gridBagLayout);
 		
 		lblTitle = new JLabel("Course code and name will be displayed here");
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
-		gbc_lblTitle.gridwidth = 5;
-		gbc_lblTitle.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTitle.anchor = GridBagConstraints.CENTER;
+		gbc_lblTitle.fill = GridBagConstraints.BOTH;
+		gbc_lblTitle.insets = new Insets(10, 5, 5, 5);
+		gbc_lblTitle.gridwidth = 2;
 		gbc_lblTitle.gridx = 0;
-		gbc_lblTitle.gridy = 1;
+		gbc_lblTitle.gridy = 0;
+		gbc_lblTitle.weighty = 0.3;
+		gbc_lblTitle.weightx = 1.0;
 		add(lblTitle, gbc_lblTitle);
 		
 		JLabel lblNumOfSections = new JLabel("Number of sections:");
+		lblNumOfSections.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNumOfSections.setHorizontalAlignment(SwingConstants.TRAILING);
 		GridBagConstraints gbc_lblNumOfSections = new GridBagConstraints();
-		gbc_lblNumOfSections.gridwidth = 2;
+		gbc_lblNumOfSections.weightx = 1.0;
+		gbc_lblNumOfSections.weighty = 0.1;
 		gbc_lblNumOfSections.anchor = GridBagConstraints.EAST;
 		gbc_lblNumOfSections.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNumOfSections.gridx = 1;
-		gbc_lblNumOfSections.gridy = 3;
+		gbc_lblNumOfSections.gridx = 0;
+		gbc_lblNumOfSections.gridy = 1;
 		add(lblNumOfSections, gbc_lblNumOfSections);
 		
 		lblNumOfSectionsData = new JLabel("###");
+		lblNumOfSectionsData.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblNumOfSectionsData = new GridBagConstraints();
-		gbc_lblNumOfSectionsData.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNumOfSectionsData.gridx = 3;
-		gbc_lblNumOfSectionsData.gridy = 3;
+		gbc_lblNumOfSectionsData.weightx = 1.0;
+		gbc_lblNumOfSectionsData.weighty = 0.1;
+		gbc_lblNumOfSectionsData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNumOfSectionsData.gridx = 1;
+		gbc_lblNumOfSectionsData.gridy = 1;
 		add(lblNumOfSectionsData, gbc_lblNumOfSectionsData);
 		
 		JLabel lblNumOfAssignments = new JLabel("Number of assignments:");
+		lblNumOfAssignments.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNumOfAssignments.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblNumOfAssignments = new GridBagConstraints();
-		gbc_lblNumOfAssignments.gridwidth = 2;
+		gbc_lblNumOfAssignments.weightx = 1.0;
+		gbc_lblNumOfAssignments.weighty = 0.1;
 		gbc_lblNumOfAssignments.anchor = GridBagConstraints.EAST;
 		gbc_lblNumOfAssignments.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNumOfAssignments.gridx = 1;
-		gbc_lblNumOfAssignments.gridy = 4;
+		gbc_lblNumOfAssignments.gridx = 0;
+		gbc_lblNumOfAssignments.gridy = 2;
 		add(lblNumOfAssignments, gbc_lblNumOfAssignments);
 		
 		lblNumOfAssignmentsData = new JLabel("###");
+		lblNumOfAssignmentsData.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblNumOfAssignmentsData = new GridBagConstraints();
-		gbc_lblNumOfAssignmentsData.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNumOfAssignmentsData.gridx = 3;
-		gbc_lblNumOfAssignmentsData.gridy = 4;
+		gbc_lblNumOfAssignmentsData.weightx = 1.0;
+		gbc_lblNumOfAssignmentsData.weighty = 0.1;
+		gbc_lblNumOfAssignmentsData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNumOfAssignmentsData.gridx = 1;
+		gbc_lblNumOfAssignmentsData.gridy = 2;
 		add(lblNumOfAssignmentsData, gbc_lblNumOfAssignmentsData);
 		
 		JLabel lblCurrentStudents = new JLabel("Current registered students:");
+		lblCurrentStudents.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblCurrentStudents.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblCurrentStudents = new GridBagConstraints();
-		gbc_lblCurrentStudents.gridwidth = 2;
+		gbc_lblCurrentStudents.weightx = 1.0;
+		gbc_lblCurrentStudents.weighty = 0.1;
 		gbc_lblCurrentStudents.anchor = GridBagConstraints.EAST;
 		gbc_lblCurrentStudents.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCurrentStudents.gridx = 1;
-		gbc_lblCurrentStudents.gridy = 5;
+		gbc_lblCurrentStudents.gridx = 0;
+		gbc_lblCurrentStudents.gridy = 3;
 		add(lblCurrentStudents, gbc_lblCurrentStudents);
 		
 		lblCurrentStudentsData = new JLabel("###");
+		lblCurrentStudentsData.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblCurrentStudentsData = new GridBagConstraints();
-		gbc_lblCurrentStudentsData.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCurrentStudentsData.gridx = 3;
-		gbc_lblCurrentStudentsData.gridy = 5;
+		gbc_lblCurrentStudentsData.weightx = 1.0;
+		gbc_lblCurrentStudentsData.weighty = 0.1;
+		gbc_lblCurrentStudentsData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCurrentStudentsData.gridx = 1;
+		gbc_lblCurrentStudentsData.gridy = 3;
 		add(lblCurrentStudentsData, gbc_lblCurrentStudentsData);
 		
 		JLabel lblStartStudents = new JLabel("Students at the start of semester:");
+		lblStartStudents.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblStartStudents.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblStartStudents = new GridBagConstraints();
-		gbc_lblStartStudents.gridwidth = 2;
+		gbc_lblStartStudents.weighty = 0.1;
+		gbc_lblStartStudents.weightx = 1.0;
 		gbc_lblStartStudents.anchor = GridBagConstraints.EAST;
 		gbc_lblStartStudents.insets = new Insets(0, 0, 5, 5);
-		gbc_lblStartStudents.gridx = 1;
-		gbc_lblStartStudents.gridy = 6;
+		gbc_lblStartStudents.gridx = 0;
+		gbc_lblStartStudents.gridy = 4;
 		add(lblStartStudents, gbc_lblStartStudents);
 		
 		lblStartStudentsData = new JLabel("###");
+		lblStartStudentsData.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblStartStudentsData = new GridBagConstraints();
-		gbc_lblStartStudentsData.insets = new Insets(0, 0, 5, 0);
-		gbc_lblStartStudentsData.gridx = 3;
-		gbc_lblStartStudentsData.gridy = 6;
+		gbc_lblStartStudentsData.weightx = 1.0;
+		gbc_lblStartStudentsData.weighty = 0.1;
+		gbc_lblStartStudentsData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStartStudentsData.gridx = 1;
+		gbc_lblStartStudentsData.gridy = 4;
 		add(lblStartStudentsData, gbc_lblStartStudentsData);
 		
 		JLabel lblDroppedStudents = new JLabel("Dropped students:");
+		lblDroppedStudents.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDroppedStudents.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblDroppedStudents = new GridBagConstraints();
-		gbc_lblDroppedStudents.gridwidth = 2;
+		gbc_lblDroppedStudents.weighty = 0.1;
+		gbc_lblDroppedStudents.weightx = 1.0;
 		gbc_lblDroppedStudents.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDroppedStudents.anchor = GridBagConstraints.EAST;
-		gbc_lblDroppedStudents.gridx = 1;
-		gbc_lblDroppedStudents.gridy = 7;
+		gbc_lblDroppedStudents.gridx = 0;
+		gbc_lblDroppedStudents.gridy = 5;
 		add(lblDroppedStudents, gbc_lblDroppedStudents);
 		
 		lblDroppedStudentsData = new JLabel("###");
+		lblDroppedStudentsData.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblDroppedStudentsData = new GridBagConstraints();
-		gbc_lblDroppedStudentsData.insets = new Insets(0, 0, 5, 0);
-		gbc_lblDroppedStudentsData.gridx = 3;
-		gbc_lblDroppedStudentsData.gridy = 7;
+		gbc_lblDroppedStudentsData.weighty = 0.1;
+		gbc_lblDroppedStudentsData.weightx = 1.0;
+		gbc_lblDroppedStudentsData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDroppedStudentsData.gridx = 1;
+		gbc_lblDroppedStudentsData.gridy = 5;
 		add(lblDroppedStudentsData, gbc_lblDroppedStudentsData);
 		
 		JButton btnOk = new JButton("Close");
-		if(toMainMenu)
+		btnOk.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		if(toSelectCourses)
 		{
-			// On close, return to main menu
-			btnOk.addActionListener(new OpenMainMenuController(rootView, user));
+			// On close, return to select courses screen
+			btnOk.addActionListener(new OpenSelectCoursesController(rootView, user, gradebook, false));
 		}
 		else
 		{
@@ -173,14 +209,16 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 			btnOk.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		}
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.gridx = 3;
-		gbc_btnOk.gridy = 10;
+		gbc_btnOk.weighty = 0.3;
+		gbc_btnOk.insets = new Insets(0, 0, 5, 5);
+		gbc_btnOk.gridx = 1;
+		gbc_btnOk.gridy = 6;
 		add(btnOk, gbc_btnOk);
 	}
 
 	private void fillData()
 	{
-		lblTitle.setText(course.getCode() + "(" + course.getName() + ")");
+		lblTitle.setText("<html>" + course.getCode() + "<p>(" + course.getName() + ")</html>");
 
 		if (course.getSections() != null) {
 			lblNumOfSectionsData.setText(String.valueOf(course.getSections().size()));

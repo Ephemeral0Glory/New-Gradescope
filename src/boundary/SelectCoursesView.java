@@ -3,8 +3,10 @@ package boundary;
 import javax.swing.JPanel;
 
 import entity.*;
+
 import javax.swing.JScrollPane;
 
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
@@ -69,6 +71,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		setLayout(gridBagLayout);
 		
 		JLabel titleLabel = new JLabel("Select a Course from the list below");
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
 		gbc_titleLabel.gridwidth = 3;
@@ -76,18 +79,22 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_titleLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_titleLabel.gridx = 0;
 		gbc_titleLabel.gridy = 0;
+		gbc_titleLabel.weighty = 0.3;
 		add(titleLabel, gbc_titleLabel);
 		
 		JLabel selectSemesterLabel = new JLabel("Select Semester:");
+		selectSemesterLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectSemesterLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_selectSemesterLabel = new GridBagConstraints();
 		gbc_selectSemesterLabel.anchor = GridBagConstraints.EAST;
 		gbc_selectSemesterLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_selectSemesterLabel.gridx = 0;
 		gbc_selectSemesterLabel.gridy = 1;
+		gbc_selectSemesterLabel.weighty = 0.1;
 		add(selectSemesterLabel, gbc_selectSemesterLabel);
 		
 		semesterSelector = new JComboBox<Semester>();
+		semesterSelector.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		semesterSelector.setModel(createComboBoxModel());
 		semesterSelector.setSelectedIndex(gradebook.getSemesters().size()-1);  // Most recently created
 		semesterSelector.addActionListener(new SelectCoursesSemesterChangeController(rootView, this));
@@ -97,6 +104,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_semesterSelectBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_semesterSelectBox.gridx = 1;
 		gbc_semesterSelectBox.gridy = 1;
+		gbc_semesterSelectBox.weighty = 0.1;
 		add(semesterSelector, gbc_semesterSelectBox);
 
 		listScrollPane = new JScrollPane();
@@ -107,13 +115,16 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_listScrollPane.fill = GridBagConstraints.BOTH;
 		gbc_listScrollPane.gridx = 0;
 		gbc_listScrollPane.gridy = 2;
+		gbc_listScrollPane.weighty = 0.65;
 		add(listScrollPane, gbc_listScrollPane);
 		
 		courseList = new JList<Course>(getCourses());
+		courseList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(courseList);
 		
 		JButton selectButton = new JButton("Select");
+		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		if(editingCourse)  // Opening course edit
 		{
 			selectButton.addActionListener(new SelectCourseController(rootView, this, user, gradebook));
@@ -126,14 +137,17 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
 		gbc_selectButton.gridx = 0;
 		gbc_selectButton.gridy = 3;
+		gbc_selectButton.weighty = 0.2;
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new OpenMainMenuController(rootView, user));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);
 		gbc_cancelButton.gridx = 1;
 		gbc_cancelButton.gridy = 3;
+		gbc_cancelButton.weighty = 0.2;
 		add(cancelButton, gbc_cancelButton);
 
 	}
@@ -169,6 +183,7 @@ public class SelectCoursesView extends JPanel implements IGraderScreen {
 	public void updateCourseListing()
 	{
 		courseList = new JList<Course>(getCourses());
+		courseList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(courseList);
 	}

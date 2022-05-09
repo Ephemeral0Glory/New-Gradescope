@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
 /**
  * 
@@ -57,6 +58,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		int y = 0;
 		
 		JLabel titleLabel = new JLabel("Create an Assignment");
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
 		gbc_titleLabel.gridwidth = 3;
@@ -69,6 +71,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		y += 2;
 		
 		JLabel assignmentName = new JLabel("Assignment Name: ");
+		assignmentName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_assignmentName = new GridBagConstraints();
 		gbc_assignmentName.anchor = GridBagConstraints.EAST;
 		gbc_assignmentName.insets = new Insets(0, 0, 5, 5);
@@ -77,7 +80,9 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentName.weighty = 0.1;
 		add(assignmentName, gbc_assignmentName);
 		
-		assignmentNameField = (assignmentNameField == null)? new JTextField() : assignmentNameField;
+		JTextField textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		assignmentNameField = (assignmentNameField == null)? textField : assignmentNameField;
 		GridBagConstraints gbc_assignmentNameField = new GridBagConstraints();
 		gbc_assignmentNameField.anchor = GridBagConstraints.WEST;
 		gbc_assignmentNameField.insets = new Insets(0, 0, 5, 0);
@@ -91,6 +96,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 
 		if (error == AssignmentProblem.EMPTY_NAME) {
 			JLabel errorMessage = new JLabel("Please enter an assignment name.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -103,6 +109,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 
 		if (error == AssignmentProblem.DUPLICATED_NAME) {
 			JLabel errorMessage = new JLabel("An assignment already exists with this name. Please try again.");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -114,6 +121,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		}
 		
 		JLabel assignmentWeight = new JLabel("Assignment Weight:");
+		assignmentWeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_assignmentWeight = new GridBagConstraints();
 		gbc_assignmentWeight.anchor = GridBagConstraints.EAST;
 		gbc_assignmentWeight.insets = new Insets(0, 0, 5, 5);
@@ -122,7 +130,9 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		gbc_assignmentWeight.weighty = 0.1;		
 		add(assignmentWeight, gbc_assignmentWeight);
 		
-		assignmentWeightField = (assignmentWeightField == null) ? new JTextField() : assignmentWeightField;
+		JTextField textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		assignmentWeightField = (assignmentWeightField == null) ? textField_1 : assignmentWeightField;
 		GridBagConstraints gbc_assignmentWeightField = new GridBagConstraints();
 		gbc_assignmentWeightField.anchor = GridBagConstraints.WEST;
 		gbc_assignmentWeightField.insets = new Insets(0, 0, 5, 0);
@@ -136,6 +146,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 
 		if (error == AssignmentProblem.BAD_FLOAT) {
 			JLabel errorMessage = new JLabel("Please enter an assignment weight between 0.0 and 100.0");
+			errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			errorMessage.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -149,6 +160,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		
 		if (!(subAssignmentNamesFields.isEmpty() && subAssignmentWeightsFields.isEmpty())) {
 			JLabel subAssignmentLabel = new JLabel("Current Subassignments:");
+			subAssignmentLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			subAssignmentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			GridBagConstraints gbc_subAssignmentLabel = new GridBagConstraints();
 			gbc_subAssignmentLabel.anchor = GridBagConstraints.EAST;
@@ -159,6 +171,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			add(subAssignmentLabel, gbc_subAssignmentLabel);
 			
 			JLabel subNameLabel = new JLabel("Name");
+			subNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc_subNameLabel = new GridBagConstraints();
 			gbc_subNameLabel.anchor = GridBagConstraints.WEST;
 			gbc_subNameLabel.insets = new Insets(0, 0, 5, 5);
@@ -168,6 +181,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			add(subNameLabel, gbc_subNameLabel);
 			
 			JLabel subWeightLabel = new JLabel("Weight");
+			subWeightLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc_subWeightLabel = new GridBagConstraints();
 			gbc_subWeightLabel.anchor = GridBagConstraints.WEST;
 			gbc_subWeightLabel.insets = new Insets(0, 0, 5, 0);
@@ -179,6 +193,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			
 			for (int i = 0; i < subAssignmentNamesFields.size(); i++) {
 				JTextField subAssignmentNameField = subAssignmentNamesFields.get(i);
+				subAssignmentNameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				GridBagConstraints gbc_subAssignmentNameField = new GridBagConstraints();
 				gbc_subAssignmentNameField.anchor = GridBagConstraints.WEST;
 				gbc_subAssignmentNameField.insets = new Insets(0, 0, 5, 5);
@@ -190,6 +205,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 				subAssignmentNameField.setColumns(10);
 				
 				JTextField subAssignmentWeightField = subAssignmentWeightsFields.get(i);
+				subAssignmentWeightField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				GridBagConstraints gbc_subAssignmentWeightField = new GridBagConstraints();
 				gbc_subAssignmentWeightField.anchor = GridBagConstraints.WEST;
 				gbc_subAssignmentWeightField.insets = new Insets(0, 0, 5, 0);
@@ -204,6 +220,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			// add error handling if one of these is invalid
 			if (error == AssignmentProblem.EMPTY_SUB_NAME) {
 				JLabel errorMessage = new JLabel("One or more of your subassignments is missing a name.");
+				errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -215,6 +232,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			}
 			if (error == AssignmentProblem.DUPLICATE_SUB_NAME) {
 				JLabel errorMessage = new JLabel("One or more of your subassignments has the same name.");
+				errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -226,6 +244,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			}
 			if (error == AssignmentProblem.BAD_SUB_WEIGHT) {
 				JLabel errorMessage = new JLabel("One or more of your subassignments has an invalid weight.");
+				errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -237,6 +256,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			}
 			if (error == AssignmentProblem.INVALID_SUB_WEIGHT) {
 				JLabel errorMessage = new JLabel("The total weight of subassignments must be between 0.0 and 100.");
+				errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				errorMessage.setForeground(Color.RED);
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -250,6 +270,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		}
 		
 		JButton addSubButton = new JButton("Add Subassignment");
+		addSubButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		addSubButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		// add action listener to recall this page to update with new row
 		addSubButton.addActionListener(new AddAssignmentAddSubController(rootView, this));
@@ -263,6 +284,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		add(addSubButton, gbc_addSubButton);
 		
 		JButton createButton = new JButton("Create");
+		createButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		createButton.addActionListener(new AddAssignmentController(rootView, parentFrame, user, this));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
 		gbc_createButton.anchor = GridBagConstraints.CENTER;
@@ -274,6 +296,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 		add(createButton, gbc_createButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.setHorizontalAlignment(SwingConstants.LEFT);
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
@@ -317,11 +340,14 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 
 	public void showError(AssignmentProblem error) {
 		removeAll();
+		repaint();
 		setupPanel(error);
 	}
 	
 	public void showNewSubAssignment()
 	{
+		removeAll();
+		repaint();
 		showError(AssignmentProblem.NO_ERROR);
 	}
 

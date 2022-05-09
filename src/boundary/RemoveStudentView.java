@@ -102,6 +102,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		add(titleLabel, gbc_titleLabel);
 		
 		JLabel selectSemesterLabel = new JLabel("Select Section:");
+		selectSemesterLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectSemesterLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_selectSemesterLabel = new GridBagConstraints();
 		gbc_selectSemesterLabel.anchor = GridBagConstraints.EAST;
@@ -112,6 +113,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		add(selectSemesterLabel, gbc_selectSemesterLabel);
 		
 		sectionSelector = new JComboBox<Section>();
+		sectionSelector.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sectionSelector.setModel(createComboBoxModel());
 		sectionSelector.setSelectedIndex(-1);  // Defaults to no selection
 		sectionSelector.addActionListener(new RemoveStudentsSectionChangeController(rootView, this));
@@ -136,11 +138,13 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		add(listScrollPane, gbc_listScrollPane);
 		
 		studentList = new JList<Student>();
+		studentList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		studentList.setEnabled(false);  // Initially not selectable (also blank)
 		studentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(studentList);
 		
 		JButton selectButton = new JButton("Remove");
+		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectButton.addActionListener(new RemoveStudentController(rootView, parentView, this, user));
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
@@ -150,6 +154,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);
@@ -190,6 +195,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 	{
 		System.out.println("in updateStudentListing");
 		studentList = new JList<Student>();
+		studentList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		studentList.setModel(createStudentsModel());
 		studentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(studentList);
@@ -273,6 +279,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		y++;  // Next row
 		
 		JLabel selectSectionLabel = new JLabel("Select Section:");
+		selectSectionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectSectionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_selectSectionLabel = new GridBagConstraints();
 		gbc_selectSectionLabel.anchor = GridBagConstraints.EAST;
@@ -295,7 +302,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		if(message == RemoveStudentProblem.NO_SECTION_SELECTION)
 		{
 			JLabel messageLabel = new JLabel("Please selection a section");
-			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			messageLabel.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -334,7 +341,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		if(message == RemoveStudentProblem.NO_STUDENT_SELECTION)
 		{
 			JLabel messageLabel = new JLabel("Please select a student to remove.");
-			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			messageLabel.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -347,6 +354,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		}
 		
 		JButton selectButton = new JButton("Remove");
+		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectButton.addActionListener(new RemoveStudentController(rootView, parentView, this, user));
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
@@ -356,6 +364,7 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);

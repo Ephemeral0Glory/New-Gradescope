@@ -105,7 +105,7 @@ public class RealAssignment implements Gradeable {
     }
 
     public String toString() {
-        return this.name + " with weight: " + Float.toString(Math.round(this.weight * 100));
+        return this.name + " with weight: " + Float.toString(Math.round(this.weight * 100)) + "%";
     }
   
     private ArrayList<Gradeable> copyTemplate(RealAssignment template, Student owner)

@@ -15,8 +15,7 @@ import boundary.RemoveEntryView;
  */
 public class RemoveEntryController implements ActionListener
 {
-	public static enum RemoveEntryProblem { NO_ERROR, NO_SECTION_SELECTION,
-		NO_ENTRY_SELECTION }
+	public static enum RemoveEntryProblem { NO_ERROR, NO_ENTRY_SELECTION }
 	private IGraderFrame rootView;
 	private IGraderFrame parentView;
 	private RemoveEntryView entryInfo;

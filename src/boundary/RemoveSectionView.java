@@ -106,7 +106,7 @@ public class RemoveSectionView extends JPanel implements IGraderScreen
 		sectionList = new JList<Section>();
 		sectionList.setModel(createListModel());
 		sectionList.setSelectedIndex(-1);
-		sectionList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		sectionList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sectionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		sectionListScrollPane.setViewportView(sectionList);
 		

@@ -108,7 +108,9 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		add(listScrollPane, gbc_listScrollPane);
 		
 		entryList = new JList<Entry>();
-		entryList.setEnabled(false);  // Initially not selectable (also blank)
+		entryList.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		entryList.setModel(createEntryModel());
+		entryList.setEnabled(true);
 		entryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(entryList);
 		
@@ -151,6 +153,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	public void updateEntryListing()
 	{
 		entryList = new JList<Entry>();
+		entryList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		entryList.setModel(createEntryModel());
 		entryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScrollPane.setViewportView(entryList);
@@ -179,27 +182,12 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	}
 	
 	/**
-	 *  @return  The section selected by the user.
-	 */
-//	public Section getSelectedSection()
-//	{
-//		return (Section) sectionSelector.getSelectedItem();
-//	}
-	
-	/**
-	 *  @return  The index in the list of the section selected by the user.
-	 */
-//	public int getSelectedSectionIndex()
-//	{
-//		return sectionSelector.getSelectedIndex();
-//	}
-	
-	/**
-	 *  Displays a "student removed" message on this screen.
+	 *  Displays an "entry removed" message on this screen.
 	 */
 	public void showSuccess()
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(RemoveEntryProblem.NO_ERROR);
 	}
 	
@@ -210,6 +198,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	public void showError(RemoveEntryProblem error)
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(error);
 	}
 	
@@ -223,7 +212,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		setLayout(gridBagLayout);
 		int y = 0;  // First row
 		
-		JLabel titleLabel = new JLabel("Remove a Student");
+		JLabel titleLabel = new JLabel("Remove an Entry");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
@@ -236,40 +225,6 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		gbc_titleLabel.weighty = 0.1;
 		add(titleLabel, gbc_titleLabel);
 		y++;  // Next row
-		
-		JLabel selectSectionLabel = new JLabel("Select Section:");
-		selectSectionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		GridBagConstraints gbc_selectSectionLabel = new GridBagConstraints();
-		gbc_selectSectionLabel.anchor = GridBagConstraints.EAST;
-		gbc_selectSectionLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_selectSectionLabel.gridx = 0;
-		gbc_selectSectionLabel.gridy = y;
-		gbc_selectSectionLabel.weighty = 0.1;
-		add(selectSectionLabel, gbc_selectSectionLabel);
-		
-		GridBagConstraints gbc_sectionSelectBox = new GridBagConstraints();
-		gbc_sectionSelectBox.anchor = GridBagConstraints.WEST;
-		gbc_sectionSelectBox.insets = new Insets(0, 0, 5, 0);
-		gbc_sectionSelectBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_sectionSelectBox.gridx = 1;
-		gbc_sectionSelectBox.gridy = y;
-		gbc_sectionSelectBox.weighty = 0.1;
-//		add(sectionSelector, gbc_sectionSelectBox);
-		y++;  // Next row
-		
-		if(message == RemoveEntryProblem.NO_SECTION_SELECTION)
-		{
-			JLabel messageLabel = new JLabel("Please selection a section");
-			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			messageLabel.setForeground(Color.RED);
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.anchor = GridBagConstraints.NORTHWEST;
-			gbc.insets = new Insets(0, 5, 5, 5);
-			gbc.gridx = 0;
-			gbc.gridy = y;
-			add(messageLabel, gbc);
-			y++;  // Next row
-		}
 
 		GridBagConstraints gbc_listScrollPane = new GridBagConstraints();
 		gbc_listScrollPane.gridwidth = 2;
@@ -285,7 +240,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		
 		if(message == RemoveEntryProblem.NO_ERROR)
 		{
-			JLabel messageLabel = new JLabel("Student removed.");
+			JLabel messageLabel = new JLabel("Entry removed.");
 			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -298,8 +253,8 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		}
 		if(message == RemoveEntryProblem.NO_ENTRY_SELECTION)
 		{
-			JLabel messageLabel = new JLabel("Please select a student to remove.");
-			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			JLabel messageLabel = new JLabel("Please select an entry to remove.");
+			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			messageLabel.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
@@ -312,6 +267,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		}
 		
 		JButton selectButton = new JButton("Remove");
+		selectButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		selectButton.addActionListener(new RemoveEntryController(rootView, parentView, this, user));
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.insets = new Insets(0, 10, 0, 5);
@@ -321,6 +277,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 		add(selectButton, gbc_selectButton);
 		
 		JButton cancelButton = new JButton("Close");
+		cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentView));
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.insets = new Insets(0, 0, 0, 10);

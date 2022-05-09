@@ -51,7 +51,7 @@ public class OpenViewCoursesInfoController implements ActionListener
 			Course loadedCourse = loadCourse(selectedCourse);
 
 			// Create course info screen
-			ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, null, user, loadedCourse, true);
+			ViewCourseInfoView vciv = new ViewCourseInfoView(rootView, null, user, gradebook, loadedCourse, true);
 			
 			// Display
 			rootView.setNewView(vciv);

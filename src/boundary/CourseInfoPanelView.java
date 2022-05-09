@@ -300,7 +300,8 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		setLayout(new GridBagLayout());
 
 		// Title
-		String assignmentName = column.isEmpty() ? "No Assignment" : column.get(0).getName();
+		String assignmentName = column.isEmpty() ? "No Assignment" :
+			(column.get(0).getName() + " (" + convert(column.get(0).getWeight()) + "%)");
 		JLabel title = new JLabel(assignmentName);
 		title.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc = new GridBagConstraints();
