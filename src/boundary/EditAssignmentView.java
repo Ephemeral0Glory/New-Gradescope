@@ -104,7 +104,7 @@ public class EditAssignmentView extends JPanel implements IGraderScreen {
 		add(updateWeightLabel, gbc_updateWeightLabel);
 		
 		updateWeightField = new JTextField();
-		updateWeightField.setText(Float.toString(parent.getWeight()));
+		updateWeightField.setText(Float.toString(Math.round(parent.getWeight() * 100)));
 		GridBagConstraints gbc_updateWeightField = new GridBagConstraints();
 		gbc_updateWeightField.gridwidth = 2;
 		gbc_updateWeightField.insets = new Insets(0, 0, 5, 0);
