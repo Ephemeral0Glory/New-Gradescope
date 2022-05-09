@@ -15,7 +15,9 @@ public class RemoveSelectedAssignmentController implements ActionListener {
     private RealAssignment parent;
     private SelectAssignmentToEditView selectedAssignmentView;
 
-    public RemoveSelectedAssignmentController(IGraderFrame rootView, IGraderFrame parentView, User user, Course course, RealAssignment parent, SelectAssignmentToEditView selectAssignmentController) {
+    public RemoveSelectedAssignmentController(IGraderFrame rootView,
+    		IGraderFrame parentView, User user, Course course,
+    		RealAssignment parent, SelectAssignmentToEditView selectAssignmentController) {
         this.rootView = rootView;
         this.parentView = parentView;
         this.user = user;
@@ -32,14 +34,11 @@ public class RemoveSelectedAssignmentController implements ActionListener {
             return; // Do nothing
         }
         // Removes the selected assignment from the parent's list of subassignments;
-        parent.removeSubAssignment(selectedAssignment);
+        course.removeAssignment(selectedAssignment);
 
+        // Update displays
         rootView.update();
         rootView.display();
-
-
-
-
     }
     
 }

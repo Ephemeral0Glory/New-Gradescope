@@ -264,6 +264,26 @@ public class Course {
     }
 
     /**
+     *  Adds the given assignment to the table.
+     *  <p>
+     *  First adds the assignment to each entry in the database. Then it updates
+     *  the aggregates.
+     *  @param templateNewAssignment
+     */
+    public void addAssignment(RealAssignment templateNewAssignment, RealAssignment toTemplateAssignment) {
+        // Add assignment to each entry
+        for(Entry e: entries)
+        {
+        	e.addAssignment(new RealAssignment(templateNewAssignment.getName(),
+        			templateNewAssignment.getWeight(), e.getStudent(),
+        			templateNewAssignment), toTemplateAssignment);
+        }
+        
+    	// Update aggregates
+        createAggregates();
+    }
+
+    /**
      *  Removes the given assignment from the table.
      *  <p>
      *  First it removes the assignment from each entry in the table. Then

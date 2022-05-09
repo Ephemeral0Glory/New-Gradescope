@@ -206,6 +206,34 @@ public class RealAssignment implements Gradeable {
     	return subAssignments.get(index);
     }
     
+    public RealAssignment getSubAssignment(RealAssignment like)
+    {
+    	// Check all sub-assignments
+    	for(int i = 0; i < numSubAssignments; i++)
+    	{
+    		// Try sub-assignment
+    		// Can cast because checked numSubAssignments != 0 above
+    		RealAssignment sa = (RealAssignment) subAssignments.get(i);
+    		// If this is one we want
+    		if(like.equals(sa))
+    		{
+    			return sa;
+    		}
+    		
+    		// Otherwise, look in sa's sub-assignments
+    		RealAssignment found = sa.getSubAssignment(like);
+    		
+    		// If found
+    		if(found != null)
+    		{
+    			return found;
+    		}
+    	}
+    	
+    	// If we get here, didn't find it
+    	return null;
+    }
+    
     public int getNumSubAssignments()
     {
     	return numSubAssignments;
@@ -243,6 +271,10 @@ public class RealAssignment implements Gradeable {
     	return list;
     }
 
+    /**
+     *  Adds a sub-assignment to this RealAssignment
+     *  @param subAssignment  The sub-assignment to add
+     */
     public void addSubAssignment(Gradeable subAssignment) {
     	// Check that we don't need to remove NullAssignment
     	if(numSubAssignments == 0)
@@ -252,6 +284,35 @@ public class RealAssignment implements Gradeable {
     	}
         this.subAssignments.add(subAssignment);
         numSubAssignments += 1;
+    }
+    
+    /**
+     *  Adds a sub-assignment to the toAssignment somewhere in this assigment's
+     *  sub-assignment tree.
+     *  @param assignmentToAdd  The assignment to add
+     *  @param toAssignment  The (potentially sub-)assignment to add to
+     */
+    public void addSubAssignment(Gradeable assignmentToAdd, RealAssignment toAssignment)
+    {
+    	// If this is the assignment to add to 
+    	if(this.equals(toAssignment))
+    	{
+    		// Add it
+    		addSubAssignment(assignmentToAdd);
+    	}
+    	else  // This is not the assignment to add to
+    	{
+    		// Look in sub-assignments
+    		for(int i = 0; i < numSubAssignments; i++)
+    		{
+    			// Get sub-assignment
+    			// Can cast because checked numSubAssignments > 0 above
+    			RealAssignment subAssignment = (RealAssignment) subAssignments.get(i);
+    			
+    			// Try to add it to the sub-assignment
+    			subAssignment.addSubAssignment(assignmentToAdd, toAssignment);
+    		}
+    	}
     }
 
     /**

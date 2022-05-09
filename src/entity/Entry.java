@@ -84,9 +84,25 @@ public class Entry {
     public Gradeable getAssignment(int index) {
     	return finalGrade.getSubAssignment(index);
     }
+    
+    public RealAssignment getAssignment(RealAssignment ra)
+    {
+    	if(ra.equals(finalGrade))
+    	{
+    		return finalGrade;
+    	}
+    	else
+    	{
+    		return finalGrade.getSubAssignment(ra);
+    	}
+    }
 
     public void addAssignment(RealAssignment assignment) {
         this.finalGrade.addSubAssignment(assignment);
+    }
+
+    public void addAssignment(RealAssignment assignment, RealAssignment toAssignment) {
+        this.finalGrade.addSubAssignment(assignment, toAssignment);
     }
 
     public boolean removeAssignment(RealAssignment assignmentToRemove) {

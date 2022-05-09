@@ -12,6 +12,7 @@ import entity.*;
 /**
  * 
  *  @author David Sullo
+ *  @author Alex Titus
  */
 public class OpenEditAssignmentController implements ActionListener {
 
@@ -38,6 +39,11 @@ public class OpenEditAssignmentController implements ActionListener {
         GraderView gv = new GraderView("Edit an Assignment");
         gv.setClosePolicyPopUp();
         RealAssignment parent = (RealAssignment) selectAssignmentToEditView.getSelectedAssignment();
+        if(parent == null)  // If there wasn't an assignment selected
+        {
+        	// Do nothing
+        	return;
+        }
         // Create edit assignment screen
         ArrayList<Gradeable> subAssignments = parent.getSubAssignments();
         ArrayList<JTextField> subAssignmentNames = new ArrayList<JTextField>();
@@ -47,15 +53,22 @@ public class OpenEditAssignmentController implements ActionListener {
                 JTextField currJTextFieldName = new JTextField();
                 JTextField currJTextFieldWeight = new JTextField();
                 currJTextFieldName.setText(((RealAssignment) g).getName());
-                currJTextFieldWeight.setText(Float.toString(((RealAssignment) g).getWeight()));
+                currJTextFieldWeight.setText( convert( ((RealAssignment) g).getWeight() ) );
                 subAssignmentNames.add(currJTextFieldName);
                 subAssignmentWeights.add(currJTextFieldWeight);
             }
         }
-        EditAssignmentView eav = new EditAssignmentView(gv, rootView, user, course, parent, subAssignmentNames, subAssignmentWeights);
+        EditAssignmentView eav = new EditAssignmentView(gv, rootView,
+        		user, course, parent, subAssignmentNames, subAssignmentWeights);
         // Display
         gv.setNewView(eav);
         gv.update();
         gv.display();
+    }
+    
+    private String convert(float weight)
+    {
+    	float percentageWeight = weight * 100;
+		return String.format("%.00f", percentageWeight);
     }
 }

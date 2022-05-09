@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -48,7 +47,7 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 		JLabel titleLabel = new JLabel("Select an Assignment to edit");
 		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
 		gbc_titleLabel.gridwidth = 3;
-		gbc_titleLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_titleLabel.insets = new Insets(5, 0, 5, 5);
 		gbc_titleLabel.gridx = 0;
 		gbc_titleLabel.gridy = 0;
 		add(titleLabel, gbc_titleLabel);
@@ -57,7 +56,7 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 		GridBagConstraints gbc_listScrollPane = new GridBagConstraints();
 		gbc_listScrollPane.gridwidth = 3;
 		gbc_listScrollPane.gridheight = 8;
-		gbc_listScrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_listScrollPane.insets = new Insets(0, 5, 5, 5);
 		gbc_listScrollPane.fill = GridBagConstraints.BOTH;
 		gbc_listScrollPane.gridx = 0;
 		gbc_listScrollPane.gridy = 1;
@@ -81,7 +80,7 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 		editButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
 		gbc_editButton.anchor = GridBagConstraints.EAST;
-		gbc_editButton.insets = new Insets(0, 0, 0, 5);
+		gbc_editButton.insets = new Insets(0, 0, 5, 5);
 		gbc_editButton.gridx = 0;
 		gbc_editButton.gridy = 9;
 		add(editButton, gbc_editButton);
@@ -89,16 +88,17 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 		JButton removeButton = new JButton("Remove");
 		removeButton.addActionListener(new RemoveSelectedAssignmentController(rootView, parentFrame, user, course, parent, this));
 		GridBagConstraints gbc_removeButton = new GridBagConstraints();
-		gbc_removeButton.insets = new Insets(0, 0, 0, 5);
+		gbc_removeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_removeButton.gridx = 1;
 		gbc_removeButton.gridy = 9;
 		add(removeButton, gbc_removeButton);
 		
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Close");
 		cancelButton.addActionListener(new ClosePopupWindowController(rootView, parentFrame));
 		cancelButton.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 		gbc_cancelButton.anchor = GridBagConstraints.WEST;
+		gbc_cancelButton.insets = new Insets(0, 0, 5, 5);
 		gbc_cancelButton.gridx = 2;
 		gbc_cancelButton.gridy = 9;
 		add(cancelButton, gbc_cancelButton);
@@ -111,8 +111,14 @@ public class SelectAssignmentToEditView extends JPanel implements IGraderScreen 
 
 	@Override
 	public void update() {
-		// ignore
+		// Update self
+		removeAll();
+		repaint();
+		setupPanel();
 		
+		// Update parent application too
+		parentFrame.update();
+		parentFrame.display();
 	}
 	
 	public Gradeable getSelectedAssignment()
