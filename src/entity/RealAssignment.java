@@ -191,6 +191,16 @@ public class RealAssignment implements Gradeable {
     {
     	return subAssignments;
     }
+
+    public ArrayList<Gradeable> getSubAssignmentsExceptNull() {
+        ArrayList<Gradeable> output = new ArrayList<>();
+        for (Gradeable g: subAssignments) {
+            if (g instanceof RealAssignment) {
+                output.add(g);
+            }
+        }
+        return output;
+    }
     
     public Gradeable getSubAssignment(int index) {
     	return subAssignments.get(index);

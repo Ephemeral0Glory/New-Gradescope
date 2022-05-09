@@ -42,7 +42,7 @@ public class OpenEditAssignmentController implements ActionListener {
         ArrayList<Gradeable> subAssignments = parent.getSubAssignments();
         ArrayList<JTextField> subAssignmentNames = new ArrayList<JTextField>();
         ArrayList<JTextField> subAssignmentWeights = new ArrayList<JTextField>();
-        if (parent.getNumSubAssignments() != 0) {;
+        if (parent.getNumSubAssignments() != 0) {
             for (Gradeable g: subAssignments) {
                 JTextField currJTextFieldName = new JTextField();
                 JTextField currJTextFieldWeight = new JTextField();

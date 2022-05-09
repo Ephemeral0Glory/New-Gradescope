@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
@@ -249,6 +250,16 @@ public class EditAssignmentView extends JPanel implements IGraderScreen {
 	public void addSubAssignmentFields() {
 		subAssignmentNamesFields.add(new JTextField());
 		subAssignmentWeightsFields.add(new JTextField());
+	}
+
+	public HashMap<String, ArrayList<JTextField>> getSubAssignmentFields(){
+		HashMap<String, ArrayList<JTextField>> assignmentsField = new HashMap<>();
+
+		assignmentsField.put("names", subAssignmentNamesFields);
+		assignmentsField.put("weights", subAssignmentWeightsFields);
+
+		return assignmentsField;
+
 	}
 
 }
