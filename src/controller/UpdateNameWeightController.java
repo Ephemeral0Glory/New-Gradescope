@@ -35,7 +35,7 @@ public class UpdateNameWeightController implements ActionListener {
         if (error == UpdateNWProblem.NO_ERROR) {
             String updatedName = editAssignmentView.getUpdatedName();
     //        Float updatedWeight = 0f;
-            Float updatedWeight = editAssignmentView.getUpdatedWeight();
+            Float updatedWeight = editAssignmentView.getUpdatedWeight() / 100;
             System.out.println("proceed to update name and weight");
 
             // first update entity information
