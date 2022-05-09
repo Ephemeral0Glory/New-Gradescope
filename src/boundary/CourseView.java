@@ -217,11 +217,12 @@ public class CourseView extends JPanel implements IGraderScreen
 		JPanel header = new JPanel();
 		GridBagLayout headerLayout = new GridBagLayout();
 //		headerLayout.columnWidths = calculateColumnWidths();
-		headerLayout.columnWeights = calculateColumnWeights();
+//		headerLayout.columnWeights = calculateColumnWeights();
 		header.setLayout(headerLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(1, 1, 1, 1);
+		gbc.weightx = 1;
 		Font headerFont = new Font("Tahoma", Font.BOLD, 16);
 		
 		// Assignments
@@ -292,19 +293,19 @@ public class CourseView extends JPanel implements IGraderScreen
 		header.add(sectionLabel, gbc);
 		headerColumnSizes.add(0, sectionLabel.getSize().width);
 		
-		// Student
-		JLabel studentLabel = new JLabel("Student");
-		studentLabel.setFont(headerFont);
-		gbc.gridx = 1;
-		header.add(studentLabel, gbc);
-		headerColumnSizes.add(0, studentLabel.getSize().width);
-		
 		// BUID
 		JLabel idLabel = new JLabel("BUID");
 		idLabel.setFont(headerFont);
-		gbc.gridx = 2;
+		gbc.gridx = 1;
 		header.add(idLabel, gbc);
 		headerColumnSizes.add(0, idLabel.getSize().width);
+		
+		// Student
+		JLabel studentLabel = new JLabel("Student");
+		studentLabel.setFont(headerFont);
+		gbc.gridx = 2;
+		header.add(studentLabel, gbc);
+		headerColumnSizes.add(0, studentLabel.getSize().width);
 		
 		return header;
 	}
@@ -340,8 +341,8 @@ public class CourseView extends JPanel implements IGraderScreen
 		int numColumns = course.getTemplate().getNumLeaves()+5+1;
 		double[] widths = new double[numColumns];
 		widths[0] = 0.1;  // Section
-		widths[1] = 0.2;  // Student
-		widths[2] = 0.1;  // BUID
+		widths[1] = 0.2;  // BUID
+		widths[2] = 0.2;  // Student
 		for(int i = 3; i < numColumns-2; i++)  // Assignments
 		{
 			widths[i] = 0.15;

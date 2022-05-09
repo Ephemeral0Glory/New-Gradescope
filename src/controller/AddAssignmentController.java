@@ -31,20 +31,23 @@ public class AddAssignmentController implements ActionListener{
         Float assignmentWeight = 0f;
 
         if (error == AssignmentProblem.NO_ERROR) {
+            Course course = addAssignmentView.getCourse();
+            Student templateStudent = course.getTemplate().getStudent();
             // Create and add Assignment where appropriate
             assignmentWeight = addAssignmentView.getWeight() / 100.0f;
-            Gradeable newAssignment = new RealAssignment(assignmentName, assignmentWeight);
+            Gradeable newAssignment = new RealAssignment(assignmentName, assignmentWeight,
+            		new Grade(0f), templateStudent);
             ArrayList<JTextField> subAssignmentNamesFields = addAssignmentView.getSubAssignmentNamesFields();
             ArrayList<JTextField> subAssignmentWeightsFields = addAssignmentView.getSubAssignmentWeightsFields();
             if (!(subAssignmentNamesFields.isEmpty() && subAssignmentWeightsFields.isEmpty())) {
                 for (int i = 0; i < subAssignmentNamesFields.size(); i++) {
                     String currName = subAssignmentNamesFields.get(i).getText();
                     Float currFloat = Float.valueOf(subAssignmentWeightsFields.get(i).getText()) / 100;
-                    RealAssignment currSubAssignment = new RealAssignment(currName, currFloat);
+                    RealAssignment currSubAssignment = new RealAssignment(currName, currFloat,
+                    		new Grade(0f), templateStudent);
                     ((RealAssignment) newAssignment).addSubAssignment(currSubAssignment);
                 }
             }
-            Course course = addAssignmentView.getCourse();
             course.getTemplate().addSubAssignment(newAssignment);
             course.addAssignment((RealAssignment) newAssignment);
             // Close window
