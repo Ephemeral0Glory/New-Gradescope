@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Scrollable;
-
 import controller.DeleteAssignmentController;
 import controller.DeleteEntryController;
 import controller.UpdateEntryController;
@@ -47,6 +46,7 @@ import entity.StudentStatus;
  *  the assignment from the table and the second updates all of the assignment's grades
  *  comments with the information entered by the user.
  *  @author Alex Titus
+ *  @author Seonghoon Cho
  *
  */
 public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scrollable
@@ -61,13 +61,10 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	private JComboBox<StudentStatus> statusSelector;
 	private ArrayList<JTextField> gradesList;
 	private ArrayList<JTextArea> commentsList;
-
-	private CourseView courseView;
 	
 	public CourseInfoPanelView(IGraderFrame rootView, CourseView courseView)
 	{
 		this.rootView = rootView;
-		this.courseView = courseView;
 	}
 	
 	public void showEntry(Entry entry)
@@ -87,8 +84,6 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	private void createInfoPanelRow(Entry entry)
 	{
 		// Set up panel
-//		setPreferredSize(courseView.getPreferredSize());
-		setPreferredSize(courseView.getInfoPaneScrollPanelSize());
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -100,53 +95,60 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		title.setFont(panelFont);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-//		gbc.gridwidth = 2;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.weightx = 1.0;
 		add(title, gbc);
 		gbc.gridy += 1;
-		gbc.gridwidth = 1;
 		
 		// Student information row
 			// Name
 		JLabel studentNameLabel = new JLabel("Student name:");
 		studentNameLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0, 0, 5, 5);
 		gbc.weightx = 0.4;
+		gbc.gridwidth = 1;
 		add(studentNameLabel, gbc);
 		gbc.gridx += 1;
 		firstNameField = new JTextField(entry.getStudent().getFName());
 		firstNameField.setFont(panelFont);
+		firstNameField.setColumns(20);
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.weightx = 0.3;
+		gbc.gridwidth = 2;
 		add(firstNameField, gbc);
-		gbc.gridx += 1;
+		gbc.gridx += 2;
 		lastNameField = new JTextField(entry.getStudent().getLName());
 		lastNameField.setFont(panelFont);
+		lastNameField.setColumns(25);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.weightx = 0.3;
+		gbc.gridwidth = 2;
 		add(lastNameField, gbc);
-		gbc.gridx += 1;
+		gbc.gridx += 2;
 			// ID
 		JLabel idLabel = new JLabel("BUID:");
 		idLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
+		gbc.gridwidth = 1;
 		add(idLabel, gbc);
 		gbc.gridx += 1;
 		buidField = new JTextField(entry.getStudent().getBUID());
 		buidField.setFont(panelFont);
+		buidField.setColumns(10);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.weightx = 0.5;
 		add(buidField, gbc);
 		gbc.gridx += 1;
 			// Status
-		JLabel statusLabel = new JLabel("Status:");
+		JLabel statusLabel = new JLabel("Current Status:");
 		statusLabel.setFont(panelFont);
 		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		add(statusLabel, gbc);
 		gbc.gridx += 1;
@@ -185,16 +187,18 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 		JButton deleteButton = new JButton("Delete Entry");
 		deleteButton.setFont(panelFont);
 		deleteButton.addActionListener(new DeleteEntryController(rootView, entry));
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 0;
 		gbc.gridy += 1;
+		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		add(deleteButton, gbc);
 		
 		JButton updateButton = new JButton("Update");
 		updateButton.setFont(panelFont);
 		updateButton.addActionListener(new UpdateEntryController(rootView, this));
+		gbc.gridx += 2;
 		gbc.gridwidth = 2;
-		gbc.gridx += 1;
 		add(updateButton, gbc);
 	}
 	
@@ -221,28 +225,33 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 			gbc.gridx += 1;
 			JTextField gradeField = new JTextField(a.getGrade().getScore() + "");
 			gradeField.setFont(panelFont);
+			gradeField.setColumns(5);
 			gbc.anchor = GridBagConstraints.WEST;
 			add(gradeField, gbc);
-			gradesList.add(gradeField);
 			gbc.gridx += 1;
+			gradesList.add(gradeField);
 			
 			// Comments
 			JLabel commentsLabel = new JLabel("Comments:");
 			commentsLabel.setFont(panelFont);
 			gbc.anchor = GridBagConstraints.EAST;
+			gbc.fill = GridBagConstraints.NONE;
 			add(commentsLabel, gbc);
 			gbc.gridx += 1;
 			JTextArea commentsArea = new JTextArea(a.getGrade().getComment(), 3, 20);
 			commentsArea.setFont(panelFont);
 			commentsArea.setEditable(true);
 			commentsArea.setEnabled(true);
+			commentsArea.setLineWrap(true);
+			commentsArea.setWrapStyleWord(true);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridheight = 2;
-			gbc.gridwidth = 2;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			add(commentsArea, gbc);
 			commentsList.add(commentsArea);
 			
 			// Set for next call
+			gbc.fill = GridBagConstraints.NONE;
 			gbc.gridheight = 1;
 			gbc.gridwidth = 1;
 			gbc.gridy += 2;
@@ -448,6 +457,7 @@ public class CourseInfoPanelView extends JPanel implements IGraderScreen, Scroll
 	public Dimension getPreferredScrollableViewportSize()
 	{
 		return null;
+//		return new Dimension(972, 293);  // This only works if no other dimensions change;
 	}
 
 	@Override

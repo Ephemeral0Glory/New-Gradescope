@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -98,6 +99,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		infoPanelScrollPane = new JScrollPane();
 		Border b = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		infoPanelScrollPane.setBorder(BorderFactory.createTitledBorder(b, "Information"));
+		infoPanelScrollPane.getViewport().setBackground(new Color(240, 240, 240));
 		gbc_global.fill = GridBagConstraints.BOTH;
 		gbc_global.gridx = 0;
 		gbc_global.gridy = 2;
