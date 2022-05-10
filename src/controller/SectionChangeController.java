@@ -7,7 +7,7 @@ import boundary.AddEntryView;
 import boundary.IGraderFrame;
 
 /**
- *  Changes the displayed courses in {@link AddEntryView} when the selected Section changes.
+ *  Changes the displayed students in {@link AddEntryView} when the selected Section changes.
  *  @author Alex Titus
  */
 public class SectionChangeController implements ActionListener
