@@ -435,13 +435,15 @@ public class CourseView extends JPanel implements IGraderScreen
 				else
 				{
 					// Take as many columns as have leaves under this assignment
-					gbc.gridwidth = ra.getNumLeaves();
+					assignmentLabel.setHorizontalAlignment(SwingConstants.CENTER);
+					gbc.gridwidth = sa.getNumLeaves();
 					gbc.anchor = GridBagConstraints.CENTER;  // Center over them
 				}
 				gbc.gridy = sa.getNumSubAssignments() == 0 ? greatestDepth : currentDepth;
 				header.add(assignmentLabel, gbc);
-				gbc.gridx += 1;
 				gbc.gridy += 1;
+				// Need to advance to next column if there are no sub-assignments
+				gbc.gridx += (sa.getNumSubAssignments() == 0) ? 1 : 0;
 
 				// Recursively add sub-assignment labels
 				labelSubAssignments(sa, header, gbc, greatestDepth);
