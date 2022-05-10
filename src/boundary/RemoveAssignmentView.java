@@ -124,18 +124,20 @@ public class RemoveAssignmentView extends JPanel implements IGraderScreen
 	@Override
 	public void update()
 	{
-		// Ignore
+		assignmentsPanel.update();
 	}
 	
 	public void showSuccess()
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(RemoveAssignmentProblem.NO_ERROR);
 	}
 	
 	public void showError(RemoveAssignmentProblem error)
 	{
 		removeAll();
+		repaint();
 		setupPanelWithMessage(error);
 	}
 	

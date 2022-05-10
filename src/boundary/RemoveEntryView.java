@@ -188,6 +188,7 @@ public class RemoveEntryView extends JPanel implements IGraderScreen
 	{
 		removeAll();
 		repaint();
+		updateEntryListing();
 		setupPanelWithMessage(RemoveEntryProblem.NO_ERROR);
 	}
 	

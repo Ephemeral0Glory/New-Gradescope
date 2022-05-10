@@ -121,7 +121,7 @@ public class GraderView extends JFrame implements IGraderFrame
 		edit.add(add);
 			// Remove submenu
 		JMenu remove = new JMenu("Remove");
-		remove.setMnemonic(KeyEvent.VK_A);
+		remove.setMnemonic(KeyEvent.VK_R);
 				// Add section
 		item = new JMenuItem("Remove Section");
 		item.setMnemonic(KeyEvent.VK_T);
@@ -145,7 +145,7 @@ public class GraderView extends JFrame implements IGraderFrame
 		edit.add(remove);
 				// Edit submenu
 		JMenu editE = new JMenu("Edit");
-		editE.setMnemonic(KeyEvent.VK_A);
+		editE.setMnemonic(KeyEvent.VK_E);
 			// Edit assignment
 		item = new JMenuItem("Edit Assignment");
 		item.setMnemonic(KeyEvent.VK_A);

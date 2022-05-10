@@ -120,7 +120,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			y++;
 		}
 		
-		JLabel assignmentWeight = new JLabel("Assignment Weight:");
+		JLabel assignmentWeight = new JLabel("Assignment Weight (%):");
 		assignmentWeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_assignmentWeight = new GridBagConstraints();
 		gbc_assignmentWeight.anchor = GridBagConstraints.EAST;
@@ -180,7 +180,7 @@ public class AddAssignmentView extends JPanel implements IGraderScreen {
 			gbc_subNameLabel.weighty = 0.1;
 			add(subNameLabel, gbc_subNameLabel);
 			
-			JLabel subWeightLabel = new JLabel("Weight");
+			JLabel subWeightLabel = new JLabel("Weight (%)");
 			subWeightLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc_subWeightLabel = new GridBagConstraints();
 			gbc_subWeightLabel.anchor = GridBagConstraints.WEST;

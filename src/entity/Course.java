@@ -225,6 +225,16 @@ public class Course {
         return this.entries;
     }
     
+    public boolean hasAssignment(RealAssignment ra)
+    {
+    	return template.hasAssignment(ra);
+    }
+    
+    public boolean hasEntry(Entry e)
+    {
+    	return entries.contains(e);
+    }
+    
     public RealAssignment getTemplate()
     {
     	return this.template;
@@ -318,7 +328,34 @@ public class Course {
     }
 
     public boolean removeSection(Section sectionToRemove) {
-        return this.sections.remove(sectionToRemove);
+        boolean retval = this.sections.remove(sectionToRemove);
+        
+        // On success, need to clear out all entries related to those students
+        ArrayList<Entry> entriesToDelete = new ArrayList<Entry>();
+        // Find entries
+        if(retval)
+        {
+        	for(Student s: sectionToRemove.getStudents())
+        	{
+        		for(Entry e: entries)
+        		{
+        			if(s.equals(e.getStudent()))
+        			{
+        				entriesToDelete.add(e);
+        			}
+        		}
+        	}
+        }
+        // Delete entries
+        for(Entry e: entriesToDelete)
+        {
+        	removeEntry(e);
+        }
+        
+        // Update aggregates
+        createAggregates();
+        
+        return retval;
     }
 
     public void addStudent(Student student) {
@@ -330,6 +367,18 @@ public class Course {
 
     public boolean removeStudent(Student studentToRemove) {
         boolean retval = this.students.remove(studentToRemove);
+        
+        // If successful, remove the student's entry (if any)
+        if(retval)
+        {
+        	for(Entry e: entries)
+        	{
+        		if(studentToRemove.equals(e.getStudent()))
+        		{
+        			removeEntry(e);
+        		}
+        	}
+        }
         
         // Update aggregates
         createAggregates();

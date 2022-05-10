@@ -88,7 +88,7 @@ public class AddStudentController implements ActionListener {
         }
 
         // Check for bad buID
-        if ( (buID.charAt(0) != 'u' || buID.charAt(0) != 'U')
+        if ( (buID.charAt(0) != 'u' && buID.charAt(0) != 'U')
         		|| buID.length() < 9) {
             return AddStudentProblem.BAD_BUID;
         }

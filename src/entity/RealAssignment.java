@@ -187,6 +187,28 @@ public class RealAssignment implements Gradeable {
     	return this.student.getFName() + " " + this.student.getLName();
     }
     
+    public boolean hasAssignment(RealAssignment ra)
+    {
+    	if(this.equals(ra))
+    	{
+    		return true;
+    	}
+    	
+    	for(int i = 0; i < numSubAssignments; i++)
+    	{
+    		// Can cast because checked that numSubAssignments > 0 above
+    		boolean inChild = ((RealAssignment) getSubAssignment(i)).hasAssignment(ra);
+    		
+    		if(inChild)
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	// If we get here, couldn't find it
+    	return false;
+    }
+    
     public ArrayList<Gradeable> getSubAssignments()
     {
     	return subAssignments;

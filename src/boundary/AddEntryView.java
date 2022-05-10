@@ -302,6 +302,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 	public void showSuccess()
 	{
 		removeAll();
+		repaint();
 		
 		// Clear previous data
 		firstNameField.setText("");
@@ -317,6 +318,7 @@ public class AddEntryView extends JPanel implements IGraderScreen
 	public void showError(EntryProblem error)
 	{
 		removeAll();
+		repaint();
 		setupPanelWithError(error);
 	}
 	

@@ -472,6 +472,19 @@ public class CourseView extends JPanel implements IGraderScreen
 
 		// Update course info panel
 		infoPanel.update();
+		
+		// If entry or column has just been removed, hide infoPanel
+		// So that deleted thing isn't shown
+		if(infoPanel.getColumn() != null &&
+				!course.hasAssignment(infoPanel.getColumn().get(0)))
+		{
+			hideInfoPanelScrollPane();
+		}
+		else if(infoPanel.getEntry() != null &&
+				!course.hasEntry(infoPanel.getEntry()))
+		{
+			hideInfoPanelScrollPane();
+		}  // Otherwise leave it
 	}
 	
 	/**
@@ -493,6 +506,7 @@ public class CourseView extends JPanel implements IGraderScreen
 	{
 		infoPanel.showColumn(column);
 		infoPanelScrollPane.setViewportView(infoPanel);
+		infoPanelScrollPane.setVisible(true);
 	}
 	
 	/**
@@ -510,7 +524,7 @@ public class CourseView extends JPanel implements IGraderScreen
 		return searchField.getText();
 	}
 
-	public void hideInfoPaneScrollPane() {
+	public void hideInfoPanelScrollPane() {
 		infoPanelScrollPane.setVisible(false);
 	}
 

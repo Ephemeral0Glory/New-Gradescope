@@ -193,7 +193,6 @@ public class RemoveStudentView extends JPanel implements IGraderScreen
 	 */
 	public void updateStudentListing()
 	{
-		System.out.println("in updateStudentListing");
 		studentList = new JList<Student>();
 		studentList.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		studentList.setModel(createStudentsModel());

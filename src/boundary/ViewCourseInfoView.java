@@ -174,7 +174,7 @@ public class ViewCourseInfoView extends JPanel implements IGraderScreen {
 		gbc_lblStartStudentsData.gridy = 4;
 		add(lblStartStudentsData, gbc_lblStartStudentsData);
 		
-		JLabel lblDroppedStudents = new JLabel("Dropped students:");
+		JLabel lblDroppedStudents = new JLabel("Withdrawn students:");
 		lblDroppedStudents.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDroppedStudents.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblDroppedStudents = new GridBagConstraints();

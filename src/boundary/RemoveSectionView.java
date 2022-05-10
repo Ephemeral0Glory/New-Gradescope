@@ -224,7 +224,6 @@ public class RemoveSectionView extends JPanel implements IGraderScreen
 		if(message == RemoveSectionProblem.NO_ERROR)
 		{
 			JLabel messageLabel = new JLabel("Section removed!");
-			messageLabel.setForeground(Color.RED);
 			messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.anchor = GridBagConstraints.NORTH;
